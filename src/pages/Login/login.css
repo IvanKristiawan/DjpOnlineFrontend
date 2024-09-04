@@ -1,0 +1,13 @@
+.no-hover {
+    background-color: white !important;  /* Original color (e.g., primary) */
+    color: rgb(161, 161, 161) !important;
+    border-color: rgb(207, 207, 207) !important;
+}
+  
+.no-hover:hover,
+.no-hover:focus,
+.no-hover:active {
+    background-color: white !important;  /* Keep the original color */
+    color: rgb(161, 161, 161) !important;
+    box-shadow: none !important;  /* Remove focus shadow */
+}
