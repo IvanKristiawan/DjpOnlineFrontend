@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useStateContext, tempUrl } from "../../contexts/ContextProvider";
 import { AuthContext } from "../../contexts/AuthContext";
+import { Colors } from "../../constants/styles";
 import "./login.css";
 import { Container, Card, InputGroup, Button, Form } from "react-bootstrap";
 import { Snackbar, Alert } from "@mui/material";
@@ -16,7 +17,7 @@ function Login() {
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [username, setUsername] = useState("");
+  const [npwp15, setNpwp15] = useState("");
   const [password, setPassword] = useState("");
   const [kodeKeamanan, setKodeKeamanan] = useState("");
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ function Login() {
       dispatch({ type: "LOGIN_START" });
       try {
         const res = await axios.post(`${tempUrl}/auth/login`, {
-          username,
+          npwp15,
           password,
           kodeKeamanan,
         });
@@ -76,6 +77,7 @@ function Login() {
       style={{
         display: "flex",
         justifyContent: "center",
+        padding: "24px",
       }}
     >
       <Card style={cardContainer}>
@@ -99,15 +101,15 @@ function Login() {
                 className="mb-3"
                 controlId="exampleForm.ControlInput1"
               >
-                <Form.Label>NIK/NPWP/NITKU</Form.Label>
+                <Form.Label style={inputText}>NIK/NPWP/NITKU</Form.Label>
                 <Form.Control
                   required
                   placeholder="Masukan nomor NIK/NPWP/NITKU Anda"
                   className="mb-3"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value.toUpperCase())}
+                  value={npwp15}
+                  onChange={(e) => setNpwp15(e.target.value.toUpperCase())}
                 />
-                <Form.Label>Kata Sandi</Form.Label>
+                <Form.Label style={inputText}>Kata Sandi</Form.Label>
                 <InputGroup>
                   <Form.Control
                     required
@@ -146,15 +148,19 @@ function Login() {
                     placeholder="Kode Keamanan"
                     style={{ width: "160px", height: "50px" }}
                     value={kodeKeamanan}
-                    onChange={(e) =>
-                      setKodeKeamanan(e.target.value.toUpperCase())
-                    }
+                    onChange={(e) => setKodeKeamanan(e.target.value)}
                   />
                 </div>
-                <Form.Label>klik untuk ubah kode</Form.Label>
+                <Form.Label style={captchaText}>
+                  klik untuk ubah kode
+                </Form.Label>
               </Form.Group>
               <div style={{ display: "flex", justifyContent: "end" }}>
-                <Form.Label>Lupa Kata Sandi ?</Form.Label>
+                <p style={penggunaBaruText}>
+                  <a href="/lupaPassword" style={daftarButton}>
+                    Lupa Kata Sandi ?
+                  </a>
+                </p>
               </div>
               <Button
                 variant="warning"
@@ -164,14 +170,16 @@ function Login() {
                 <b style={{ fontSize: "18px" }}>Login</b>
               </Button>
               <hr />
-              <p style={{ textAlign: "center" }}>
+              <p style={penggunaBaruText}>
                 Pengguna Baru?{" "}
-                <a href="" style={{ color: "black", textDecoration: "none" }}>
+                <a href="/registrasi" style={daftarButton}>
                   Daftar disini
                 </a>
               </p>
-              <Button variant="light">Belum Menerima Email Aktivasi ?</Button>
-              <Button variant="light" style={{ marginTop: "10px" }}>
+              <Button variant="light" style={emailButton}>
+                Belum Menerima Email Aktivasi ?
+              </Button>
+              <Button variant="light" style={daftarNpwpButton}>
                 Belum Punya NPWP ?
               </Button>
             </Form>
@@ -181,7 +189,7 @@ function Login() {
       {error && (
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error" sx={alertBox}>
-            Username atau Password salah!
+            Npwp15 atau Password salah!
           </Alert>
         </Snackbar>
       )}
@@ -203,10 +211,42 @@ const headerText = {
   fontWeight: 600,
 };
 
-const headerDetail = {
-  fontSize: 12,
-  fontWeight: 500,
-  color: "gray",
+const inputText = {
+  color: Colors.grey700,
+  fontSize: ".9rem",
+};
+
+const captchaText = {
+  color: Colors.grey600,
+  fontSize: "12px",
+};
+
+const emailButton = {
+  color: Colors.grey600,
+  fontSize: "1rem",
+};
+
+const penggunaBaruText = {
+  color: Colors.grey600,
+  fontSize: "14px",
+  textAlign: "center",
+};
+
+const daftarNpwpButton = {
+  color: Colors.grey600,
+  fontSize: "1rem",
+  marginTop: "10px",
+};
+
+const buttonText = {
+  color: Colors.grey800,
+  fontSize: "1rem",
+};
+
+const daftarButton = {
+  textDecoration: "none",
+  color: Colors.grey800,
+  fontSize: "1rem",
 };
 
 const alertBox = {

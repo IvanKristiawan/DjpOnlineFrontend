@@ -2,10 +2,10 @@ import React, { useContext, useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import "./styles.scss";
 import "./styles.css";
-import { Sidebar, Footer, ScrollToTop } from "./components";
+import { Sidebar, Footer, ScrollToTop, Menu } from "./components";
 import { AuthContext } from "./contexts/AuthContext";
 import { useStateContext } from "./contexts/ContextProvider";
-import { Login } from "./pages/index";
+import { Login, Registrasi, LupaPassword } from "./pages/index";
 
 import { FaBars } from "react-icons/fa";
 
@@ -47,23 +47,14 @@ const App = () => {
 
   return (
     <div className={`app ${toggled ? "toggled" : ""}`}>
-      {user && (
-        <Sidebar
-          collapsed={collapsed}
-          toggled={toggled}
-          handleToggleSidebar={handleToggleSidebar}
-          handleCollapsedChange={handleCollapsedChange}
-        />
-      )}
-
       <main>
-        <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
-          <FaBars />
-        </div>
         <ScrollToTop />
+        {/* <Menu /> */}
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/registrasi" element={<Registrasi />} />
+          <Route path="/lupaPassword" element={<LupaPassword />} />
           {/* Profil User */}
           {/* <Route
             path="/profilUser"

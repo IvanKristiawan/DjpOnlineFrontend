@@ -8,12 +8,16 @@ $highlight-color: #d8d8d8;
 $icon-bg-color: rgba(255, 255, 255, 0.05);
 $icon-size: 35px;
 
-@import '~react-pro-sidebar/dist/scss/styles.scss';
+@import "~react-pro-sidebar/dist/scss/styles.scss";
 body {
   margin: 0;
   height: 100vh;
   color: #353535;
   font-family: sans-serif;
+  background-image: url("https://static.pajak.go.id/assets/media/bg/background-djp.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 #root {
@@ -24,12 +28,11 @@ body {
   height: 100%;
   display: flex;
   position: relative;
-  
+
   .btn-toggle {
     cursor: pointer;
     display: none;
   }
-
 
   .sidebar-btn-wrapper {
     display: flex;
@@ -70,12 +73,11 @@ body {
   }
 
   main {
-    padding: 24px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    
+
     header {
       margin-bottom: 16px;
       border-bottom: 1px solid #efefef;

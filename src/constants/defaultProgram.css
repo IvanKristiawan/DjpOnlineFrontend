@@ -1,0 +1,28 @@
+.hover-button {
+    background-color: #212c5f;   /* Default background color */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.hover-button:hover {
+    background-color: #212c5f; /* Change color on hover */
+    color: #ffb822;
+}
+
+.blank-button {
+    background-color: white;   /* Default background color */
+    color: #212c5f;
+    border: 1px solid rgb(218, 218, 218);
+    border-radius: 10px;
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.blank-button:hover {
+    background-color: rgb(240, 240, 240);
+}
