@@ -5,7 +5,7 @@ import "./styles.css";
 import { Sidebar, Footer, ScrollToTop, Menu } from "./components";
 import { AuthContext } from "./contexts/AuthContext";
 import { useStateContext } from "./contexts/ContextProvider";
-import { Login, Registrasi, LupaPassword } from "./pages/index";
+import { Login, Registrasi, LupaPassword, Informasi } from "./pages/index";
 
 import { FaBars } from "react-icons/fa";
 
@@ -25,14 +25,24 @@ const App = () => {
     setToggled(value);
   };
 
-  // const USERRoute = ({ children }) => {
+  const USERRoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user) {
+      return children;
+    }
+
+    return <Navigate to="/login" />;
+  };
+
+  // const NERACAOJKRoute = ({ children }) => {
   //   const { user } = useContext(AuthContext);
 
-  //   if (user) {
+  //   if (user.akses.neracaOjk) {
   //     return children;
   //   }
 
-  //   return <Navigate to="/login" />;
+  //   return <Navigate to="/unauthorized" />;
   // };
 
   useEffect(() => {
@@ -55,6 +65,15 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/registrasi" element={<Registrasi />} />
           <Route path="/lupaPassword" element={<LupaPassword />} />
+          {/* Informasi */}
+          <Route
+            path="/informasi"
+            element={
+              <USERRoute>
+                <Informasi />
+              </USERRoute>
+            }
+          />
           {/* Profil User */}
           {/* <Route
             path="/profilUser"

@@ -2,7 +2,7 @@
     background-color: #212c5f;   /* Default background color */
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: .25rem;
     padding: 10px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition on hover */
@@ -17,7 +17,7 @@
     background-color: white;   /* Default background color */
     color: #212c5f;
     border: 1px solid rgb(218, 218, 218);
-    border-radius: 10px;
+    border-radius: .25rem;
     padding: 10px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition on hover */
@@ -25,4 +25,34 @@
   
 .blank-button:hover {
     background-color: rgb(240, 240, 240);
+}
+
+.user-button {
+    background-color: rgba(255, 184, 34, 0.15);   /* Default background color */
+    color: #ffb822;
+    border: none;
+    border-radius: .25rem;
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.user-button:hover {
+    background-color: #212c5f;
+    color: white
+}
+
+.yellow-button {
+    background-color: rgba(255, 184, 34, 0.15);   /* Default background color */
+    color: #ffb822;
+    border: none;
+    border-radius: .25rem;
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.yellow-button:hover {
+    background-color: #ffb822;
+    color: black
 }

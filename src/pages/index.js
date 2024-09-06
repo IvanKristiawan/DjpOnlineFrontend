@@ -2,6 +2,8 @@
 export { default as Login } from "./Login/Login";
 export { default as Registrasi } from "./Registrasi/Registrasi";
 export { default as LupaPassword } from "./LupaPassword/LupaPassword";
+// Informasi Page
+export { default as Informasi } from "./Informasi/Informasi";
 // Utility Page
 export { default as ProfilUser } from "./Utility/ProfilUser/ProfilUser";
 export { default as UbahProfilUser } from "./Utility/ProfilUser/UbahProfilUser";

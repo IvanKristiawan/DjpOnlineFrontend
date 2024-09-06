@@ -63,7 +63,7 @@ function Login() {
           setting: findSetting.data,
         });
 
-        navigate("/admin");
+        navigate("/informasi");
       } catch (err) {
         setOpen(true);
         dispatch({ type: "LOGIN_FAILURE", payload: err });
