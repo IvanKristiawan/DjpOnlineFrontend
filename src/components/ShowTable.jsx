@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   root: {
     "& .MuiTableCell-head": {
       color: "white",
-      backgroundColor: Colors.blue700,
+      backgroundColor: Colors.blue900,
     },
   },
   tableRightBorder: {
@@ -34,10 +34,16 @@ export function ShowTableUser({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Username
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tipe User
             </TableCell>
           </TableRow>
@@ -67,6 +73,55 @@ export function ShowTableUser({ currentPosts }) {
   );
 }
 
+export function ShowTableUserPerCabang({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NPWP
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NITKU
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NAMA
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts.map((user, index) => (
+            <TableRow
+              key={user.id}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+              }}
+            >
+              <TableCell component="th" scope="row">
+                {user.npwp15}
+              </TableCell>
+              <TableCell>{user.nitku}</TableCell>
+              <TableCell>{user.nama}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
 export function ShowTableGantiPeriode({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
@@ -75,10 +130,16 @@ export function ShowTableGantiPeriode({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Dari Tanggal
             </TableCell>
             <TableCell sx={{ fontWeight: "bold" }}>Sampai Tanggal</TableCell>
@@ -118,10 +179,16 @@ export function ShowTablePerusahaan({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Kode Perusahaan
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama Perusahaan
             </TableCell>
           </TableRow>
@@ -159,13 +226,22 @@ export function ShowTableWilayah({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Kode Wilayah
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama Wilayah
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Singkatan Wilayah
             </TableCell>
           </TableRow>
@@ -204,22 +280,40 @@ export function ShowTableUnit({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Kode Unit
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama Unit
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tipe Unit
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Wilayah
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Telepon
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Fax
             </TableCell>
           </TableRow>
@@ -261,31 +355,58 @@ export function ShowTableAnggotaKoperasi({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No.
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Alamat
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Telp
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Unit
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tgl. Masuk
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Rek. BPR
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Rek SimTab UUO-SPI
             </TableCell>
           </TableRow>
@@ -330,31 +451,58 @@ export function ShowTableAnggotaKoperasiKeluar({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No.
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Alamat
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Telp
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Unit
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tgl. Masuk
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Rek. BPR
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Rek. SimTab UUO-SPI
             </TableCell>
           </TableRow>
@@ -399,13 +547,22 @@ export function ShowTableKodeKartuTabungan({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Kode
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Jenis
             </TableCell>
           </TableRow>
@@ -444,10 +601,16 @@ export function ShowTableAnggotaKoperasiSimpananWajib({ id, currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Bukti
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tgl.
             </TableCell>
             <TableCell sx={{ fontWeight: "bold" }}>Simpanan Wajib</TableCell>
@@ -463,14 +626,18 @@ export function ShowTableAnggotaKoperasiSimpananWajib({ id, currentPosts }) {
                 cursor: "pointer",
               }}
               onClick={() => {
-                navigate(`/daftarSimpananWajib/simpananWajib/${user.simpananwajib.id}/${user.id}`);
+                navigate(
+                  `/daftarSimpananWajib/simpananWajib/${user.simpananwajib.id}/${user.id}`
+                );
               }}
             >
               <TableCell component="th" scope="row">
                 {user.simpananwajib.noBuktiSetor}
               </TableCell>
               <TableCell>{user.tglSimpananWajibFormatted}</TableCell>
-              <TableCell align="right">{user.simpananWajib.toLocaleString("en-US")}</TableCell>
+              <TableCell align="right">
+                {user.simpananWajib.toLocaleString("en-US")}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -487,22 +654,40 @@ export function ShowTableMutasiUnit({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. SK
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tgl.
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Unit Awal
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Unit Aktif
             </TableCell>
           </TableRow>
@@ -544,25 +729,46 @@ export function ShowTableKeluar({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. SK
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tgl.
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Unit
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               DJA
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Total
             </TableCell>
           </TableRow>
@@ -587,8 +793,12 @@ export function ShowTableKeluar({ currentPosts }) {
               <TableCell>{user.anggotakoperasis.noAnggota}</TableCell>
               <TableCell>{user.anggotakoperasis.namaAnggota}</TableCell>
               <TableCell>{user.anggotakoperasis.unitAktif.namaUnit}</TableCell>
-              <TableCell align="right">{user.dja.toLocaleString("en-US")}</TableCell>
-              <TableCell align="right">{user.total.toLocaleString("en-US")}</TableCell>
+              <TableCell align="right">
+                {user.dja.toLocaleString("en-US")}
+              </TableCell>
+              <TableCell align="right">
+                {user.total.toLocaleString("en-US")}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -605,25 +815,46 @@ export function ShowTablePembayaranKeluar({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Tanda Terima
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tgl. Tanda Terima
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Simpanan Pokok
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Simpanan Wajib
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Dana Jasa Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Total
             </TableCell>
           </TableRow>
@@ -632,7 +863,9 @@ export function ShowTablePembayaranKeluar({ currentPosts }) {
           {currentPosts.map((user, index) => {
             const tempTotal = user.keluar.total;
             const tempTotalSimpananWajib =
-              user.keluar.total - user.keluar.anggotakoperasis.simpananPokok - user.keluar.dja;
+              user.keluar.total -
+              user.keluar.anggotakoperasis.simpananPokok -
+              user.keluar.dja;
             return (
               <TableRow
                 key={user.id}
@@ -649,9 +882,17 @@ export function ShowTablePembayaranKeluar({ currentPosts }) {
                   {user.noTandaTerima}
                 </TableCell>
                 <TableCell>{user.tglTandaTerimaFormatted}</TableCell>
-                <TableCell>{user.keluar.anggotakoperasis.namaAnggota}</TableCell>
-                <TableCell>{user.keluar.anggotakoperasis.simpananPokok.toLocaleString("en-US")}</TableCell>
-                <TableCell>{tempTotalSimpananWajib.toLocaleString("en-US")}</TableCell>
+                <TableCell>
+                  {user.keluar.anggotakoperasis.namaAnggota}
+                </TableCell>
+                <TableCell>
+                  {user.keluar.anggotakoperasis.simpananPokok.toLocaleString(
+                    "en-US"
+                  )}
+                </TableCell>
+                <TableCell>
+                  {tempTotalSimpananWajib.toLocaleString("en-US")}
+                </TableCell>
                 <TableCell>{user.keluar.dja.toLocaleString("en-US")}</TableCell>
                 <TableCell>{tempTotal.toLocaleString("en-US")}</TableCell>
               </TableRow>
@@ -671,16 +912,28 @@ export function ShowTableSimpananPokok({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Bukti
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tgl.
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama Anggota
             </TableCell>
             <TableCell sx={{ fontWeight: "bold" }}>Simpanan Pokok</TableCell>
@@ -705,7 +958,9 @@ export function ShowTableSimpananPokok({ currentPosts }) {
               <TableCell>{user.tglSimpananPokokFormatted}</TableCell>
               <TableCell>{user.noAnggota}</TableCell>
               <TableCell>{user.anggotakoperasis.namaAnggota}</TableCell>
-              <TableCell align="right">{user.simpananPokok.toLocaleString("en-US")}</TableCell>
+              <TableCell align="right">
+                {user.simpananPokok.toLocaleString("en-US")}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -722,22 +977,40 @@ export function ShowTableDaftarSimpananWajib({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No.
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Bukti
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tgl.
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Kode Unit
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama Unit
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Total
             </TableCell>
           </TableRow>
@@ -762,7 +1035,9 @@ export function ShowTableDaftarSimpananWajib({ currentPosts }) {
               <TableCell>{user.tglSimpananWajibFormatted}</TableCell>
               <TableCell>{user.unit.kodeUnit}</TableCell>
               <TableCell>{user.unit.namaUnit}</TableCell>
-              <TableCell align="right">{user.totalSimpananWajib.toLocaleString("en-US")}</TableCell>
+              <TableCell align="right">
+                {user.totalSimpananWajib.toLocaleString("en-US")}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -779,16 +1054,28 @@ export function ShowTableSimpananWajib({ id, currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Bukti
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tgl.
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama Anggota
             </TableCell>
             <TableCell sx={{ fontWeight: "bold" }}>Simpanan Wajib</TableCell>
@@ -813,7 +1100,9 @@ export function ShowTableSimpananWajib({ id, currentPosts }) {
               <TableCell>{user.tglSimpananWajibFormatted}</TableCell>
               <TableCell>{user.anggotakoperasis.noAnggota}</TableCell>
               <TableCell>{user.anggotakoperasis.namaAnggota}</TableCell>
-              <TableCell align="right">{user.simpananWajib.toLocaleString("en-US")}</TableCell>
+              <TableCell align="right">
+                {user.simpananWajib.toLocaleString("en-US")}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -830,13 +1119,22 @@ export function ShowTableSaldoDja({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tanggal
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Saldo
             </TableCell>
           </TableRow>
@@ -858,7 +1156,9 @@ export function ShowTableSaldoDja({ currentPosts }) {
                 {user.noSaldoDja}
               </TableCell>
               <TableCell>{user.tglSaldoDjaFormatted}</TableCell>
-              <TableCell align="right">{user.saldoDja.toLocaleString("en-US")}</TableCell>
+              <TableCell align="right">
+                {user.saldoDja.toLocaleString("en-US")}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -875,13 +1175,22 @@ export function ShowTableShuSimpananWajib({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tanggal
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Saldo
             </TableCell>
           </TableRow>
@@ -903,7 +1212,9 @@ export function ShowTableShuSimpananWajib({ currentPosts }) {
                 {user.noShuSimpananWajib}
               </TableCell>
               <TableCell>{user.tglShuSimpananWajibFormatted}</TableCell>
-              <TableCell align="right">{user.shuSimpananWajib.toLocaleString("en-US")}</TableCell>
+              <TableCell align="right">
+                {user.shuSimpananWajib.toLocaleString("en-US")}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -920,25 +1231,46 @@ export function ShowTablePembukaanTabunganUmum({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tgl.
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Rekening
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Jumlah Setor
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Bukti Setor
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Kode Kartu Tabungan
             </TableCell>
           </TableRow>
@@ -970,9 +1302,13 @@ export function ShowTablePembukaanTabunganUmum({ currentPosts }) {
                 <TableCell>{user.noRekeningTabunganUmum}</TableCell>
                 <TableCell>{user.anggotakoperasis.noAnggota}</TableCell>
                 <TableCell>{user.anggotakoperasis.namaAnggota}</TableCell>
-                <TableCell>{user.jumlahSetor.toLocaleString("en-US")}</TableCell>
+                <TableCell>
+                  {user.jumlahSetor.toLocaleString("en-US")}
+                </TableCell>
                 <TableCell>{user.noBuktiSetor}</TableCell>
-                <TableCell>{user.kodekartutabungan.kodeKodeKartuTabungan}</TableCell>
+                <TableCell>
+                  {user.kodekartutabungan.kodeKodeKartuTabungan}
+                </TableCell>
               </TableRow>
             );
           })}
@@ -990,28 +1326,52 @@ export function ShowTableSetoranTabunganUmum({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tgl.
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Rekening
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Jumlah Setor
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Bukti Setor
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Hari Bulan
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Kode Kartu Tabungan
             </TableCell>
           </TableRow>
@@ -1043,10 +1403,14 @@ export function ShowTableSetoranTabunganUmum({ currentPosts }) {
                 <TableCell>{user.noRekeningTabunganUmum}</TableCell>
                 <TableCell>{user.anggotakoperasis.noAnggota}</TableCell>
                 <TableCell>{user.anggotakoperasis.namaAnggota}</TableCell>
-                <TableCell>{user.jumlahSetor.toLocaleString("en-US")}</TableCell>
+                <TableCell>
+                  {user.jumlahSetor.toLocaleString("en-US")}
+                </TableCell>
                 <TableCell>{user.noBuktiSetor}</TableCell>
                 <TableCell>{user.hariBulan}</TableCell>
-                <TableCell>{user.kodekartutabungan.kodeKodeKartuTabungan}</TableCell>
+                <TableCell>
+                  {user.kodekartutabungan.kodeKodeKartuTabungan}
+                </TableCell>
               </TableRow>
             );
           })}
@@ -1064,28 +1428,52 @@ export function ShowTableTarikTabunganUmum({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Tgl.
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Rekening
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Nama Anggota
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Jumlah Tarik
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               No. Bukti Tarik
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Hari Bulan
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }} className={classes.tableRightBorder}>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
               Kode Kartu Tabungan
             </TableCell>
           </TableRow>
@@ -1117,10 +1505,14 @@ export function ShowTableTarikTabunganUmum({ currentPosts }) {
                 <TableCell>{user.noRekeningTabunganUmum}</TableCell>
                 <TableCell>{user.anggotakoperasis.noAnggota}</TableCell>
                 <TableCell>{user.anggotakoperasis.namaAnggota}</TableCell>
-                <TableCell>{user.jumlahTarik.toLocaleString("en-US")}</TableCell>
+                <TableCell>
+                  {user.jumlahTarik.toLocaleString("en-US")}
+                </TableCell>
                 <TableCell>{user.noBuktiTarik}</TableCell>
                 <TableCell>{user.hariBulan}</TableCell>
-                <TableCell>{user.kodekartutabungan.kodeKodeKartuTabungan}</TableCell>
+                <TableCell>
+                  {user.kodekartutabungan.kodeKodeKartuTabungan}
+                </TableCell>
               </TableRow>
             );
           })}

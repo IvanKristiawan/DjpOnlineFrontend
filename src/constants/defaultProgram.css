@@ -2,7 +2,7 @@
     background-color: #212c5f;   /* Default background color */
     color: white;
     border: none;
-    border-radius: .25rem;
+    border-radius: 10px;
     padding: 10px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition on hover */
@@ -17,7 +17,7 @@
     background-color: white;   /* Default background color */
     color: #212c5f;
     border: 1px solid rgb(218, 218, 218);
-    border-radius: .25rem;
+    border-radius: 10px;
     padding: 10px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition on hover */
@@ -55,4 +55,52 @@
 .yellow-button:hover {
     background-color: #ffb822;
     color: black
+}
+
+.petunjuk-button {
+    background-color: #ffb822;
+    color: white;
+    border: none;
+    border-radius: .25rem;
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.petunjuk-button:hover {
+    background-color: #f8aa00;
+    color: white
+}
+
+.menu-profil-text {
+    color: #646c9a;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.menu-profil-text:hover {
+    color: blue
+}
+
+.menu-data-profil-text-active {
+    color: #ffb822;
+    border-bottom: 1px solid #ffb822;
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    transition: color 0.5s ease; /* Smooth transition on hover */
+}
+
+.menu-data-profil-text {
+    color: #646c9a;
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    transition: color 0.5s ease; /* Smooth transition on hover */
+}
+  
+.menu-data-profil-text:hover {
+    color: #ffb822;
+    border-bottom: 1px solid #ffb822;
 }

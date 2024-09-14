@@ -8,6 +8,8 @@ export { default as HeaderMain } from "./HeaderMain";
 export { default as MainMenu } from "./MainMenu";
 export { default as HeaderMainProfil } from "./HeaderMainProfil";
 export { default as PetunjukPengisian } from "./PetunjukPengisian";
+export { default as Petunjuk } from "./Petunjuk";
+export { default as MenuProfil } from "./MenuProfil";
 export { default as Sidebar } from "./Sidebar";
 export { default as Footer } from "./Footer";
 export { default as usePagination } from "./usePagination";

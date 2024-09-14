@@ -16,6 +16,27 @@ import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import ReplayIcon from "@mui/icons-material/Replay";
 import DescriptionIcon from "@mui/icons-material/Description";
 
+// Petunjuk Pengisian component
+const PetunjukPengisianComponent = () => {
+  return (
+    <ol>
+      <li>
+        Nomor Pokok Wajib Pajak (NPWP) yang dimasukkan hanya angka, tanpa tanda
+        titik (.) dan strip (-).
+      </li>
+      <li>
+        Dapatkan EFIN (Electronic Filing Identification Number) di Kantor
+        Pelayanan Pajak (KPP) terdekat bagi Wajib Pajak Orang Pribadi atau di
+        KPP terdaftar bagi Wajib Pajak Badan.
+      </li>
+      <li>
+        Untuk melakukan registrasi akun masukkan NPWP, EFIN, dan Kode Keamanan
+        dengan benar, kemudian klik tombol Submit untuk ke tahap selanjutnya.
+      </li>
+    </ol>
+  );
+};
+
 function Registrasi() {
   const { screenSize } = useStateContext();
   const [npwp15, setNpwp15] = useState("");
@@ -60,12 +81,9 @@ function Registrasi() {
       <HeaderInfo />
       <Paper elevation={4} style={paperStyle}>
         <PetunjukPengisian
+          width={"240px"}
           titlePetunjuk={"Petunjuk Pengisian"}
-          listPetunjuk={[
-            "Nomor Pokok Wajib Pajak (NPWP) yang dimasukkan hanya angka, tanpa tanda titik (.) dan strip (-).",
-            "Dapatkan EFIN (Electronic Filing Identification Number) di Kantor Pelayanan Pajak (KPP) terdekat bagi Wajib Pajak Orang Pribadi atau di KPP terdaftar bagi Wajib Pajak Badan.",
-            "Untuk melakukan registrasi akun masukkan NPWP, EFIN, dan Kode Keamanan dengan benar, kemudian klik tombol Submit untuk ke tahap selanjutnya.",
-          ]}
+          PetunjukPengisianComponent={PetunjukPengisianComponent}
         />
         <Card style={inputContainer}>
           <Card.Header style={inputTitle}>

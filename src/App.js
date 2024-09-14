@@ -5,7 +5,16 @@ import "./styles.css";
 import { Sidebar, Footer, ScrollToTop, Menu } from "./components";
 import { AuthContext } from "./contexts/AuthContext";
 import { useStateContext } from "./contexts/ContextProvider";
-import { Login, Registrasi, LupaPassword, Informasi } from "./pages/index";
+import {
+  Login,
+  Registrasi,
+  LupaPassword,
+  Informasi,
+  Profil,
+  Cabang,
+  Password,
+  HakAkses,
+} from "./pages/index";
 
 import { FaBars } from "react-icons/fa";
 
@@ -71,6 +80,39 @@ const App = () => {
             element={
               <USERRoute>
                 <Informasi />
+              </USERRoute>
+            }
+          />
+          {/* Profil */}
+          <Route
+            path="/profil"
+            element={
+              <USERRoute>
+                <Profil />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/profil/cabang"
+            element={
+              <USERRoute>
+                <Cabang />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/profil/password"
+            element={
+              <USERRoute>
+                <Password />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/profil/hakAkses"
+            element={
+              <USERRoute>
+                <HakAkses />
               </USERRoute>
             }
           />

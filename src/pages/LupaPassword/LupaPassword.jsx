@@ -17,6 +17,35 @@ import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import ReplayIcon from "@mui/icons-material/Replay";
 import DescriptionIcon from "@mui/icons-material/Description";
 
+// Petunjuk Pengisian component
+const PetunjukPengisianComponent = () => {
+  return (
+    <ol>
+      <li>
+        Pastikan Anda masih menyimpan EFIN (Electronic Filling Identification
+        Number) yang diberikan oleh Kantor Pelayanan Pajak (KPP).
+      </li>
+      <li>
+        Jika Anda lupa atau tidak menyimpan EFIN, silakan menelepon ke Kring
+        Pajak 1500200 dengan menyiapkan NPWP dan konfirmasi data diri, atau
+        melakukan live chatting dengan agen Chat Pajak pada laman
+        www.pajak.go.id, atau bertanya lewat Twitter dengan me-mention akun
+        Twitter @kring_pajak, atau meminta pencetakan ulang EFIN di KPP
+        terdekat.
+      </li>
+      <li>
+        Anda dapat mengubah email untuk menerima kata sandi baru, jika
+        menghendakinya dengan memilih "YA" pada pilihan "Lupa Email?"
+      </li>
+      <li>
+        Jika Anda mengubah email, maka kata sandi akan dikirimkan ke email Anda
+        yang baru, dan email tersebut selanjutnya akan digunakan oleh sistem
+        untuk mengirimkan pesan kepada Anda
+      </li>
+    </ol>
+  );
+};
+
 function LupaPassword() {
   const { screenSize } = useStateContext();
   const [npwp15, setNpwp15] = useState("");
@@ -63,13 +92,9 @@ function LupaPassword() {
       <HeaderInfo />
       <Paper elevation={4} style={paperStyle}>
         <PetunjukPengisian
+          width={"240px"}
           titlePetunjuk={"Permohonan Ubah Kata Sandi"}
-          listPetunjuk={[
-            "Pastikan Anda masih menyimpan EFIN (Electronic Filling Identification Number) yang diberikan oleh Kantor Pelayanan Pajak (KPP).",
-            "Jika Anda lupa atau tidak menyimpan EFIN, silakan menelepon ke Kring Pajak 1500200 dengan menyiapkan NPWP dan konfirmasi data diri, atau melakukan live chatting dengan agen Chat Pajak pada laman www.pajak.go.id, atau bertanya lewat Twitter dengan me-mention akun Twitter @kring_pajak, atau meminta pencetakan ulang EFIN di KPP terdekat.",
-            'Anda dapat mengubah email untuk menerima kata sandi baru, jika menghendakinya dengan memilih "YA" pada pilihan "Lupa Email?"',
-            "Jika Anda mengubah email, maka kata sandi akan dikirimkan ke email Anda yang baru, dan email tersebut selanjutnya akan digunakan oleh sistem untuk mengirimkan pesan kepada Anda",
-          ]}
+          PetunjukPengisianComponent={PetunjukPengisianComponent}
         />
         <Card style={inputContainer}>
           <Card.Header style={inputTitle}>
