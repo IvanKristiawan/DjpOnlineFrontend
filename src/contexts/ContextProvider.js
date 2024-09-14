@@ -2,8 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 
 const StateContext = createContext();
 
-// export const tempUrl = "https://koperasiapi.techkudev.com";
-// export const tempUrl = "https://koperasiapi.ivankristiawan.com";
+// export const tempUrl = "https://pajakapi.ivankristiawan.com";
 export const tempUrl = "http://localhost:5000";
 
 export const ContextProvider = ({ children }) => {
@@ -13,7 +12,7 @@ export const ContextProvider = ({ children }) => {
     <StateContext.Provider
       value={{
         screenSize,
-        setScreenSize
+        setScreenSize,
       }}
     >
       {children}
