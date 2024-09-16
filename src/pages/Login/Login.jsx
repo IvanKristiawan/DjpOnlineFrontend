@@ -33,6 +33,19 @@ function Login() {
     width: screenSize >= 650 ? "23rem" : "18rem",
   };
 
+  const kodeKeamananContainer = {
+    marginTop: "20px",
+    display: screenSize >= 650 && "flex",
+    alignItems: screenSize >= 650 && "center",
+    justifyContent: screenSize >= 650 && "space-between",
+  };
+
+  const kodeKeamananInput = {
+    width: "160px",
+    height: "50px",
+    marginTop: screenSize <= 650 && "10px",
+  };
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -130,14 +143,7 @@ function Login() {
                     )}
                   </Button>
                 </InputGroup>
-                <div
-                  style={{
-                    marginTop: "20px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
+                <div style={kodeKeamananContainer}>
                   <img
                     src={CaptchaImage}
                     alt="CaptchaImage"
@@ -146,7 +152,7 @@ function Login() {
                   <Form.Control
                     required
                     placeholder="Kode Keamanan"
-                    style={{ width: "160px", height: "50px" }}
+                    style={kodeKeamananInput}
                     value={kodeKeamanan}
                     onChange={(e) => setKodeKeamanan(e.target.value)}
                   />
