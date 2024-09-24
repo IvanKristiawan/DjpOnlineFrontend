@@ -10,12 +10,15 @@ import "../../constants/defaultProgram.css";
 import { Card } from "react-bootstrap";
 import { Paper } from "@mui/material";
 import CardLogo from "../../assets/Card Logo.png";
+import NpwpFrontLogo from "../../assets/Npwp Front.png";
+import QrCodeKartuLogo from "../../assets/Qr Code Kartu.png";
 import MailIcon from "@mui/icons-material/Mail";
 import DescriptionIcon from "@mui/icons-material/Description";
 
 function Informasi() {
   const { screenSize } = useStateContext();
   const navigate = useNavigate();
+  const [openKartu, setOpenKartu] = useState(false);
 
   const { user, dispatch } = useContext(AuthContext);
 
@@ -152,9 +155,83 @@ function Informasi() {
                 </div>
               </div>
               <div style={container2}>
-                <div style={{ padding: "30px" }}>
-                  <button className="hover-button">Tampilkan NPWP</button>
-                </div>
+                {openKartu === false && (
+                  <div style={{ padding: "30px" }}>
+                    <button
+                      className="hover-button"
+                      onClick={() => setOpenKartu(true)}
+                    >
+                      Tampilkan NPWP
+                    </button>
+                  </div>
+                )}
+
+                {openKartu === true && (
+                  <>
+                    <div style={{ padding: "30px" }}>
+                      <button
+                        className="hover-button"
+                        onClick={() => setOpenKartu(false)}
+                      >
+                        Sembunyikan NPWP
+                      </button>
+                    </div>
+                    <div style={kartuContainer}>
+                      <img
+                        src={NpwpFrontLogo}
+                        alt="NpwpFrontLogo"
+                        style={{ width: "300px" }}
+                      />
+                      <div style={kartuContentWrapper}>
+                        <span style={kartuMarkStyle}>Untuk Edukasi</span>
+                        <div style={kartuIdentitasStyle}>
+                          <span style={kartuIdentitasNpwpStyle}>{`${user.npwp15
+                            .trim()
+                            .slice(0, 2)}.${user.npwp15.slice(
+                            2,
+                            5
+                          )}.${user.npwp15.slice(5, 8)}.${user.npwp15.slice(
+                            8,
+                            9
+                          )}-${user.npwp15.slice(9, 12)}.${user.npwp15.slice(
+                            12
+                          )}`}</span>
+                          <div style={kartuIdentitasNamaWrapper}>
+                            <span style={kartuIdentitasNamaStyle}>
+                              {user.nama}
+                            </span>
+                          </div>
+                          <div style={kartuIdentitasNpwp16Wrapper}>
+                            <span style={kartuIdentitasNpwp16Style}>
+                              NPWP16 :{" "}
+                              {`${user.nikNpwp16.slice(
+                                0,
+                                4
+                              )} ${user.nikNpwp16.slice(
+                                4,
+                                8
+                              )} ${user.nikNpwp16.slice(
+                                8,
+                                12
+                              )} ${user.nikNpwp16.slice(12, 16)}`}
+                            </span>
+                          </div>
+                        </div>
+                        <div style={kartuKeteranganWrapper}>
+                          <img
+                            src={QrCodeKartuLogo}
+                            alt="QrCodeKartuLogo"
+                            style={{ width: "50px", height: "50px" }}
+                          />
+                          <div style={kartuKeteranganStyle}>
+                            <span>{user.alamat}</span>
+                            <span>Tanggal Terdaftar 08/05/2018</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
                 <div style={{ textAlign: "center" }}>
                   <p style={{ color: "#646c9a" }}>
                     Anda dapat mengirim NPWP Elektronik ke email Anda dengan
@@ -231,4 +308,88 @@ const kontakNpwpDetil = {
 const ubahProfilButtonContainer = {
   display: "flex",
   marginTop: "40px",
+};
+
+const kartuContainer = {
+  position: "relative",
+  marginBottom: "20px",
+};
+
+const kartuContentWrapper = {
+  position: "absolute",
+  top: 0,
+  padding: "10px 20px",
+  width: "300px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  color: "black",
+  fontFamily: "Montserrat",
+  fontWeight: 700,
+  fontStyle: "normal",
+};
+
+const kartuMarkStyle = {
+  width: "100%",
+  paddingLeft: "50px",
+  textAlign: "right",
+  display: "block",
+  fontSize: "6px",
+};
+
+const kartuIdentitasStyle = {
+  paddingTop: "30px",
+  width: "fit-content",
+  width: "225px",
+};
+
+const kartuIdentitasNpwpStyle = {
+  fontFamily: "Bebas Neue",
+  fontWeight: "bold",
+  fontStyle: "normal",
+  fontSize: "25px",
+};
+
+const kartuIdentitasNamaWrapper = {
+  display: "flex",
+  justifyContent: "space-between",
+  width: "100%",
+  lineHeight: 1,
+};
+
+const kartuIdentitasNamaStyle = {
+  fontWeight: "900",
+  fontSize: "7px",
+  color: "#000",
+  lineHeight: 1.25,
+};
+
+const kartuIdentitasNpwp16Wrapper = {
+  display: "flex",
+  justifyContent: "space-between",
+  width: "100%",
+  lineHeight: 1,
+};
+
+const kartuIdentitasNpwp16Style = {
+  fontWeight: "900",
+  fontSize: "7px",
+  color: "#000",
+  lineHeight: 1.25,
+};
+
+const kartuKeteranganWrapper = {
+  display: "flex",
+  flexWrap: "nowrap",
+  lineHeight: 1.25,
+  paddingTop: "20px",
+};
+
+const kartuKeteranganStyle = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  width: "220px",
+  fontSize: "6px",
+  padding: "0px 25px 0px 10px",
 };
