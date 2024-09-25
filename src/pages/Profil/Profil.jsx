@@ -204,6 +204,7 @@ function Profil() {
     padding: screenSize >= 900 ? "20px 50px 20px 20px" : "20px 20px 20px 20px",
     display: screenSize >= 900 && "flex",
     justifyContent: screenSize >= 900 && "space-around",
+    background: "#EBECF1",
   };
 
   const profilWrapper2 = {

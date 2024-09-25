@@ -14,6 +14,7 @@ import {
   Cabang,
   Password,
   HakAkses,
+  Bayar,
 } from "./pages/index";
 
 import { FaBars } from "react-icons/fa";
@@ -113,6 +114,15 @@ const App = () => {
             element={
               <USERRoute>
                 <HakAkses />
+              </USERRoute>
+            }
+          />
+          {/* Bayar */}
+          <Route
+            path="/bayar"
+            element={
+              <USERRoute>
+                <Bayar />
               </USERRoute>
             }
           />

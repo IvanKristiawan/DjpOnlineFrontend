@@ -9,6 +9,8 @@ export { default as Profil } from "./Profil/Profil";
 export { default as Cabang } from "./Profil/Cabang";
 export { default as Password } from "./Profil/Password";
 export { default as HakAkses } from "./Profil/HakAkses";
+// Bayar Page
+export { default as Bayar } from "./Bayar/Bayar";
 // Utility Page
 export { default as ProfilUser } from "./Utility/ProfilUser/ProfilUser";
 export { default as UbahProfilUser } from "./Utility/ProfilUser/UbahProfilUser";

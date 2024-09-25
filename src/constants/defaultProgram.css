@@ -104,3 +104,32 @@
     color: #ffb822;
     border-bottom: 1px solid #ffb822;
 }
+
+.menu-data-bayar-text-active {
+    color: #212c5f;
+    border-bottom: 1px solid #212c5f;
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    transition: color 0.5s ease; /* Smooth transition on hover */
+}
+
+.menu-data-bayar-text {
+    color: #646c9a;
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    transition: color 0.5s ease; /* Smooth transition on hover */
+}
+
+.menu-data-bayar-text:hover {
+    color: #212c5f;
+    border-bottom: 1px solid #212c5f;
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    transition: color 0.5s ease; /* Smooth transition on hover */
+}

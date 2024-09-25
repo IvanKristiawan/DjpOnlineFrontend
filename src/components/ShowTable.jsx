@@ -122,6 +122,228 @@ export function ShowTableUserPerCabang({ currentPosts }) {
   );
 }
 
+export function ShowTableBayarRiwayatPembayaran({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  let dataTable = currentPosts.map((user, index) => (
+    <TableRow
+      key={user.id}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell component="th" scope="row">
+        {user.npwp15}
+      </TableCell>
+      <TableCell>{user.nitku}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+    </TableRow>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={6} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              TAHUN/MASA PAJAK
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              TANGGAL BAYAR
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NTPN
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NOMINAL BAYAR
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              AKSI
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{dataTable}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableBayarRiwayatPbkKirim({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  let dataTable = currentPosts.map((user, index) => (
+    <TableRow
+      key={user.id}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell component="th" scope="row">
+        {user.npwp15}
+      </TableCell>
+      <TableCell>{user.nitku}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+    </TableRow>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={6} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              TAHUN/MASA PAJAK
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NOMOR BUKTI PBK
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NTPN
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              TANGGAL PBK
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              AKSI
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{dataTable}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableBayarRiwayatPbkTerima({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  let dataTable = currentPosts.map((user, index) => (
+    <TableRow
+      key={user.id}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell component="th" scope="row">
+        {user.npwp15}
+      </TableCell>
+      <TableCell>{user.nitku}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+    </TableRow>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={6} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              TAHUN/MASA PAJAK
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NOMOR BUKTI PBK
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NTPN
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              TANGGAL PBK
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              AKSI
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{dataTable}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
 export function ShowTableGantiPeriode({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
