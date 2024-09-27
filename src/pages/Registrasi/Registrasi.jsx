@@ -81,6 +81,7 @@ function Registrasi() {
       <HeaderInfo />
       <Paper elevation={4} style={paperStyle}>
         <PetunjukPengisian
+          defaultCollapse={false}
           width={"240px"}
           titlePetunjuk={"Petunjuk Pengisian"}
           PetunjukPengisianComponent={PetunjukPengisianComponent}

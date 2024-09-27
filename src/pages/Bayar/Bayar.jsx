@@ -138,6 +138,7 @@ function Bayar() {
       <Paper elevation={4} style={paperStyle}>
         <div>
           <PetunjukPengisian
+            defaultCollapse={false}
             width={"240px"}
             titlePetunjuk={"Petunjuk Pengisian"}
             PetunjukPengisianComponent={PetunjukPengisianComponent}
@@ -151,6 +152,9 @@ function Bayar() {
                   src={LogoEbillingLogo}
                   alt="LogoEbillingLogo"
                   style={logoEbillingStyle}
+                  onClick={() => {
+                    navigate("/eBilling");
+                  }}
                 />
                 <div style={{ textAlign: "center" }}>
                   <h6>e-Billing</h6>

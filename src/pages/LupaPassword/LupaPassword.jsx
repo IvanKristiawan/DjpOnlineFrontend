@@ -92,6 +92,7 @@ function LupaPassword() {
       <HeaderInfo />
       <Paper elevation={4} style={paperStyle}>
         <PetunjukPengisian
+          defaultCollapse={false}
           width={"240px"}
           titlePetunjuk={"Permohonan Ubah Kata Sandi"}
           PetunjukPengisianComponent={PetunjukPengisianComponent}

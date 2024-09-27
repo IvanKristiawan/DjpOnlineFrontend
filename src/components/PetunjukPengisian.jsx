@@ -7,12 +7,13 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 function PetunjukPengisian({
+  defaultCollapse,
   width,
   titlePetunjuk,
   PetunjukPengisianComponent,
 }) {
   const { screenSize } = useStateContext();
-  const [collapse, setCollapse] = useState(false);
+  const [collapse, setCollapse] = useState(defaultCollapse);
 
   // Toggle visibility
   const toggleCollapseVisibility = () => {

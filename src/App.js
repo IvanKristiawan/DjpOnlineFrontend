@@ -15,6 +15,7 @@ import {
   Password,
   HakAkses,
   Bayar,
+  EBilling,
 } from "./pages/index";
 
 import { FaBars } from "react-icons/fa";
@@ -123,6 +124,15 @@ const App = () => {
             element={
               <USERRoute>
                 <Bayar />
+              </USERRoute>
+            }
+          />
+          {/* EBilling */}
+          <Route
+            path="/eBilling"
+            element={
+              <USERRoute>
+                <EBilling />
               </USERRoute>
             }
           />
