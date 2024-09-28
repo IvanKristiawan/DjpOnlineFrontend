@@ -395,7 +395,7 @@ function EBilling() {
     );
     tempY += 4;
     doc.text("tercantum di dalamnya.", 40, tempY);
-    window.open(URL.createObjectURL(doc.output("blob")));
+    doc.save("Cetakan Kode Billing.pdf");
   };
 
   const saveEBilling = async (e) => {
