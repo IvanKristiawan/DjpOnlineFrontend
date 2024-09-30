@@ -72,6 +72,21 @@
     color: white
 }
 
+.cari-pralapor-button {
+    background-color: #1dc9b7;
+    color: white;
+    border: none;
+    border-radius: .25rem;
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.cari-pralapor-button:hover {
+    background-color: #1eb3a4;
+    color: white
+}
+
 .menu-profil-text {
     color: #646c9a;
     transition: background-color 0.3s ease; /* Smooth transition on hover */
@@ -127,6 +142,35 @@
 .menu-data-bayar-text:hover {
     color: #212c5f;
     border-bottom: 1px solid #212c5f;
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    transition: color 0.5s ease; /* Smooth transition on hover */
+}
+
+.menu-data-pralapor-text-active {
+    color: #ffb822;
+    border-bottom: 1px solid #ffb822;
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    transition: color 0.5s ease; /* Smooth transition on hover */
+}
+
+.menu-data-pralapor-text {
+    color: #646c9a;
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    transition: color 0.5s ease; /* Smooth transition on hover */
+}
+
+.menu-data-pralapor-text:hover {
+    color: #ffb822;
+    border-bottom: 1px solid #ffb822;
     cursor: pointer;
     height: 50px;
     display: flex;

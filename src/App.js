@@ -16,6 +16,8 @@ import {
   HakAkses,
   Bayar,
   EBilling,
+  Lapor,
+  Pralapor,
 } from "./pages/index";
 
 import { FaBars } from "react-icons/fa";
@@ -133,6 +135,23 @@ const App = () => {
             element={
               <USERRoute>
                 <EBilling />
+              </USERRoute>
+            }
+          />
+          {/* Lapor */}
+          <Route
+            path="/lapor"
+            element={
+              <USERRoute>
+                <Lapor />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/pralapor"
+            element={
+              <USERRoute>
+                <Pralapor />
               </USERRoute>
             }
           />

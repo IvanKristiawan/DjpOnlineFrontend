@@ -23,7 +23,7 @@ import {
   DialogTitle,
   Pagination,
 } from "@mui/material";
-import LogoEbillingLogo from "../../assets/Logo Ebilling.png";
+import LogoEbilling from "../../assets/Logo Ebilling.png";
 import InfoIcon from "@mui/icons-material/Info";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
@@ -149,8 +149,8 @@ function Bayar() {
             <Card.Body>
               <div style={menuEbillingContainer}>
                 <img
-                  src={LogoEbillingLogo}
-                  alt="LogoEbillingLogo"
+                  src={LogoEbilling}
+                  alt="LogoEbilling"
                   style={logoEbillingStyle}
                   onClick={() => {
                     navigate("/eBilling");
@@ -183,7 +183,7 @@ function Bayar() {
           </div>
           <Card>
             <Card.Header style={inputTitle}>
-              <DescriptionIcon />
+              <DescriptionIcon style={{ marginRight: "10px" }} />
               Riwayat Pembayaran
             </Card.Header>
             <Card.Body>
@@ -302,6 +302,7 @@ function Bayar() {
         onClose={handleCloseConfirmation}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        maxWidth={"xs"}
       >
         <div style={{ padding: "20px" }}>
           <DialogTitle id="alert-dialog-title">

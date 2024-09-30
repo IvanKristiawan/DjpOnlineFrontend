@@ -13,6 +13,9 @@ export { default as HakAkses } from "./Profil/HakAkses";
 export { default as Bayar } from "./Bayar/Bayar";
 // EBilling Page
 export { default as EBilling } from "./EBilling/EBilling";
+// Lapor Page
+export { default as Lapor } from "./Lapor/Lapor";
+export { default as Pralapor } from "./Lapor/Pralapor";
 // Utility Page
 export { default as ProfilUser } from "./Utility/ProfilUser/ProfilUser";
 export { default as UbahProfilUser } from "./Utility/ProfilUser/UbahProfilUser";

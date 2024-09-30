@@ -492,7 +492,7 @@ function EBilling() {
           >
             <Card>
               <Card.Header style={inputTitle}>
-                <BorderColorIcon />
+                <BorderColorIcon style={{ marginRight: "10px" }} />
                 Form Buat Kode Billing
               </Card.Header>
               <Card.Body>
