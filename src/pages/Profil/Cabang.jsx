@@ -104,6 +104,13 @@ function Cabang() {
     marginLeft: screenSize >= 600 && "20px",
   };
 
+  const inputTitle = {
+    fontSize: screenSize >= 900 ? "20px" : "15px",
+    fontWeight: "600",
+    color: "white",
+    backgroundColor: Colors.blue900,
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -190,14 +197,6 @@ function Cabang() {
 }
 
 export default Cabang;
-
-const inputTitle = {
-  height: "50px",
-  fontSize: "20px",
-  fontWeight: "600",
-  color: "white",
-  backgroundColor: Colors.blue900,
-};
 
 const profilWrapper = {
   flex: 1,

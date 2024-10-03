@@ -18,6 +18,13 @@ const MenuProfil = ({ menuActive }) => {
     marginBottom: "20px",
   };
 
+  const inputTitle = {
+    fontSize: screenSize >= 900 ? "20px" : "15px",
+    fontWeight: "600",
+    color: "white",
+    backgroundColor: Colors.blue900,
+  };
+
   return (
     <Card style={menuProfilContainer}>
       <Card.Header style={inputTitle}>
@@ -104,14 +111,6 @@ const MenuProfil = ({ menuActive }) => {
 };
 
 export default MenuProfil;
-
-const inputTitle = {
-  height: "50px",
-  fontSize: "20px",
-  fontWeight: "600",
-  color: "white",
-  backgroundColor: Colors.blue900,
-};
 
 const menuWrapperActive = {
   backgroundColor: "#EBECF1",

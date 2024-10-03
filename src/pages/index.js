@@ -16,6 +16,8 @@ export { default as EBilling } from "./EBilling/EBilling";
 // Lapor Page
 export { default as Lapor } from "./Lapor/Lapor";
 export { default as Pralapor } from "./Lapor/Pralapor";
+// Ebupot Unifikasi Page
+export { default as EbupotUnifikasi } from "./EbupotUnifikasi/EbupotUnifikasi";
 // Utility Page
 export { default as ProfilUser } from "./Utility/ProfilUser/ProfilUser";
 export { default as UbahProfilUser } from "./Utility/ProfilUser/UbahProfilUser";

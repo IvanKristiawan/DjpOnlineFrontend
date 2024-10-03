@@ -175,6 +175,13 @@ function Lapor() {
     cursor: "pointer",
   };
 
+  const inputTitle = {
+    fontSize: screenSize >= 900 ? "20px" : "15px",
+    fontWeight: "600",
+    color: "white",
+    backgroundColor: Colors.blue900,
+  };
+
   const renderTooltipEBilling = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       <div style={{ textAlign: "start" }}>
@@ -725,14 +732,6 @@ function Lapor() {
 }
 
 export default Lapor;
-
-const inputTitle = {
-  height: "50px",
-  fontSize: "20px",
-  fontWeight: "600",
-  color: "white",
-  backgroundColor: Colors.blue900,
-};
 
 const menuEbillingContainer = {
   cursor: "pointer",

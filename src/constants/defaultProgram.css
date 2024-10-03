@@ -72,6 +72,22 @@
     color: white
 }
 
+.ebupot-unifikasi-refresh-button {
+    background-color: #ffb822;
+    color: white;
+    border: none;
+    border-radius: .9rem;
+    padding: 5px 5px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.ebupot-unifikasi-refresh-button:hover {
+    background-color: #f8aa00;
+    color: white
+}
+
 .cari-pralapor-button {
     background-color: #1dc9b7;
     color: white;

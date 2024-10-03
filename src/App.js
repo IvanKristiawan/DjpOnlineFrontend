@@ -18,6 +18,7 @@ import {
   EBilling,
   Lapor,
   Pralapor,
+  EbupotUnifikasi,
 } from "./pages/index";
 
 import { FaBars } from "react-icons/fa";
@@ -152,6 +153,15 @@ const App = () => {
             element={
               <USERRoute>
                 <Pralapor />
+              </USERRoute>
+            }
+          />
+          {/* Ebupot Unifikasi */}
+          <Route
+            path="/dashboardEbupotUnifikasi"
+            element={
+              <USERRoute>
+                <EbupotUnifikasi />
               </USERRoute>
             }
           />

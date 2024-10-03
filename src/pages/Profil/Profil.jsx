@@ -216,6 +216,13 @@ function Profil() {
     marginTop: screenSize >= 900 ? "40px" : "16px",
   };
 
+  const inputTitle = {
+    fontSize: screenSize >= 900 ? "20px" : "15px",
+    fontWeight: "600",
+    color: "white",
+    backgroundColor: Colors.blue900,
+  };
+
   const updateUser = async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -887,14 +894,6 @@ function Profil() {
 }
 
 export default Profil;
-
-const inputTitle = {
-  height: "50px",
-  fontSize: "20px",
-  fontWeight: "600",
-  color: "white",
-  backgroundColor: Colors.blue900,
-};
 
 const profilMenuContainer = {
   borderBottom: "1px solid rgba(255,184,34,0.1)",

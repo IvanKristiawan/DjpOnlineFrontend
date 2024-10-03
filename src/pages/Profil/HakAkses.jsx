@@ -421,6 +421,13 @@ function HakAkses() {
     marginTop: screenSize >= 900 ? "100px" : "16px",
   };
 
+  const inputTitle = {
+    fontSize: screenSize >= 900 ? "20px" : "15px",
+    fontWeight: "600",
+    color: "white",
+    backgroundColor: Colors.blue900,
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -903,14 +910,6 @@ function HakAkses() {
 }
 
 export default HakAkses;
-
-const inputTitle = {
-  height: "50px",
-  fontSize: "20px",
-  fontWeight: "600",
-  color: "white",
-  backgroundColor: Colors.blue900,
-};
 
 const profilWrapper = {
   flex: 2,

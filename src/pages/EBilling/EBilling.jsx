@@ -274,6 +274,13 @@ function EBilling() {
     marginTop: screenSize >= 600 ? "60px" : "10px",
   };
 
+  const inputTitle = {
+    fontSize: screenSize >= 900 ? "20px" : "15px",
+    fontWeight: "600",
+    color: "white",
+    backgroundColor: Colors.blue900,
+  };
+
   const downloadPdf = async () => {
     let tempY = 15;
 
@@ -1612,14 +1619,6 @@ function EBilling() {
 }
 
 export default EBilling;
-
-const inputTitle = {
-  height: "50px",
-  fontSize: "20px",
-  fontWeight: "600",
-  color: "white",
-  backgroundColor: Colors.blue900,
-};
 
 const inputButtonContainer = {
   display: "flex",

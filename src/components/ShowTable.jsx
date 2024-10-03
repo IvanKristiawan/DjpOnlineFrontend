@@ -418,6 +418,182 @@ export function ShowTableSpt({ currentPosts }) {
   );
 }
 
+export function ShowTableSptPphUnifikasiTelahDikirim({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  let dataTable = currentPosts.map((user, index) => (
+    <TableRow
+      key={user.id}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell component="th" scope="row">
+        {user.npwp15}
+      </TableCell>
+      <TableCell>{user.nitku}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+    </TableRow>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={6} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NO
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NO.BPE/NTTE
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              MASA/TAHUN PAJAK
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              PBTL KE
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              TANGGAL KIRIM
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              AKSI
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{dataTable}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableBuktiPotongSptPphUnifikasi({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  let dataTable = currentPosts.map((user, index) => (
+    <TableRow
+      key={user.id}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell component="th" scope="row">
+        {user.npwp15}
+      </TableCell>
+      <TableCell>{user.nitku}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+      <TableCell>{user.nama}</TableCell>
+    </TableRow>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={8} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NO
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              ID DIPOTONG
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              KODE OBJEK PAJAK
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NO BUKTI POTONG
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              TANGGAL BUKTI POTONG
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              JML PENGHASILAN BRUTO (RP)
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              PPH (RP)
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              AKSI
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{dataTable}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
 export function ShowTableEspop({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();

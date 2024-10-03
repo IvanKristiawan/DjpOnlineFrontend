@@ -6,6 +6,8 @@ export { default as Menu } from "./Menu";
 export { default as HeaderInfo } from "./HeaderInfo";
 export { default as HeaderMain } from "./HeaderMain";
 export { default as MainMenu } from "./MainMenu";
+export { default as HeaderMainEbupotUnifikasi } from "./HeaderMainEbupotUnifikasi";
+export { default as MainMenuEbupotUnifikasi } from "./MainMenuEbupotUnifikasi";
 export { default as MenuEBilling } from "./MenuEBilling";
 export { default as HeaderMainProfil } from "./HeaderMainProfil";
 export { default as PetunjukPengisian } from "./PetunjukPengisian";

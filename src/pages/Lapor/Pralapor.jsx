@@ -251,6 +251,13 @@ function Pralapor() {
     marginLeft: screenSize >= 900 && "20px",
   };
 
+  const inputTitle = {
+    fontSize: screenSize >= 900 ? "20px" : "15px",
+    fontWeight: "600",
+    color: "white",
+    backgroundColor: Colors.blue900,
+  };
+
   const renderTooltipEBilling = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       <div style={{ textAlign: "start" }}>
@@ -344,7 +351,7 @@ function Pralapor() {
                       alt="LogoEbupotUnifikasi"
                       style={logoMenuStyle}
                       onClick={() => {
-                        navigate("/ebupotUnifikasi");
+                        navigate("/dashboardEbupotUnifikasi");
                       }}
                     />
                     <div style={{ textAlign: "center" }}>
@@ -804,14 +811,6 @@ function Pralapor() {
 }
 
 export default Pralapor;
-
-const inputTitle = {
-  height: "50px",
-  fontSize: "20px",
-  fontWeight: "600",
-  color: "white",
-  backgroundColor: Colors.blue900,
-};
 
 const menuEbillingContainer = {
   cursor: "pointer",
