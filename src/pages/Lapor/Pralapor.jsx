@@ -275,7 +275,7 @@ function Pralapor() {
       <Paper elevation={4} style={paperStyle}>
         <div>
           <PetunjukPengisian
-            defaultCollapse={false}
+            defaultCollapse={screenSize >= 900 ? false : true}
             width={"240px"}
             titlePetunjuk={"Petunjuk Pengisian"}
             PetunjukPengisianComponent={PetunjukPengisianComponent}
@@ -285,6 +285,7 @@ function Pralapor() {
           <div style={menuLaporanContainer}>
             <Paper elevation={6} style={{ flex: 1 }}>
               <div
+                className="paper-background"
                 style={menuLaporanWrapper}
                 onClick={() => {
                   navigate("/lapor");
@@ -299,6 +300,7 @@ function Pralapor() {
             </Paper>
             <Paper elevation={6} style={{ flex: 1 }}>
               <div
+                className="paper-background"
                 style={menuLaporanWrapper}
                 onClick={() => {
                   navigate("/pralapor");
@@ -351,7 +353,7 @@ function Pralapor() {
                       alt="LogoEbupotUnifikasi"
                       style={logoMenuStyle}
                       onClick={() => {
-                        navigate("/dashboardEbupotUnifikasi");
+                        navigate("/ebupotUnifikasi/dashboard");
                       }}
                     />
                     <div style={{ textAlign: "center" }}>

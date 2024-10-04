@@ -97,3 +97,15 @@ export const days_of_a_year = function (year) {
   // Return 366 if the given year is a leap year, otherwise return 365
   return isLeapYear(year) ? 366 : 365;
 };
+
+export const generateRandomString = function (length) {
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // Uppercase letters and numbers
+  let result = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length); // Pick a random index
+    result += characters[randomIndex]; // Append the character at that index
+  }
+
+  return result;
+};

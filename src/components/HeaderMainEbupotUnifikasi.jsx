@@ -53,14 +53,14 @@ function HeaderMainEbupotUnifikasi({ username }) {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto"></Nav>
           <Nav>
-            <Nav.Link style={marginButton} href="/dashboardEbupotUnifikasi">
+            <Nav.Link style={marginButton} href="/ebupotUnifikasi/dashboard">
               <Button variant="secondary" size="sm">
                 Dashboard
               </Button>
             </Nav.Link>
             <Nav.Link
               style={marginButton}
-              href="/pajakPenghasilanEbupotUnifikasi"
+              href="/ebupotUnifikasi/daftarDisetorSendiri"
             >
               <Button variant="secondary" size="sm">
                 Pajak Penghasilan

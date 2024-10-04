@@ -25,24 +25,24 @@ function MainMenuEbupotUnifikasi({ activeLink }) {
         <div style={menuWrapper}>
           <div
             style={
-              activeLink === "dashboardEbupotUnifikasi"
+              activeLink === "/ebupotUnifikasi/dashboard"
                 ? menuButtonActiveStyle
                 : menuButtonStyle
             }
             onClick={() => {
-              navigate("/dashboardEbupotUnifikasi");
+              navigate("/ebupotUnifikasi/dashboard");
             }}
           >
             Dashboard
           </div>
           <div
             style={
-              activeLink === "pajakPenghasilanEbupotUnifikasi"
+              activeLink === "/ebupotUnifikasi/daftarDisetorSendiri"
                 ? menuButtonActiveStyle
                 : menuButtonStyle
             }
             onClick={() => {
-              navigate("/pajakPenghasilanEbupotUnifikasi");
+              navigate("/ebupotUnifikasi/daftarDisetorSendiri");
             }}
           >
             Pajak Penghasilan
@@ -79,7 +79,7 @@ function MainMenuEbupotUnifikasi({ activeLink }) {
               alt="LogoEbupotUnifikasi"
               style={logoMenuStyle}
               onClick={() => {
-                navigate("/dashboardEbupotUnifikasi");
+                navigate("/ebupotUnifikasi/dashboard");
               }}
             />
           </div>
@@ -101,7 +101,7 @@ function MainMenuEbupotUnifikasi({ activeLink }) {
             alt="LogoEbupotUnifikasi"
             style={logoMenuStyleSmallScreen}
             onClick={() => {
-              navigate("/dashboardEbupotUnifikasi");
+              navigate("/ebupotUnifikasi/dashboard");
             }}
           />
         </div>

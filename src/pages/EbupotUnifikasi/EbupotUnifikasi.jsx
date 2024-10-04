@@ -92,11 +92,11 @@ function EbupotUnifikasi() {
       <Menu />
       <HeaderMainEbupotUnifikasi username={user.nama} />
       {screenSize <= 1000 && <HeaderMainProfil username={user.nama} />}
-      <MainMenuEbupotUnifikasi activeLink={"dashboardEbupotUnifikasi"} />
+      <MainMenuEbupotUnifikasi activeLink={"/ebupotUnifikasi/dashboard"} />
       <Paper elevation={4} style={paperStyle}>
         <div>
           <PetunjukPengisian
-            defaultCollapse={false}
+            defaultCollapse={screenSize >= 900 ? false : true}
             width={"240px"}
             titlePetunjuk={"Petunjuk Pengisian"}
             PetunjukPengisianComponent={PetunjukPengisianComponent}

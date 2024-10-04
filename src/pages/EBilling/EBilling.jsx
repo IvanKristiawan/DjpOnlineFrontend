@@ -12,6 +12,7 @@ import {
 } from "../../components/index";
 import "../../constants/defaultProgram.css";
 import CaptchaImage from "../../assets/Captcha Image.jpeg";
+import { generateRandomString } from "../../constants/helper";
 import { Card, Form, Row, Col } from "react-bootstrap";
 import {
   Paper,
@@ -131,6 +132,9 @@ function EBilling() {
 
   const [kodeBilling, setKodeBilling] = useState("");
   const [masaAktifKodeBilling, setMasaAktifKodeBilling] = useState("");
+
+  const randomString = generateRandomString(16);
+  const [ntpnBilling, setNtpnBilling] = useState(randomString);
 
   const [jenisPajaks, setJenisPajaks] = useState([]);
   const [jenisSetorans, setJenisSetorans] = useState([]);
@@ -387,6 +391,9 @@ function EBilling() {
     tempY += 8;
     doc.text("MASA AKTIF", 30, tempY);
     doc.text(`: ${masaAktifKodeBilling}`, 70, tempY);
+    tempY += 8;
+    doc.text("NTPN", 30, tempY);
+    doc.text(`: ${ntpnBilling}`, 70, tempY);
 
     tempY += 14;
     doc.text(
@@ -437,6 +444,8 @@ function EBilling() {
           jumlahSetor,
           uraian,
 
+          ntpnBilling,
+
           userIdInput: user.id,
           kodeCabang: user.cabang.id,
           _id: user.id,
@@ -484,7 +493,7 @@ function EBilling() {
       <Paper elevation={4} style={paperStyle}>
         <div>
           <PetunjukPengisian
-            defaultCollapse={true}
+            defaultCollapse={screenSize >= 900 ? false : true}
             width={"240px"}
             titlePetunjuk={"Petunjuk Pengisian"}
             PetunjukPengisianComponent={PetunjukPengisianComponent}
@@ -1590,6 +1599,22 @@ function EBilling() {
                     </Form.Label>
                     <Col sm="8">
                       <Form.Control value={masaAktifKodeBilling} disabled />
+                    </Col>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row style={inputSpace}>
+                <Col>
+                  <Form.Group
+                    as={Row}
+                    className="mb-3"
+                    controlId="formPlaintextPassword"
+                  >
+                    <Form.Label column sm="4">
+                      Kode NTPN
+                    </Form.Label>
+                    <Col sm="8">
+                      <Form.Control value={ntpnBilling} disabled />
                     </Col>
                   </Form.Group>
                 </Col>
