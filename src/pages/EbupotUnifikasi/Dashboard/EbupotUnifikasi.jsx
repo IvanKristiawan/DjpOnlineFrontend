@@ -1,20 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useStateContext, tempUrl } from "../../contexts/ContextProvider";
-import { AuthContext } from "../../contexts/AuthContext";
-import { Colors } from "../../constants/styles";
-import { Menu, PetunjukPengisian } from "../../components/index";
+import { useStateContext, tempUrl } from "../../../contexts/ContextProvider";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { Colors } from "../../../constants/styles";
+import { Menu, PetunjukPengisian } from "../../../components/index";
 import {
   HeaderMainEbupotUnifikasi,
   HeaderMainProfil,
   MainMenuEbupotUnifikasi,
-} from "../../components/index";
+} from "../../../components/index";
 import {
   ShowTableSptPphUnifikasiTelahDikirim,
   ShowTableBuktiPotongSptPphUnifikasi,
-} from "../../components/ShowTable";
-import "../../constants/defaultProgram.css";
+} from "../../../components/ShowTable";
+import "../../../constants/defaultProgram.css";
 import { Card, Tooltip, Form } from "react-bootstrap";
 import { Paper, Box, Pagination } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";

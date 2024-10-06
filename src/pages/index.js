@@ -17,7 +17,7 @@ export { default as EBilling } from "./EBilling/EBilling";
 export { default as Lapor } from "./Lapor/Lapor";
 export { default as Pralapor } from "./Lapor/Pralapor";
 // Ebupot Unifikasi Page
-export { default as EbupotUnifikasi } from "./EbupotUnifikasi/EbupotUnifikasi";
+export { default as EbupotUnifikasi } from "./EbupotUnifikasi/Dashboard/EbupotUnifikasi";
 export { default as EbupotUnifikasiDaftarPphDisetorSendiri } from "./EbupotUnifikasi/EbupotUnifikasiPphDisetorSendiri/EbupotUnifikasiDaftarPphDisetorSendiri";
 export { default as EbupotUnifikasiInputPphDisetorSendiri } from "./EbupotUnifikasi/EbupotUnifikasiPphDisetorSendiri/EbupotUnifikasiInputPphDisetorSendiri";
 export { default as EbupotUnifikasiUbahPphDisetorSendiri } from "./EbupotUnifikasi/EbupotUnifikasiPphDisetorSendiri/EbupotUnifikasiUbahPphDisetorSendiri";
