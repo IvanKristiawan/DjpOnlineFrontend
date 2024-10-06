@@ -1,17 +1,18 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useStateContext, tempUrl } from "../../contexts/ContextProvider";
-import { AuthContext } from "../../contexts/AuthContext";
-import { Colors } from "../../constants/styles";
-import { Menu, PetunjukPengisian } from "../../components/index";
+import { useStateContext, tempUrl } from "../../../contexts/ContextProvider";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { Colors } from "../../../constants/styles";
+import { Menu, PetunjukPengisian } from "../../../components/index";
 import {
   MenuEbupotUnifikasi,
   HeaderMainEbupotUnifikasi,
   HeaderMainProfil,
   MainMenuEbupotUnifikasi,
-} from "../../components/index";
-import "../../constants/defaultProgram.css";
+} from "../../../components/index";
+import "../../../constants/defaultProgram.css";
+import { formatDate } from "../../../constants/helper";
 import { Card, Form, Row, Col, Spinner } from "react-bootstrap";
 import {
   Paper,
@@ -30,7 +31,6 @@ import ReplayIcon from "@mui/icons-material/Replay";
 import SaveIcon from "@mui/icons-material/Save";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import { formatDate } from "../../constants/helper";
 
 // Petunjuk Pengisian component
 const PetunjukPengisianComponent = () => {
@@ -63,10 +63,11 @@ const PetunjukPengisianComponent = () => {
   );
 };
 
-function EbupotUnifikasiInputPphDisetorSendiri() {
+function EbupotUnifikasiUbahPphDisetorSendiri() {
   const { screenSize } = useStateContext();
   const { user, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { id } = useParams();
   const [jenisBuktiPenyetoran, setJenisBuktiPenyetoran] = useState(
     "Surat Setoran Pajak"
   );
@@ -125,7 +126,9 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
   const errorJumlahPenghasilanBruto =
     parseInt(jumlahPenghasilanBruto) < parseInt(jumlahSetor);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getKategoriKluById();
+  }, []);
 
   const getObjekPajakData = async (jenisSetoranId) => {
     const response = await axios.post(`${tempUrl}/objekPajaksByJenisSetoran`, {
@@ -136,65 +139,50 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
     setObjekPajaks(response.data);
   };
 
-  const handleCloseConfirmationSearchSuratSetoranPajak = () => {
-    setOpenConfirmationSearchSuratSetoranPajak(false);
+  const getKategoriKluById = async () => {
+    setOpenSearchSuratSetoranPajak(true);
+    const response = await axios.post(
+      `${tempUrl}/eBupotUnifikasiPphDisetorSendiris/${id}`,
+      {
+        _id: user.id,
+        token: user.token,
+      }
+    );
+    setJenisBuktiPenyetoran(response.data.jenisBuktiPenyetoran);
+    setEBillingId(response.data.id);
+    setNtpnBilling(response.data.ebilling.ntpnBilling);
+    setNomorPemindahbukuan("");
+
+    let tempMasaPajak = new Date(
+      response.data.ebilling.tanggalSetorKodeBilling
+    );
+    setTahunPajak(tempMasaPajak.getFullYear());
+
+    setMasaPajak(response.data.ebilling.masaPajakDariBulan);
+    setJenisPajak(
+      response.data.ebilling.jenissetoran.jenispajak.kodeJenisPajak
+    );
+    setJenisSetoran(response.data.ebilling.jenissetoran.kodeJenisSetoran);
+    setKodeObjekPajak(
+      `${response.data.objekpajak.kodeObjekPajak} - ${response.data.objekpajak.namaObjekPajak}`
+    );
+    setJumlahPenghasilanBruto(response.data.jumlahPenghasilanBruto);
+    setJumlahSetor(response.data.ebilling.jumlahSetor);
+    setTanggalSetor(formatDate(response.data.ebilling.tanggalSetorKodeBilling));
+    getObjekPajakData(response.data.ebilling.jenissetoran.id);
+
+    setOpenSearchSuratSetoranPajak(false);
   };
 
-  const handleClickOpenConfirmationSearchSuratSetoranPajak = async () => {
-    if (ntpnBilling.length !== 16) {
-      setDetilSearchSuratSetoranPajak(
-        "DATAFORMAT - Nomor Bukti Setor harus diisi 16 karakter."
-      );
-    } else if (tahunPajak.length === 0) {
-      setDetilSearchSuratSetoranPajak(
-        "DATAFORMAT - Tahun Pajak harus diisi angka."
-      );
-    }
-
-    if (ntpnBilling.length !== 16 || tahunPajak.length === 0) {
-      setOpenConfirmationSearchSuratSetoranPajak(true);
-    } else {
-      setOpenSearchSuratSetoranPajak(true);
-
-      setTimeout(async () => {
-        const findEBilling = await axios.post(`${tempUrl}/eBillingByNtpnUser`, {
-          ntpnBilling,
-          tahunPajak,
-          userIdInput: user.id,
-          _id: user.id,
-          token: user.token,
-        });
-        setOpenSearchSuratSetoranPajak(false);
-
-        if (findEBilling.data) {
-          setEBillingId(findEBilling.data.id);
-          setMasaPajak(findEBilling.data.masaPajakDariBulan);
-          setJenisPajak(
-            findEBilling.data.jenissetoran.jenispajak.kodeJenisPajak
-          );
-          setJenisSetoran(findEBilling.data.jenissetoran.kodeJenisSetoran);
-          setJumlahSetor(findEBilling.data.jumlahSetor);
-          setTanggalSetor(
-            formatDate(findEBilling.data.tanggalSetorKodeBilling)
-          );
-          getObjekPajakData(findEBilling.data.jenissetoran.id);
-
-          setOpenFoundSuratSetoranPajak(true);
-        } else {
-          setDetilSearchSuratSetoranPajak(
-            "SOA006 - Data Pembayaran G2 tidak ditemukan."
-          );
-          setOpenConfirmationSearchSuratSetoranPajak(true);
-        }
-      }, 500);
-    }
+  const handleCloseConfirmationSearchSuratSetoranPajak = () => {
+    setOpenConfirmationSearchSuratSetoranPajak(false);
   };
 
   const handleCloseConfirmationFoundSuratSetoranPajak = () => {
     setOpenFoundSuratSetoranPajak(false);
   };
 
-  const saveEbupotUnifikasiInputPphDisetorSendiri = async (e) => {
+  const updateEbupotUnifikasiUbahPphDisetorSendiri = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -206,11 +194,9 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
 
     if (handlingInput) {
       try {
-        let savedEBupotUnifikasiPphDisetorSendiri = await axios.post(
-          `${tempUrl}/saveEBupotUnifikasiPphDisetorSendiri`,
+        let updatedEBupotUnifikasiPphDisetorSendiri = await axios.post(
+          `${tempUrl}/updateEBupotUnifikasiPphDisetorSendiri/${id}`,
           {
-            jenisBuktiPenyetoran,
-            eBillingId,
             kodeObjekPajak: kodeObjekPajak.split(" -", 2)[0],
             jumlahPenghasilanBruto,
 
@@ -314,7 +300,7 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
           <Card style={{ marginTop: "20px" }}>
             <Card.Header style={inputTitle}>
               <EditIcon style={{ marginRight: "10px" }} />
-              Perekaman data Bukti Setor atas PPh yang disetor sendiri
+              Ubah data Bukti Setor atas PPh yang disetor sendiri
             </Card.Header>
             <Card.Body>
               <div style={{ marginTop: "20px" }}>
@@ -343,8 +329,6 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
                           checked={
                             jenisBuktiPenyetoran === "Surat Setoran Pajak"
                           }
-                          onChange={handleJenisBuktiPenyetoranChange}
-                          style={{ cursor: "pointer" }}
                         />
                       </Col>
                       <Col sm="4" className="mt-2">
@@ -354,8 +338,6 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
                           name="Pemindahbukuan"
                           value="Pemindahbukuan"
                           checked={jenisBuktiPenyetoran === "Pemindahbukuan"}
-                          onChange={handleJenisBuktiPenyetoranChange}
-                          style={{ cursor: "pointer" }}
                         />
                       </Col>
                     </Form.Group>
@@ -372,22 +354,7 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
                             NTPN
                           </Form.Label>
                           <Col sm="8">
-                            <Form.Control
-                              required
-                              value={ntpnBilling}
-                              onChange={(e) => {
-                                let value = e.target.value.toUpperCase(); // Convert to uppercase
-                                if (value.length <= 16) {
-                                  setNtpnBilling(value); // Set the value only if it's 16 characters or less
-                                }
-
-                                setMasaPajak("");
-                                setJenisPajak("");
-                                setJenisSetoran("");
-                                setJumlahSetor("");
-                                setTanggalSetor("");
-                              }}
-                            />
+                            <Form.Control value={ntpnBilling} disabled />
                           </Col>
                         </Form.Group>
                       </div>
@@ -401,36 +368,12 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
                             Tahun Pajak
                           </Form.Label>
                           <Col sm="8">
-                            <Autocomplete
-                              size="small"
-                              disablePortal
-                              id="combo-box-demo"
-                              options={tahunPajakOptions}
-                              renderInput={(params) => (
-                                <TextField size="small" {...params} />
-                              )}
-                              onInputChange={(e, value) => {
-                                setTahunPajak(value);
-
-                                setMasaPajak("");
-                                setJenisPajak("");
-                                setJenisSetoran("");
-                                setJumlahSetor("");
-                                setTanggalSetor("");
-                              }}
-                              inputValue={tahunPajak}
-                              value={tahunPajak}
-                            />
+                            <Form.Control value={tahunPajak} disabled />
                           </Col>
                         </Form.Group>
                       </div>
                       <div style={inputWrapperCek}>
-                        <button
-                          className="hover-button"
-                          onClick={() =>
-                            handleClickOpenConfirmationSearchSuratSetoranPajak()
-                          }
-                        >
+                        <button className="hover-button" disabled>
                           <SearchIcon style={{ marginRight: "4px" }} />
                           Cek Surat Setoran Pajak
                         </button>
@@ -457,23 +400,14 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
                           </Form.Label>
                           <Col sm="8">
                             <Form.Control
-                              required
                               value={nomorPemindahbukuan}
-                              onChange={(e) => {
-                                setNomorPemindahbukuan(e.target.value);
-
-                                setMasaPajak("");
-                                setJenisPajak("");
-                                setJenisSetoran("");
-                                setJumlahSetor("");
-                                setTanggalSetor("");
-                              }}
+                              disabled
                             />
                           </Col>
                         </Form.Group>
                       </div>
                       <div style={inputWrapperCek}>
-                        <button className="hover-button" type="submit">
+                        <button className="hover-button" disabled>
                           <SearchIcon style={{ marginRight: "4px" }} />
                           Cek Pemindahbukuan
                         </button>
@@ -548,7 +482,7 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
                             <TextField size="small" {...params} />
                           )}
                           onInputChange={(e, value) => setKodeObjekPajak(value)}
-                          inputValue={kodeObjekPajak}
+                          value={kodeObjekPajak}
                         />
                       </Col>
                     </Form.Group>
@@ -638,7 +572,7 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
                 <button
                   className="hover-button"
                   style={{ marginRight: "4px" }}
-                  onClick={saveEbupotUnifikasiInputPphDisetorSendiri}
+                  onClick={updateEbupotUnifikasiUbahPphDisetorSendiri}
                 >
                   <SaveIcon style={{ marginRight: "4px" }} />
                   Simpan
@@ -799,4 +733,4 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
   );
 }
 
-export default EbupotUnifikasiInputPphDisetorSendiri;
+export default EbupotUnifikasiUbahPphDisetorSendiri;

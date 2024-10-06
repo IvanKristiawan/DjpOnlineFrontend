@@ -18,9 +18,9 @@ export { default as Lapor } from "./Lapor/Lapor";
 export { default as Pralapor } from "./Lapor/Pralapor";
 // Ebupot Unifikasi Page
 export { default as EbupotUnifikasi } from "./EbupotUnifikasi/EbupotUnifikasi";
-export { default as EbupotUnifikasiDaftarPphDisetorSendiri } from "./EbupotUnifikasi/EbupotUnifikasiDaftarPphDisetorSendiri";
-export { default as EbupotUnifikasiInputPphDisetorSendiri } from "./EbupotUnifikasi/EbupotUnifikasiInputPphDisetorSendiri";
-export { default as EbupotUnifikasiUbahPphDisetorSendiri } from "./EbupotUnifikasi/EbupotUnifikasiUbahPphDisetorSendiri";
+export { default as EbupotUnifikasiDaftarPphDisetorSendiri } from "./EbupotUnifikasi/EbupotUnifikasiPphDisetorSendiri/EbupotUnifikasiDaftarPphDisetorSendiri";
+export { default as EbupotUnifikasiInputPphDisetorSendiri } from "./EbupotUnifikasi/EbupotUnifikasiPphDisetorSendiri/EbupotUnifikasiInputPphDisetorSendiri";
+export { default as EbupotUnifikasiUbahPphDisetorSendiri } from "./EbupotUnifikasi/EbupotUnifikasiPphDisetorSendiri/EbupotUnifikasiUbahPphDisetorSendiri";
 // Utility Page
 export { default as ProfilUser } from "./Utility/ProfilUser/ProfilUser";
 export { default as UbahProfilUser } from "./Utility/ProfilUser/UbahProfilUser";
