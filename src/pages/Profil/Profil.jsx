@@ -582,6 +582,7 @@ function Profil() {
                     onClose={handleCloseConfirmation}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
+                    maxWidth={"xs"}
                   >
                     <div style={{ padding: "30px" }}>
                       <DialogTitle id="alert-dialog-title">

@@ -4,10 +4,10 @@ export const formatDate = (date) => {
   return `${tempDate.getDate().toLocaleString("en-US", {
     minimumIntegerDigits: 2,
     useGrouping: false,
-  })}/${(tempDate.getMonth() + 1).toLocaleString("en-US", {
+  })}-${(tempDate.getMonth() + 1).toLocaleString("en-US", {
     minimumIntegerDigits: 2,
     useGrouping: false,
-  })}/${tempDate.getFullYear()}`;
+  })}-${tempDate.getFullYear()}`;
 };
 
 export const formatTime = (datetime) => {

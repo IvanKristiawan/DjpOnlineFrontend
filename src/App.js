@@ -20,6 +20,8 @@ import {
   Pralapor,
   EbupotUnifikasi,
   EbupotUnifikasiDaftarPphDisetorSendiri,
+  EbupotUnifikasiInputPphDisetorSendiri,
+  EbupotUnifikasiUbahPphDisetorSendiri,
 } from "./pages/index";
 
 import { FaBars } from "react-icons/fa";
@@ -171,6 +173,22 @@ const App = () => {
             element={
               <USERRoute>
                 <EbupotUnifikasiDaftarPphDisetorSendiri />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/inputDisetorSendiri"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiInputPphDisetorSendiri />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/:id/edit"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiUbahPphDisetorSendiri />
               </USERRoute>
             }
           />

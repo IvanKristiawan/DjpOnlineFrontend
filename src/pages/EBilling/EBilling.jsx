@@ -1031,6 +1031,7 @@ function EBilling() {
                               decimalSeparator={","}
                               thousandSeparator={"."}
                               customInput={Form.Control}
+                              style={{ textAlign: "right" }}
                               onValueChange={(values) => {
                                 setJumlahSetor(
                                   values.formattedValue

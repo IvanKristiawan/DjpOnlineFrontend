@@ -13,6 +13,21 @@
     color: #ffb822;
 }
 
+.aksi-button {
+    background-color: #212c5f;   /* Default background color */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 7px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.aksi-button:hover {
+    background-color: #212c5f; /* Change color on hover */
+    color: #ffb822;
+}
+
 .blank-button {
     background-color: white;   /* Default background color */
     color: #212c5f;

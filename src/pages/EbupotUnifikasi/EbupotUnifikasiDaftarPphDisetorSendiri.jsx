@@ -6,22 +6,26 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { Colors } from "../../constants/styles";
 import { Menu, PetunjukPengisian } from "../../components/index";
 import {
+  MenuEbupotUnifikasi,
   HeaderMainEbupotUnifikasi,
   HeaderMainProfil,
   MainMenuEbupotUnifikasi,
 } from "../../components/index";
 import { ShowTableEbupotUnifikasiPphDisetorSendiri } from "../../components/ShowTable";
 import "../../constants/defaultProgram.css";
-import { Card, Tooltip, Form } from "react-bootstrap";
-import { Paper, Box, Pagination, Autocomplete, TextField } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import EditIcon from "@mui/icons-material/Edit";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Card, Form, Spinner } from "react-bootstrap";
+import {
+  Paper,
+  Box,
+  Pagination,
+  Autocomplete,
+  TextField,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import PaymentsIcon from "@mui/icons-material/Payments";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import IosShareIcon from "@mui/icons-material/IosShare";
-import LockResetIcon from "@mui/icons-material/LockReset";
 import SearchIcon from "@mui/icons-material/Search";
 
 // Petunjuk Pengisian component
@@ -62,13 +66,12 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
   const [masaTahunPajakSearch, setMasaTahunPajakSearch] = useState("");
   const [kataKunciSearch, setKataKunciSearch] = useState("");
   const [pencairanBerdasarkan, setPencairanBerdasarkan] = useState("Periode");
-  const [openMenuPphYangDisetorSendiri, setOpenMenuPphYangDisetorSendiri] =
-    useState(false);
-  const [openMenuPph4, setOpenMenuPph4] = useState(false);
-  const [openMenuPphNonResiden, setOpenMenuPphNonResiden] = useState(false);
 
-  const [userPerCabangs, setUserPerCabangs] = useState([]);
-  const [pbkTerimaPagination, setPbkTerimaPagination] = useState([]);
+  const [openLoading, setOpenLoading] = useState(false);
+  const [
+    eBupotUnifikasiPphDisetorSendiriPagination,
+    setEBupotUnifikasiPphDisetorSendiriPagination,
+  ] = useState([]);
   let [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [pages, setPages] = useState(0);
@@ -110,17 +113,63 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
     },
   ];
 
-  useEffect(() => {
-    getUserPerCabangData();
-  }, []);
+  useEffect(() => {}, []);
 
-  const getUserPerCabangData = async () => {
-    const response = await axios.post(`${tempUrl}/usersPerCabang`, {
-      _id: user.id,
-      token: user.token,
-      kodeCabang: user.cabang.id,
-    });
-    setUserPerCabangs(response.data);
+  const getEBupotUnifikasiPphDisetorSendiriData = async () => {
+    let tempCondition = pencairanBerdasarkan.length !== 0;
+    if (pencairanBerdasarkan === "Periode") {
+      tempCondition =
+        pencairanBerdasarkan.length !== 0 && masaTahunPajakSearch.length !== 0;
+    } else {
+      tempCondition =
+        pencairanBerdasarkan.length !== 0 && kataKunciSearch.length !== 0;
+    }
+
+    if (tempCondition) {
+      setOpenLoading(true);
+
+      setTimeout(async () => {
+        const response = await axios.post(
+          `${tempUrl}/eBupotUnifikasiPphDisetorSendirisByUserSearchPagination`,
+          {
+            userIdInput: user.id,
+            pencairanBerdasarkan,
+            masaTahunPajakSearch,
+            kataKunciSearch,
+            _id: user.id,
+            token: user.token,
+            kodeCabang: user.cabang.id,
+          }
+        );
+        setEBupotUnifikasiPphDisetorSendiriPagination(
+          response.data.eBupotUnifikasiPphDisetorSendiris
+        );
+        setPage(response.data.page);
+        setPages(response.data.totalPage);
+        setRows(response.data.totalRows);
+        setOpenLoading(false);
+      }, 500);
+    }
+  };
+
+  const deleteEBupotUnifikasiPphDisetorSendiri = async (id) => {
+    setOpenLoading(true);
+    try {
+      await axios.post(
+        `${tempUrl}/deleteEBupotUnifikasiPphDisetorSendiri/${id}`,
+        {
+          _id: user.id,
+          token: user.token,
+        }
+      );
+      setEBupotUnifikasiPphDisetorSendiriPagination([]);
+      navigate("/ebupotUnifikasi/daftarDisetorSendiri");
+    } catch (error) {
+      if (error.response.data.message.includes("foreign key")) {
+        // alert(`${namaKategoriKlu} tidak bisa dihapus karena sudah ada data!`);
+      }
+    }
+    setOpenLoading(false);
   };
 
   const inputContainer = {
@@ -136,21 +185,6 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
     display: screenSize >= 900 && "flex",
     justifyContent: screenSize >= 900 && "space-around",
     background: "#EBECF1",
-  };
-
-  const menuLaporanContainer = {
-    display: screenSize >= 900 && "flex",
-    width: "100%",
-    marginBottom: "20px",
-  };
-
-  const menuLaporanWrapper = {
-    display: "flex",
-    justifyContent: screenSize >= 900 && "center",
-    flexDirection: screenSize >= 900 && "column",
-    alignItems: screenSize >= 900 && "center",
-    padding: screenSize >= 900 ? "30px 10px" : "10px 10px",
-    cursor: "pointer",
   };
 
   const searchContainer = {
@@ -178,11 +212,6 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
     backgroundColor: Colors.blue900,
   };
 
-  const menuStyle = {
-    marginBottom: screenSize >= 900 && "-15px",
-    marginTop: screenSize >= 900 && "-10px",
-  };
-
   return (
     <div>
       <Menu />
@@ -201,174 +230,7 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
           />
         </div>
         <div style={inputContainer}>
-          <div style={menuLaporanContainer}>
-            <Paper elevation={6} style={{ flex: 1 }}>
-              <div
-                className="paper-background"
-                style={menuLaporanWrapper}
-                onClick={() => {
-                  setOpenMenuPphYangDisetorSendiri(
-                    !openMenuPphYangDisetorSendiri
-                  );
-                  setOpenMenuPph4(false);
-                  setOpenMenuPphNonResiden(false);
-                }}
-              >
-                <PaymentsIcon style={{ fill: "#ffb822" }} fontSize="large" />
-                <b>PPh yang Disetor Sendiri</b>
-                <div style={menuStyle}>
-                  <KeyboardArrowDownIcon
-                    fontSize="small"
-                    style={{ fill: "gray" }}
-                  />
-                </div>
-              </div>
-              {openMenuPphYangDisetorSendiri && (
-                <div style={userPopupContainer}>
-                  <div style={userPopup}>
-                    <div
-                      style={userPopupWrapper1}
-                      onClick={() => {
-                        navigate("/ebupotUnifikasi/daftarDisetorSendiri");
-                      }}
-                    >
-                      <MenuIcon className="icon-ebupot-pph" />
-                      <b style={userPopupTeks}>
-                        Daftar PPh yang Disetor Sendiri
-                      </b>
-                    </div>
-                    <div
-                      style={userPopupWrapper2}
-                      onClick={() => {
-                        navigate("/ebupotUnifikasi/inputDisetorSendiri");
-                      }}
-                    >
-                      <EditIcon className="icon-ebupot-pph" />
-                      <b style={userPopupTeks}>
-                        Rekam PPh yang Disetor Sendiri
-                      </b>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </Paper>
-            <Paper elevation={6} style={{ flex: 1.2 }}>
-              <div
-                className="paper-background"
-                style={menuLaporanWrapper}
-                onClick={() => {
-                  setOpenMenuPphYangDisetorSendiri(false);
-                  setOpenMenuPph4(!openMenuPph4);
-                  setOpenMenuPphNonResiden(false);
-                }}
-              >
-                <AssignmentIcon style={{ fill: "#ffb822" }} fontSize="large" />
-                <b>PPh Pasal 4 ayat (2), 15, 22, 23</b>
-                <div style={menuStyle}>
-                  <KeyboardArrowDownIcon
-                    fontSize="small"
-                    style={{ fill: "gray" }}
-                  />
-                </div>
-              </div>
-              {openMenuPph4 && (
-                <div style={userPopupContainer}>
-                  <div style={userPopup}>
-                    <div
-                      style={userPopupWrapper1}
-                      onClick={() => {
-                        navigate("/ebupotUnifikasi/daftarPph4");
-                      }}
-                    >
-                      <MenuIcon className="icon-ebupot-pph" />
-                      <b style={userPopupTeks}>Daftar BP Ps 4(2), 15, 22, 23</b>
-                    </div>
-                    <div
-                      style={userPopupWrapper2}
-                      onClick={() => {
-                        navigate("/ebupotUnifikasi/inputPph4");
-                      }}
-                    >
-                      <EditIcon className="icon-ebupot-pph" />
-                      <b style={userPopupTeks}>Rekam BP Ps 4(2), 15, 22, 23</b>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </Paper>
-            <Paper elevation={6} style={{ flex: 1 }}>
-              <div
-                className="paper-background"
-                style={menuLaporanWrapper}
-                onClick={() => {
-                  setOpenMenuPphYangDisetorSendiri(false);
-                  setOpenMenuPph4(false);
-                  setOpenMenuPphNonResiden(!openMenuPphNonResiden);
-                }}
-              >
-                <AssignmentIcon style={{ fill: "#ffb822" }} fontSize="large" />
-                <b>PPh Non Residen</b>
-                <div style={menuStyle}>
-                  <KeyboardArrowDownIcon
-                    fontSize="small"
-                    style={{ fill: "gray" }}
-                  />
-                </div>
-              </div>
-              {openMenuPphNonResiden && (
-                <div style={userPopupContainer}>
-                  <div style={userPopup}>
-                    <div
-                      style={userPopupWrapper1}
-                      onClick={() => {
-                        navigate("/ebupotUnifikasi/daftarPphNonResiden");
-                      }}
-                    >
-                      <MenuIcon className="icon-ebupot-pph" />
-                      <b style={userPopupTeks}>
-                        Daftar Bukti Potong PPh Non Residen
-                      </b>
-                    </div>
-                    <div
-                      style={userPopupWrapper2}
-                      onClick={() => {
-                        navigate("/ebupotUnifikasi/inputPphNonResiden");
-                      }}
-                    >
-                      <EditIcon className="icon-ebupot-pph" />
-                      <b style={userPopupTeks}>
-                        Rekam Bukti Potong PPh Non Residen
-                      </b>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </Paper>
-            <Paper elevation={6} style={{ flex: 1 }}>
-              <div
-                className="paper-background"
-                style={menuLaporanWrapper}
-                onClick={() => {
-                  navigate("/ebupotUnifikasi/import");
-                }}
-              >
-                <IosShareIcon style={{ fill: "#ffb822" }} fontSize="large" />
-                <b>Impor Data PPh</b>
-              </div>
-            </Paper>
-            <Paper elevation={6} style={{ flex: 1 }}>
-              <div
-                className="paper-background"
-                style={menuLaporanWrapper}
-                onClick={() => {
-                  navigate("/ebupotUnifikasi/posting");
-                }}
-              >
-                <LockResetIcon style={{ fill: "#ffb822" }} fontSize="large" />
-                <b>Posting</b>
-              </div>
-            </Paper>
-          </div>
+          <MenuEbupotUnifikasi />
           <Card style={{ marginTop: "20px" }}>
             <Card.Header style={inputTitle}>
               <FormatListBulletedIcon style={{ marginRight: "10px" }} />
@@ -415,7 +277,7 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
                             />
                           )}
                           onChange={(e, value) => {
-                            setMasaTahunPajakSearch(value);
+                            setMasaTahunPajakSearch(value.label);
                           }}
                           value={masaTahunPajakSearch}
                         />
@@ -436,7 +298,7 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
                     <div>
                       <button
                         className="cari-pralapor-button"
-                        // onClick={handleCloseInfo}
+                        onClick={getEBupotUnifikasiPphDisetorSendiriData}
                       >
                         <SearchIcon style={{ marginRight: "5px" }} />
                         Cari
@@ -467,7 +329,8 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
               </div>
               <Box>
                 <ShowTableEbupotUnifikasiPphDisetorSendiri
-                  currentPosts={pbkTerimaPagination}
+                  currentPosts={eBupotUnifikasiPphDisetorSendiriPagination}
+                  deleteFunction={deleteEBupotUnifikasiPphDisetorSendiri}
                 />
               </Box>
               <Box sx={tableContainer}>
@@ -484,6 +347,41 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
           </Card>
         </div>
       </Paper>
+      <Dialog
+        open={openLoading}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        fullWidth={true}
+        maxWidth={"xs"}
+      >
+        <div style={{ padding: "30px" }}>
+          <DialogTitle id="alert-dialog-title">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "center",
+              }}
+            >
+              <b>Memproses</b>
+            </div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p>Mohon Sabar Menunggu</p>
+                <Spinner animation="border" variant="primary" />
+              </div>
+            </DialogContentText>
+          </DialogContent>
+        </div>
+      </Dialog>
     </div>
   );
 }
@@ -501,33 +399,4 @@ const tableContainer = {
   pt: 4,
   display: "flex",
   justifyContent: "center",
-};
-
-const userPopupContainer = {
-  position: "relative",
-};
-
-const userPopupWrapper1 = {
-  cursor: "pointer",
-};
-
-const userPopupWrapper2 = {
-  cursor: "pointer",
-  marginTop: "20px",
-};
-
-const userPopupTeks = {
-  marginLeft: "5px",
-};
-
-const userPopup = {
-  cursor: "auto",
-  position: "absolute",
-  transform: "translateX(0%)",
-  width: "300px",
-  padding: "20px",
-  backgroundColor: "white",
-  zIndex: 1000, // Ensure it stays in front
-  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", // Optional shadow for effect
-  borderRadius: "5px",
 };

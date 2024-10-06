@@ -1,15 +1,28 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import { Button } from "react-bootstrap";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Colors } from "../constants/styles";
+import "../constants/defaultProgram.css";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EmailIcon from "@mui/icons-material/Email";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 const useStyles = makeStyles({
   root: {
@@ -891,32 +904,210 @@ export function ShowTableWilayah({ currentPosts }) {
   );
 }
 
-export function ShowTableEbupotUnifikasiPphDisetorSendiri({ currentPosts }) {
+export function ShowTableEbupotUnifikasiPphDisetorSendiri({
+  currentPosts,
+  deleteFunction,
+}) {
   let navigate = useNavigate();
   const classes = useStyles();
+  const [openConfirmationEdit, setOpenConfirmationEdit] = useState(false);
+  const [openConfirmationDelete, setOpenConfirmationDelete] = useState(false);
+
+  const handleClickOpenConfirmationEdit = () => {
+    setOpenConfirmationEdit(true);
+  };
+
+  const handleCloseConfirmationEdit = () => {
+    setOpenConfirmationEdit(false);
+  };
+
+  const handleClickOpenConfirmationDelete = () => {
+    setOpenConfirmationDelete(true);
+  };
+
+  const handleCloseConfirmationDelete = () => {
+    setOpenConfirmationDelete(false);
+  };
+
+  const dataStyle = {
+    fontWeight: 700,
+  };
+
+  const aksiButtonWrapper = {
+    display: "flex",
+  };
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
 
   let dataTable = currentPosts.map((user, index) => (
-    <TableRow
-      key={user.id}
-      sx={{
-        "&:last-child td, &:last-child th": { border: 0 },
-      }}
-    >
-      <TableCell component="th" scope="row">
-        {user.npwp15}
-      </TableCell>
-      <TableCell>{user.nitku}</TableCell>
-      <TableCell>{user.nama}</TableCell>
-      <TableCell>{user.nama}</TableCell>
-      <TableCell>{user.nama}</TableCell>
-      <TableCell>{user.nama}</TableCell>
-    </TableRow>
+    <>
+      <TableRow
+        key={user.id}
+        sx={{
+          "&:last-child td, &:last-child th": { border: 0 },
+        }}
+      >
+        <TableCell component="th" scope="row" style={dataStyle}>
+          {user.ebilling.masaPajakDariBulan}
+        </TableCell>
+        <TableCell style={dataStyle}>
+          {user.objekpajak.kodeObjekPajak}
+        </TableCell>
+        <TableCell style={dataStyle}>{user.nomorBuktiSetor}</TableCell>
+        <TableCell style={dataStyle}>
+          {user.jumlahPenghasilanBruto.toLocaleString("de-DE")}
+        </TableCell>
+        <TableCell style={dataStyle}>
+          {user.ebilling.jumlahSetor.toLocaleString("de-DE")}
+        </TableCell>
+        <TableCell style={aksiButtonWrapper}>
+          <button className="aksi-button">
+            <RemoveRedEyeIcon fontSize="small" />
+          </button>
+          <button
+            className="aksi-button"
+            style={aksiButtonStyle}
+            onClick={() => {
+              handleClickOpenConfirmationEdit();
+            }}
+          >
+            <EditIcon fontSize="small" />
+          </button>
+          <button
+            className="aksi-button"
+            style={aksiButtonStyle}
+            onClick={() => {
+              handleClickOpenConfirmationDelete();
+            }}
+          >
+            <DeleteIcon fontSize="small" />
+          </button>
+          <button className="aksi-button" style={aksiButtonStyle}>
+            <EmailIcon fontSize="small" />
+          </button>
+        </TableCell>
+      </TableRow>
+      <Dialog
+        open={openConfirmationEdit}
+        onClose={handleCloseConfirmationEdit}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        maxWidth={"xs"}
+      >
+        <div style={{ padding: "30px" }}>
+          <DialogTitle id="alert-dialog-title">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <HelpOutlineIcon color="primary" sx={{ fontSize: 80 }} />
+              </div>
+              <b>Ubah Bukti Potong</b>
+            </div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Apakah Anda yakin akan mengubah Bukti Potong?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              variant="warning"
+              style={{ paddingTop: "10px" }}
+              onClick={handleCloseConfirmationEdit}
+            >
+              Tidak
+            </Button>
+            <button
+              className="hover-button"
+              style={{ paddingLeft: "15px", paddingRight: "15px" }}
+              onClick={() => {
+                navigate(`/ebupotUnifikasi/${user.id}/edit`);
+              }}
+            >
+              Ya
+            </button>
+          </DialogActions>
+        </div>
+      </Dialog>
+      <Dialog
+        open={openConfirmationDelete}
+        onClose={handleCloseConfirmationDelete}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        maxWidth={"xs"}
+      >
+        <div style={{ padding: "30px" }}>
+          <DialogTitle id="alert-dialog-title">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <HelpOutlineIcon color="primary" sx={{ fontSize: 80 }} />
+              </div>
+              <b>Hapus Bukti Potong</b>
+            </div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Apakah Anda yakin akan menghapus Bukti Potong?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              variant="warning"
+              style={{ paddingTop: "10px" }}
+              onClick={handleCloseConfirmationDelete}
+            >
+              Tidak
+            </Button>
+            <button
+              className="hover-button"
+              style={{ paddingLeft: "15px", paddingRight: "15px" }}
+              onClick={() => deleteFunction(user.id)}
+            >
+              Ya
+            </button>
+          </DialogActions>
+        </div>
+      </Dialog>
+    </>
   ));
 
   if (currentPosts.length === 0) {
     dataTable = (
       <TableRow>
-        <TableCell colSpan={5} style={{ textAlign: "center" }}>
+        <TableCell colSpan={6} style={{ textAlign: "center" }}>
           <b>Tidak ditemukan</b>
         </TableCell>
       </TableRow>
@@ -924,50 +1115,52 @@ export function ShowTableEbupotUnifikasiPphDisetorSendiri({ currentPosts }) {
   }
 
   return (
-    <TableContainer component={Paper} sx={{ width: "100%" }}>
-      <Table aria-label="simple table">
-        <TableHead className={classes.root}>
-          <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
-              PERIODE
-            </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
-              KODE OBJEK PAJAK
-            </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
-              NOMOR BUKTI SETOR
-            </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
-              JUMLAH PENGHASILAN BRUTO (RP)
-            </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
-              PPH DISETOR (RP)
-            </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
-              AKSI
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>{dataTable}</TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer component={Paper} sx={{ width: "100%" }}>
+        <Table aria-label="simple table">
+          <TableHead className={classes.root}>
+            <TableRow>
+              <TableCell
+                sx={{ fontWeight: "bold" }}
+                className={classes.tableRightBorder}
+              >
+                PERIODE
+              </TableCell>
+              <TableCell
+                sx={{ fontWeight: "bold" }}
+                className={classes.tableRightBorder}
+              >
+                KODE OBJEK PAJAK
+              </TableCell>
+              <TableCell
+                sx={{ fontWeight: "bold" }}
+                className={classes.tableRightBorder}
+              >
+                NOMOR BUKTI SETOR
+              </TableCell>
+              <TableCell
+                sx={{ fontWeight: "bold" }}
+                className={classes.tableRightBorder}
+              >
+                JUMLAH PENGHASILAN BRUTO (RP)
+              </TableCell>
+              <TableCell
+                sx={{ fontWeight: "bold" }}
+                className={classes.tableRightBorder}
+              >
+                PPH DISETOR (RP)
+              </TableCell>
+              <TableCell
+                sx={{ fontWeight: "bold" }}
+                className={classes.tableRightBorder}
+              >
+                AKSI
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>{dataTable}</TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
