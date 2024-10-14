@@ -61,12 +61,12 @@ function MainMenuEbupotUnifikasi({ activeLink }) {
           </div>
           <div
             style={
-              activeLink === "pengaturanEbupotUnifikasi"
+              activeLink === "/pengaturan/penandatangan"
                 ? menuButtonActiveStyle
                 : menuButtonStyle
             }
             onClick={() => {
-              navigate("/pengaturanEbupotUnifikasi");
+              navigate("/pengaturan/penandatangan");
             }}
           >
             Pengaturan

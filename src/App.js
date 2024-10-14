@@ -22,6 +22,10 @@ import {
   EbupotUnifikasiDaftarPphDisetorSendiri,
   EbupotUnifikasiInputPphDisetorSendiri,
   EbupotUnifikasiUbahPphDisetorSendiri,
+  EbupotUnifikasiDaftarPph42152223,
+  EbupotUnifikasiInputPph42152223,
+  EbupotUnifikasiUbahPph42152223,
+  TampilPenandatangan,
 } from "./pages/index";
 
 import { FaBars } from "react-icons/fa";
@@ -185,10 +189,43 @@ const App = () => {
             }
           />
           <Route
-            path="/ebupotUnifikasi/:id/edit"
+            path="/ebupotUnifikasi/ubahDisetorSendiri/:id"
             element={
               <USERRoute>
                 <EbupotUnifikasiUbahPphDisetorSendiri />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/daftarPph42152223"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiDaftarPph42152223 />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/inputPph42152223"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiInputPph42152223 />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/ubahPph42152223/:id"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiUbahPph42152223 />
+              </USERRoute>
+            }
+          />
+          {/* Pengaturan */}
+          <Route
+            path="/pengaturan/penandatangan"
+            element={
+              <USERRoute>
+                <TampilPenandatangan />
               </USERRoute>
             }
           />

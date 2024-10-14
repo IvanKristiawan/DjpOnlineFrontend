@@ -9,6 +9,7 @@ export { default as MainMenu } from "./MainMenu";
 export { default as HeaderMainEbupotUnifikasi } from "./HeaderMainEbupotUnifikasi";
 export { default as MainMenuEbupotUnifikasi } from "./MainMenuEbupotUnifikasi";
 export { default as MenuEbupotUnifikasi } from "./MenuEbupotUnifikasi";
+export { default as MenuPengaturan } from "./MenuPengaturan";
 export { default as MenuEBilling } from "./MenuEBilling";
 export { default as HeaderMainProfil } from "./HeaderMainProfil";
 export { default as PetunjukPengisian } from "./PetunjukPengisian";

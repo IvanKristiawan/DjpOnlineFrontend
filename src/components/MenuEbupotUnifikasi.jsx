@@ -106,7 +106,7 @@ function MenuEbupotUnifikasi({ username }) {
               <div
                 style={userPopupWrapper1}
                 onClick={() => {
-                  navigate("/ebupotUnifikasi/daftarPph4");
+                  navigate("/ebupotUnifikasi/daftarPph42152223");
                 }}
               >
                 <MenuIcon className="icon-ebupot-pph" />
@@ -115,7 +115,7 @@ function MenuEbupotUnifikasi({ username }) {
               <div
                 style={userPopupWrapper2}
                 onClick={() => {
-                  navigate("/ebupotUnifikasi/inputPph4");
+                  navigate("/ebupotUnifikasi/inputPph42152223");
                 }}
               >
                 <EditIcon className="icon-ebupot-pph" />

@@ -827,11 +827,12 @@ function HakAkses() {
                         navigate("/");
                       }}
                     >
-                      <ReplayIcon style={{ marginRight: "4px" }} />
+                      <ReplayIcon fontSize="small" style={{ marginRight: "4px" }} />
                       Batal
                     </button>
                     <button className="hover-button" type="submit">
                       <DriveFileRenameOutlineIcon
+                        fontSize="small"
                         style={{ marginRight: "4px" }}
                       />
                       Ubah Fitur Layanan
@@ -894,11 +895,14 @@ function HakAkses() {
                 style={{ marginRight: "4px" }}
                 onClick={handleCloseConfirmation}
               >
-                <NotInterestedOutlinedIcon style={{ marginRight: "4px" }} />
+                <NotInterestedOutlinedIcon fontSize="small" style={{ marginRight: "4px" }} />
                 Tidak
               </button>
               <button className="hover-button" onClick={updateUser}>
-                <ThumbUpOutlinedIcon style={{ marginRight: "4px" }} />
+                <ThumbUpOutlinedIcon
+                  fontSize="small"
+                  style={{ marginRight: "4px" }}
+                />
                 Ya
               </button>
             </div>

@@ -563,7 +563,10 @@ function Profil() {
                           navigate("/");
                         }}
                       >
-                        <ReplayIcon style={{ marginRight: "4px" }} />
+                        <ReplayIcon
+                          fontSize="small"
+                          style={{ marginRight: "4px" }}
+                        />
                         Batal
                       </button>
                       <button
@@ -572,7 +575,10 @@ function Profil() {
                           handleClickOpenConfirmation();
                         }}
                       >
-                        <DescriptionIcon style={{ marginRight: "4px" }} />
+                        <DescriptionIcon
+                          fontSize="small"
+                          style={{ marginRight: "4px" }}
+                        />
                         Submit
                       </button>
                     </div>
@@ -627,7 +633,7 @@ function Profil() {
                           Tidak
                         </Button>
                         <button
-                          className="hover-button"
+                          className="hover-button-no-icon"
                           style={{ paddingLeft: "15px", paddingRight: "15px" }}
                           onClick={updateUser}
                         >

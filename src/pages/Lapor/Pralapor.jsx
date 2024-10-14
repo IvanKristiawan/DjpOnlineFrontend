@@ -645,11 +645,11 @@ function Pralapor() {
               </Box>
               <Box sx={tableContainer}>
                 <Pagination
+                  shape="rounded"
+                  color="primary"
                   count={pages}
                   page={page + 1}
                   onChange={handleChange}
-                  color="secondary"
-                  variant="outlined"
                   size={screenSize <= 600 ? "small" : "large"}
                 />
               </Box>
@@ -799,7 +799,7 @@ function Pralapor() {
             }}
           >
             <button
-              className="hover-button"
+              className="hover-button-no-icon"
               style={{ paddingLeft: "15px", paddingRight: "15px" }}
               onClick={handleCloseInfo}
             >

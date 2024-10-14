@@ -209,6 +209,8 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
         let savedEBupotUnifikasiPphDisetorSendiri = await axios.post(
           `${tempUrl}/saveEBupotUnifikasiPphDisetorSendiri`,
           {
+            userId: user.id,
+
             jenisBuktiPenyetoran,
             eBillingId,
             kodeObjekPajak: kodeObjekPajak.split(" -", 2)[0],
@@ -431,7 +433,10 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
                             handleClickOpenConfirmationSearchSuratSetoranPajak()
                           }
                         >
-                          <SearchIcon style={{ marginRight: "4px" }} />
+                          <SearchIcon
+                            fontSize="small"
+                            style={{ marginRight: "4px" }}
+                          />
                           Cek Surat Setoran Pajak
                         </button>
                         <p style={{ marginTop: "20px" }}>
@@ -474,7 +479,10 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
                       </div>
                       <div style={inputWrapperCek}>
                         <button className="hover-button" type="submit">
-                          <SearchIcon style={{ marginRight: "4px" }} />
+                          <SearchIcon
+                            fontSize="small"
+                            style={{ marginRight: "4px" }}
+                          />
                           Cek Pemindahbukuan
                         </button>
                         <p style={{ marginTop: "20px" }}>
@@ -640,7 +648,7 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
                   style={{ marginRight: "4px" }}
                   onClick={saveEbupotUnifikasiInputPphDisetorSendiri}
                 >
-                  <SaveIcon style={{ marginRight: "4px" }} />
+                  <SaveIcon fontSize="small" style={{ marginRight: "4px" }} />
                   Simpan
                 </button>
                 <button
@@ -649,7 +657,7 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
                     navigate("/ebupotUnifikasi/daftarDisetorSendiri");
                   }}
                 >
-                  <ReplayIcon style={{ marginRight: "4px" }} />
+                  <ReplayIcon fontSize="small" style={{ marginRight: "4px" }} />
                   Batal
                 </button>
               </div>
@@ -696,7 +704,7 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
             }}
           >
             <button
-              className="hover-button"
+              className="hover-button-no-icon"
               style={{ paddingTop: "10px" }}
               onClick={handleCloseConfirmationSearchSuratSetoranPajak}
             >
@@ -781,7 +789,7 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
             }}
           >
             <button
-              className="hover-button"
+              className="hover-button-no-icon"
               style={{
                 paddingTop: "10px",
                 paddingLeft: "20px",

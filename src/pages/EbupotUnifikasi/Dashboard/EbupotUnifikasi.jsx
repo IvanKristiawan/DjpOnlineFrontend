@@ -115,7 +115,10 @@ function EbupotUnifikasi() {
                     className="ebupot-unifikasi-refresh-button"
                     // onClick={handleCloseInfo}
                   >
-                    <RefreshIcon style={{ marginRight: "5px" }} />
+                    <RefreshIcon
+                      fontSize="small"
+                      style={{ marginRight: "5px" }}
+                    />
                     Refresh
                   </button>
                 </div>
@@ -149,11 +152,11 @@ function EbupotUnifikasi() {
               </Box>
               <Box sx={tableContainer}>
                 <Pagination
+                  shape="rounded"
+                  color="primary"
                   count={pages}
                   page={page + 1}
                   onChange={handleChange}
-                  color="secondary"
-                  variant="outlined"
                   size={screenSize <= 600 ? "small" : "large"}
                 />
               </Box>
@@ -172,11 +175,11 @@ function EbupotUnifikasi() {
               </Box>
               <Box sx={tableContainer}>
                 <Pagination
+                  shape="rounded"
+                  color="primary"
                   count={pages}
                   page={page + 1}
                   onChange={handleChange}
-                  color="secondary"
-                  variant="outlined"
                   size={screenSize <= 600 ? "small" : "large"}
                 />
               </Box>

@@ -11,7 +11,7 @@ import {
   HeaderMainProfil,
   MainMenuEbupotUnifikasi,
 } from "../../../components/index";
-import { ShowTableEbupotUnifikasiPphDisetorSendiri } from "../../../components/ShowTable";
+import { ShowTableEbupotUnifikasiPph42152223 } from "../../../components/ShowTable";
 import "../../../constants/defaultProgram.css";
 import { Card, Form, Spinner } from "react-bootstrap";
 import {
@@ -27,49 +27,75 @@ import {
 } from "@mui/material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import SearchIcon from "@mui/icons-material/Search";
+import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 
 // Petunjuk Pengisian component
 const PetunjukPengisianComponent = () => {
   return (
     <div>
       <p>
-        <b>Deskripsi Form:</b> Form ini menampilkan data Data Bukti Setor atas
-        PPh yang disetor sendiri yang telah direkam.
+        <b>Deskripsi Form:</b> Form ini menampilkan data Data Bukti Potong PPh
+        Unifikasi yang telah dibuat/direkam.
       </p>
       <p>
-        Anda dapat menggunakan form ini untuk melihat data ringkas Bukti Setor
-        atas PPh yang disetor sendiri yang mencakup Masa Pajak, Objek Pajak,
-        Nomor Bukti Setor serta nominal Jumlah Penghasilan Bruto dan PPh yang
-        disetor.
+        Anda dapat menggunakan form ini untuk melihat data ringkas Bukti Potong
+        yang mencakup Masa Pajak, Objek Pajak, Nomor Bukti Pemotongan, Identitas
+        Wajib Pajak, Nama Wajib Pajak serta nominal DPP dan Pajak Peghasilan
+        yang dipotong.
       </p>
-      <p>
-        Pada kolom paling kanan, tersedia tombol aksi yang berfungsi untuk :
-      </p>
+      <p>Pada kolom paling kanan, tersedia tombol aksi yang berfungsi :</p>
       <ul>
-        <li>Melakukan perubahan data Bukti Setor yang sudah direkam.</li>
-        <li>Melakukan penghapusan data Bukti Setor sudah direkam.</li>
+        <li>
+          Untuk melihat dokumen bukti pemotongan, serta untuk mengunduh atau
+          mencetaknya (pastikan Anda telah memasang add on PDF Reader pada
+          browser Anda.)
+        </li>
+        <li>
+          Untuk melakukan perubahan data Bukti Potong yang sudah direkam. Jika
+          Bukti Potong telah dilaporkan dalam SPT dan disampaikan ke DITJEN
+          PAJAK, maka proses perubahan mengakibatkan status Bukti Potong menjadi
+          PEMBETULAN.
+        </li>
+        <li>
+          Untuk melakukan penghapusan data Bukti Potong yang sudah direkam. Jika
+          Bukti Potong telah dilaporkan dalam SPT dan disampaikan ke DITJEN
+          PAJAK, maka proses penghapusan menjadikan status Bukti Pemotongan
+          tersebut adalah BATAL.
+        </li>
+        <li>
+          Untuk mengirimkan dokumen bukti pemotongan berupa file PDF kepada
+          Wajib Pajak yang Penghasilannya telah dipotong.
+        </li>
       </ul>
-      <p>Kolom Status menunjukkan status dari Bukti Setor.</p>
       <p>
-        Untuk melakukan filter pencarian data bukti setor, Anda dapat
+        Kolom Status menunjukkan status dari Bukti Pemotongan apakah Normal,
+        Ganti, Hapus atau Batal.
+      </p>
+      <p>
+        Untuk melakukan filter pencarian data bukti pemotongan, Anda dapat
         menggunakan filter yang disediakan mencakup filter dengan Nomor Bukti
-        Setor maupun period.
+        Pemotongan, Identitas Wajib Pajak yang dipotong maupun periode.
+      </p>
+      <p>
+        Sebelum melakukan ekspor data ke excel silahkan melakukan pencarian
+        daftar bukti potong terlebih dahulu.
       </p>
     </div>
   );
 };
 
-function EbupotUnifikasiDaftarPphDisetorSendiri() {
+function EbupotUnifikasiDaftarPph42152223() {
   const { screenSize } = useStateContext();
   const { user, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [kataKunciSearch, setKataKunciSearch] = useState("");
+  const [nomorBuktiSetor, setNomorBuktiSetor] = useState("");
+  const [identitas, setIdentitas] = useState("");
   const [pencairanBerdasarkan, setPencairanBerdasarkan] = useState("Periode");
 
   const [openLoading, setOpenLoading] = useState(false);
   const [
-    eBupotUnifikasiPphDisetorSendiriPagination,
-    setEBupotUnifikasiPphDisetorSendiriPagination,
+    eBupotUnifikasiPph42152223Pagination,
+    setEBupotUnifikasiPph42152223Pagination,
   ] = useState([]);
   let [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -112,22 +138,28 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
       label: "Nomor Bukti Setor",
     },
     {
+      label: "Identitas",
+    },
+    {
       label: "Periode",
     },
   ];
 
   useEffect(() => {
-    getEBupotUnifikasiPphDisetorSendiriData();
+    getEBupotUnifikasiPph42152223Data();
   }, []);
 
-  const getEBupotUnifikasiPphDisetorSendiriData = async () => {
+  const getEBupotUnifikasiPph42152223Data = async () => {
     let tempCondition = pencairanBerdasarkan.length !== 0;
     if (pencairanBerdasarkan === "Periode") {
       tempCondition =
         pencairanBerdasarkan.length !== 0 && masaTahunPajakSearch.length !== 0;
+    } else if (pencairanBerdasarkan === "Nomor Bukti Setor") {
+      tempCondition =
+        pencairanBerdasarkan.length !== 0 && nomorBuktiSetor.length !== 0;
     } else {
       tempCondition =
-        pencairanBerdasarkan.length !== 0 && kataKunciSearch.length !== 0;
+        pencairanBerdasarkan.length !== 0 && identitas.length !== 0;
     }
 
     if (tempCondition) {
@@ -135,19 +167,20 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
 
       setTimeout(async () => {
         const response = await axios.post(
-          `${tempUrl}/eBupotUnifikasiPphDisetorSendirisByUserSearchPagination`,
+          `${tempUrl}/eBupotUnifikasiPph42152223sByUserSearchPagination`,
           {
-            userEBupotUnifikasiPphDisetorSendiriId: user.id,
+            userEBupotUnifikasiPph42152223Id: user.id,
             pencairanBerdasarkan,
             masaTahunPajakSearch,
-            kataKunciSearch,
+            nomorBuktiSetor,
+            identitas,
             _id: user.id,
             token: user.token,
             kodeCabang: user.cabang.id,
           }
         );
-        setEBupotUnifikasiPphDisetorSendiriPagination(
-          response.data.eBupotUnifikasiPphDisetorSendiris
+        setEBupotUnifikasiPph42152223Pagination(
+          response.data.eBupotUnifikasiPph42152223s
         );
         setPage(response.data.page);
         setPages(response.data.totalPage);
@@ -157,24 +190,27 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
     }
   };
 
-  const deleteEBupotUnifikasiPphDisetorSendiri = async (id) => {
+  const deleteEBupotUnifikasiPph42152223 = async (id) => {
     setOpenLoading(true);
     try {
       await axios.post(
-        `${tempUrl}/deleteEBupotUnifikasiPphDisetorSendiri/${id}`,
+        `${tempUrl}/statusDeleteEBupotUnifikasiPph42152223/${id}`,
         {
           _id: user.id,
           token: user.token,
         }
       );
-      setEBupotUnifikasiPphDisetorSendiriPagination([]);
-      navigate("/ebupotUnifikasi/daftarDisetorSendiri");
+
+      setTimeout(async () => {
+        getEBupotUnifikasiPph42152223Data();
+        setOpenLoading(false);
+      }, 500);
     } catch (error) {
       if (error.response.data.message.includes("foreign key")) {
         // alert(`${namaKategoriKlu} tidak bisa dihapus karena sudah ada data!`);
       }
+      setOpenLoading(false);
     }
-    setOpenLoading(false);
   };
 
   const inputContainer = {
@@ -238,8 +274,24 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
           <MenuEbupotUnifikasi />
           <Card style={{ marginTop: "20px" }}>
             <Card.Header style={inputTitle}>
-              <FormatListBulletedIcon style={{ marginRight: "10px" }} />
-              Daftar Bukti Setor atas PPh yang disetor Sendiri
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div>
+                  <FormatListBulletedIcon style={{ marginRight: "10px" }} />
+                  Daftar Bukti Potong Pasal 4 ayat (2), 15, 22, 23
+                </div>
+                <div>
+                  <button
+                    className="ebupot-unifikasi-refresh-button"
+                    // onClick={handleCloseInfo}
+                  >
+                    <InsertDriveFileIcon
+                      fontSize="small"
+                      style={{ marginRight: "5px" }}
+                    />
+                    Ekspor Excel
+                  </button>
+                </div>
+              </div>
             </Card.Header>
             <Card.Body>
               <div style={{ marginTop: "20px" }}>
@@ -268,7 +320,7 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
                   <div style={searchWrapper2}>
                     <div style={{ marginBottom: "5px" }}>Kata Kunci</div>
                     <div>
-                      {pencairanBerdasarkan === "Periode" ? (
+                      {pencairanBerdasarkan === "Periode" && (
                         <Autocomplete
                           size="small"
                           disablePortal
@@ -286,12 +338,21 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
                           }}
                           value={masaTahunPajakSearch}
                         />
-                      ) : (
+                      )}
+                      {pencairanBerdasarkan === "Nomor Bukti Setor" && (
                         <Form.Control
                           required
                           className="mb-3"
-                          value={kataKunciSearch}
-                          onChange={(e) => setKataKunciSearch(e.target.value)}
+                          value={nomorBuktiSetor}
+                          onChange={(e) => setNomorBuktiSetor(e.target.value)}
+                        />
+                      )}
+                      {pencairanBerdasarkan === "Identitas" && (
+                        <Form.Control
+                          required
+                          className="mb-3"
+                          value={identitas}
+                          onChange={(e) => setIdentitas(e.target.value)}
                         />
                       )}
                     </div>
@@ -303,7 +364,7 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
                     <div>
                       <button
                         className="cari-pralapor-button"
-                        onClick={getEBupotUnifikasiPphDisetorSendiriData}
+                        onClick={getEBupotUnifikasiPph42152223Data}
                       >
                         <SearchIcon style={{ marginRight: "5px" }} />
                         Cari
@@ -333,9 +394,9 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
                 <p style={{ paddingTop: "10px" }}>Entry</p>
               </div>
               <Box>
-                <ShowTableEbupotUnifikasiPphDisetorSendiri
-                  currentPosts={eBupotUnifikasiPphDisetorSendiriPagination}
-                  deleteFunction={deleteEBupotUnifikasiPphDisetorSendiri}
+                <ShowTableEbupotUnifikasiPph42152223
+                  currentPosts={eBupotUnifikasiPph42152223Pagination}
+                  deleteFunction={deleteEBupotUnifikasiPph42152223}
                 />
               </Box>
               <Box sx={tableContainer}>
@@ -391,7 +452,7 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
   );
 }
 
-export default EbupotUnifikasiDaftarPphDisetorSendiri;
+export default EbupotUnifikasiDaftarPph42152223;
 
 const menuLaporContainer = {
   display: "flex",

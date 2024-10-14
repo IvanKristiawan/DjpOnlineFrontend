@@ -4,10 +4,10 @@ export const formatDate = (date) => {
   return `${tempDate.getDate().toLocaleString("en-US", {
     minimumIntegerDigits: 2,
     useGrouping: false,
-  })}-${(tempDate.getMonth() + 1).toLocaleString("en-US", {
+  })}/${(tempDate.getMonth() + 1).toLocaleString("en-US", {
     minimumIntegerDigits: 2,
     useGrouping: false,
-  })}-${tempDate.getFullYear()}`;
+  })}/${tempDate.getFullYear()}`;
 };
 
 export const formatTime = (datetime) => {
@@ -108,4 +108,121 @@ export const generateRandomString = function (length) {
   }
 
   return result;
+};
+
+export const dasarPemotonganDokumenOptions = function () {
+  let namaDokumenOptions = [
+    {
+      label: "Faktur Pajak",
+    },
+    {
+      label: "Invoice",
+    },
+    {
+      label: "Pengumuman",
+    },
+    {
+      label: "Surat Perjanjian",
+    },
+    {
+      label: "Bukti Pembayaran",
+    },
+    {
+      label: "Akta Perikatan",
+    },
+    {
+      label: "Akta RUPS",
+    },
+    {
+      label: "Surat Pernyataan",
+    },
+  ];
+
+  return namaDokumenOptions;
+};
+
+// Arrays of common Indonesian first names and last names
+const firstNames = [
+  "AGUS",
+  "PUTRI",
+  "RIZKY",
+  "DEWI",
+  "BUDI",
+  "SITI",
+  "AHMAD",
+  "NUR",
+  "SRI",
+  "EKA",
+  "HENDRA",
+  "FIRMAN",
+  "WATI",
+  "JOKO",
+  "ANDRI",
+  "TIARA",
+  "YUDI",
+  "LINA",
+  "IRFAN",
+  "WIDYA",
+];
+const lastNames = [
+  "SANTOSO",
+  "SAPUTRA",
+  "WIJAYA",
+  "RAHMAN",
+  "PRATAMA",
+  "HARYANTO",
+  "SUKARNO",
+  "IRAWAN",
+  "SUSANTI",
+  "LESTARI",
+  "CAHYONO",
+  "PURNOMO",
+  "SUHARTO",
+  "HIDAYAT",
+  "SETIAWAN",
+  "KUSUMA",
+  "FIRMANSYAH",
+  "MULYANI",
+  "ANGGRAINI",
+  "BASTIAN",
+];
+
+// Function to generate a random name
+export const getRandomIndonesianName = function () {
+  const randomFirstName =
+    firstNames[Math.floor(Math.random() * firstNames.length)];
+  const randomLastName =
+    lastNames[Math.floor(Math.random() * lastNames.length)];
+  return `${randomFirstName} ${randomLastName}`;
+};
+
+// Arrays of common Indonesian street names (all uppercase)
+const streetNames = [
+  "JALAN SUDIRMAN",
+  "JALAN THAMRIN",
+  "JALAN MANGGA BESAR",
+  "JALAN GAJAH MADA",
+  "JALAN MH THAMRIN",
+  "JALAN MEDAN MERDEKA",
+  "JALAN DIPONEGORO",
+  "JALAN AHMAD YANI",
+  "JALAN PAHLAWAN",
+  "JALAN PEMUDA",
+  "JALAN MERDEKA",
+  "JALAN KENANGA",
+  "JALAN MELATI",
+  "JALAN MAWAR",
+  "JALAN KUSUMA BANGSA",
+  "JALAN JENDERAL SOEDIRMAN",
+  "JALAN LETJEN S. PARMAN",
+  "JALAN LETJEN SUPRAPTO",
+  "JALAN SUTOMO",
+  "JALAN SISINGAMANGARAJA",
+];
+
+// Function to generate a random street name
+export const getRandomIndonesianStreetName = function () {
+  const randomStreet =
+    streetNames[Math.floor(Math.random() * streetNames.length)];
+  return randomStreet;
 };

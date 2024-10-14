@@ -461,11 +461,11 @@ function Lapor() {
               </Box>
               <Box sx={tableContainer}>
                 <Pagination
+                  shape="rounded"
+                  color="primary"
                   count={pages}
                   page={page + 1}
                   onChange={handleChange}
-                  color="secondary"
-                  variant="outlined"
                   size={screenSize <= 600 ? "small" : "large"}
                 />
               </Box>

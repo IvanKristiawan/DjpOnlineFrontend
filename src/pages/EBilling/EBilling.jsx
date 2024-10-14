@@ -12,7 +12,11 @@ import {
 } from "../../components/index";
 import "../../constants/defaultProgram.css";
 import CaptchaImage from "../../assets/Captcha Image.jpeg";
-import { generateRandomString } from "../../constants/helper";
+import {
+  generateRandomString,
+  getRandomIndonesianName,
+  getRandomIndonesianStreetName,
+} from "../../constants/helper";
 import { Card, Form, Row, Col } from "react-bootstrap";
 import {
   Paper,
@@ -890,8 +894,12 @@ function EBilling() {
                                       setSubjekPajakNikNpwp16(
                                         padded15DigitNikNpwp16
                                       );
-                                      setSubjekPajakNama("CONTOH NAMA");
-                                      setSubjekPajakAlamat("CONTOH ALAMAT");
+                                      setSubjekPajakNama(
+                                        getRandomIndonesianName()
+                                      );
+                                      setSubjekPajakAlamat(
+                                        getRandomIndonesianStreetName()
+                                      );
                                     } else {
                                       setSubjekPajakNitku(user.nitku);
                                       setSubjekPajakNikNpwp16(user.nikNpwp16);
@@ -1126,11 +1134,17 @@ function EBilling() {
                         setJumlahSetor("");
                       }}
                     >
-                      <ReplayIcon style={{ marginRight: "4px" }} />
+                      <ReplayIcon
+                        fontSize="small"
+                        style={{ marginRight: "4px" }}
+                      />
                       Kosongkan
                     </button>
                     <button className="hover-button" type="submit">
-                      <SaveOutlinedIcon style={{ marginRight: "4px" }} />
+                      <SaveOutlinedIcon
+                        fontSize="small"
+                        style={{ marginRight: "4px" }}
+                      />
                       Buat Kode Billing
                     </button>
                   </div>
@@ -1209,13 +1223,13 @@ function EBilling() {
         </DialogContent>
         <DialogActions>
           <button
-            className="blank-button"
+            className="blank-button-no-icon"
             style={{ marginRight: "4px" }}
             onClick={handleCloseConfirmation}
           >
             Batal
           </button>
-          <button className="hover-button" onClick={saveEBilling}>
+          <button className="hover-button-no-icon" onClick={saveEBilling}>
             Submit
           </button>
         </DialogActions>
@@ -1625,14 +1639,14 @@ function EBilling() {
         </DialogContent>
         <DialogActions>
           <button
-            className="blank-button"
+            className="blank-button-no-icon"
             style={{ marginRight: "4px" }}
             onClick={handleCloseSaved}
           >
             Tutup
           </button>
           <button
-            className="hover-button"
+            className="hover-button-no-icon"
             // onClick={saveEBilling}
             onClick={() => downloadPdf()}
           >

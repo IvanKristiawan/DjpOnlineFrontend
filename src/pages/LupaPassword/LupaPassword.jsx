@@ -242,11 +242,11 @@ function LupaPassword() {
                     navigate("/");
                   }}
                 >
-                  <ReplayIcon style={{ marginRight: "4px" }} />
+                  <ReplayIcon fontSize="small" style={{ marginRight: "4px" }} />
                   Batal
                 </button>
                 <button className="hover-button" type="submit">
-                  <DescriptionIcon style={{ marginRight: "4px" }} />
+                  <DescriptionIcon fontSize="small" style={{ marginRight: "4px" }} />
                   Submit
                 </button>
               </div>

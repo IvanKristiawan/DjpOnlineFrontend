@@ -165,7 +165,7 @@ function Informasi() {
                 {openKartu === false && (
                   <div style={{ padding: "30px" }}>
                     <button
-                      className="hover-button"
+                      className="hover-button-no-icon"
                       onClick={() => setOpenKartu(true)}
                     >
                       Tampilkan NPWP
@@ -177,7 +177,7 @@ function Informasi() {
                   <>
                     <div style={{ padding: "30px" }}>
                       <button
-                        className="hover-button"
+                        className="hover-button-no-icon"
                         onClick={() => setOpenKartu(false)}
                       >
                         Sembunyikan NPWP
@@ -245,7 +245,7 @@ function Informasi() {
                     menekan tombol di bawah.
                   </p>
                   <button className="hover-button">
-                    <MailIcon /> Kirim Email
+                    <MailIcon fontSize="small" /> Kirim Email
                   </button>
                 </div>
               </div>
