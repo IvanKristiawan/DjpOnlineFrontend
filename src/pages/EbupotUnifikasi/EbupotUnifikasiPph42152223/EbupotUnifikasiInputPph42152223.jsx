@@ -2057,6 +2057,7 @@ function EbupotUnifikasiInputPph42152223() {
                     <Col sm="8">
                       <Form.Control
                         required
+                        isInvalid={validated && noDokumen.length === 0}
                         value={noDokumen}
                         onChange={(e) => {
                           setNoDokumen(e.target.value);
@@ -2103,18 +2104,27 @@ function EbupotUnifikasiInputPph42152223() {
             <button
               className="hover-button"
               onClick={() => {
-                dasarPemotonganPagination.push({
-                  namaDokumen: namaDokumen,
-                  noDokumen: noDokumen,
-                  tanggalDokumen: tanggalDokumen,
-                });
-                setReloadDasarPemotongan(Math.floor(Math.random() * 1000));
+                let tempValidation =
+                  namaDokumen.length !== 0 &&
+                  noDokumen.length !== 0 &&
+                  tanggalDokumen.length !== 0;
 
-                handleCloseSavedDokumenDasarPemotongan();
+                if (tempValidation) {
+                  dasarPemotonganPagination.push({
+                    namaDokumen: namaDokumen,
+                    noDokumen: noDokumen,
+                    tanggalDokumen: tanggalDokumen,
+                  });
+                  setReloadDasarPemotongan(Math.floor(Math.random() * 1000));
 
-                setNamaDokumen("");
-                setNoDokumen("");
-                setTanggalDokumen(new Date());
+                  handleCloseSavedDokumenDasarPemotongan();
+
+                  setNamaDokumen("");
+                  setNoDokumen("");
+                  setTanggalDokumen(new Date());
+                } else {
+                  setValidated(true);
+                }
               }}
             >
               <AddCircleIcon fontSize="small" />

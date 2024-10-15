@@ -13,11 +13,8 @@ import {
   usePagination,
 } from "../../../components/index";
 import "../../../constants/defaultProgram.css";
-import {
-  dasarPemotonganDokumenOptions,
-  getRandomIndonesianName,
-} from "../../../constants/helper";
-import { ShowTableDaftarDokumenPph42152223 } from "../../../components/ShowTable";
+import { dasarPemotonganDokumenOptions } from "../../../constants/helper";
+import { ShowTableDaftarDokumenPphNonResiden } from "../../../components/ShowTable";
 import {
   Card,
   Form,
@@ -37,12 +34,8 @@ import {
   DialogContentText,
   DialogTitle,
   Accordion,
-  AccordionActions,
   AccordionSummary,
   AccordionDetails,
-  FormGroup,
-  FormControlLabel,
-  Switch,
   Box,
   Pagination,
 } from "@mui/material";
@@ -91,24 +84,30 @@ const PetunjukPengisianComponent = () => {
           tahun pajak yang Anda Pilih.
         </li>
         <li>
-          Nomo Bukti Potong, isikan nomor bukti potong sesuai dengan Identitas,
-          Identitas yang dperbolehkan digunakan hanya NPWP atau NIK(KTP), jika
-          tidak memiliki, maka tidak diperbolehkan untuk dilakukan perekaman
-          data dengan ketentuan yang berlaku.
+          Nomo Bukti Potong, isikan nomor bukti potong sesuai dengan ketentuan
+          yang berlaku.
         </li>
         <li>
-          Dalam hal NPWP yang digunakan sebagai identitas, masukkan NPWP dari
-          Wajib pajak yang dipotong, Sistem akan melakukan pencarian otomatis
-          atas NPWP tersebut dan jika ditemukan datanya akan ditampilkan
-          data-data yang sesuai pada isian dibawahnya.
+          Tax ID Number (TIN), Id ini harus diisi dengan data yang valid, tidak
+          diperbolehkan mengisi dengan nilai "0000..".
         </li>
         <li>
-          Dalam hal NIK yang digunakan sebagai identitas, masukkan NIK dari
-          Wajib Pajak yang dipotong, Sistem akan melakukan pencarian data secara
-          otomatis ke data yang bersumber dari Kementerian Dalam Negeri atas NIK
-          yang dimasukkan.
+          Nama, isikan nama wajib pajak sesuai dengan yang tertera pada dokumen
+          kewarganegaraannya atau Paspor.
         </li>
-        <li>Tidak diperbolehkan menggunakan identitas yang tidak valid.</li>
+        <li>
+          Alamat, isikan alamat wajib pajak sesuai dengan dokumen
+          kewarganegaraannya.
+        </li>
+        <li>
+          Negara,pilihkan Asal negara yang sesuai dari pilihan yang tersedia.
+        </li>
+        <li>
+          Tanggal Lahir,isikan tanggal lahir sesuai dengan dokumen
+          kewarganegaraannya.
+        </li>
+        <li>No Paspor,cukup jelas.</li>
+        <li>No KITAS/KITAP,cukup jelas.</li>
       </ul>
       <p>
         <b>BAGIAN II,</b> Penghasilan Yang Dipotong
@@ -143,13 +142,14 @@ const PetunjukPengisianComponent = () => {
           </ol>
         </li>
         <li>
-          Dengan memilih Kode Objek Pajak, Sistem akan melakukan pencarian
-          secara otomatis tarif dari jenis objek pajak.
+          Secara default tarif terisi otomatis berdasarkan Kode Objek Pajak yang
+          dipilih, tetapi jika menggunakan fasilitas SKD WPLN atau Fasilitas
+          Lainnya, maka Wajib Pajak harus mengisikan tarif secara manual.
         </li>
         <li>
           Isikan nilai nominal Penghasilan Bruto pada kotak yang tersedia,
           Sistem akan menghitung secara otomatis nilai Pajak Penghasilan yang
-          dipotong
+          dipotong.
         </li>
       </ul>
       <p>
@@ -160,6 +160,7 @@ const PetunjukPengisianComponent = () => {
         pemotongan penghasilan. Untuk mengisi dokumen pendukung, klik tombol
         tambah, kemudian, isilah data dokumen pendukung yang sesuai.
       </p>
+
       <p>
         <b>BAGIAN IV,</b> Identitas Pemotong
       </p>
@@ -184,25 +185,11 @@ const PetunjukPengisianComponent = () => {
           klik tombol simpan untuk menyimpan data.
         </li>
       </ul>
-
-      <p>
-        Pada kolom paling kanan, tersedia tombol aksi yang berfungsi untuk :
-      </p>
-      <ul>
-        <li>Melakukan perubahan data Bukti Setor yang sudah direkam.</li>
-        <li>Melakukan penghapusan data Bukti Setor sudah direkam.</li>
-      </ul>
-      <p>Kolom Status menunjukkan status dari Bukti Setor.</p>
-      <p>
-        Untuk melakukan filter pencarian data bukti setor, Anda dapat
-        menggunakan filter yang disediakan mencakup filter dengan Nomor Bukti
-        Setor maupun period.
-      </p>
     </div>
   );
 };
 
-function EbupotUnifikasiUbahPph42152223() {
+function EbupotUnifikasiUbahPphNonResiden() {
   const { screenSize } = useStateContext();
   const { user, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -224,32 +211,40 @@ function EbupotUnifikasiUbahPph42152223() {
 
   const [masaPajak, setMasaPajak] = useState("");
   const [masaPajakOptions, setMasaPajakOptions] = useState([]);
-  const [identitas, setIdentitas] = useState("NPWP/NITKU");
-  const [npwpNitku, setNpwpNitku] = useState("");
-  const [nik, setNik] = useState("");
+  const [tin, setTin] = useState("");
   const [nama, setNama] = useState("");
-  const [isNikValid, setIsNikValid] = useState(false);
+  const [alamat, setAlamat] = useState("");
+  const [tempatLahir, setTempatLahir] = useState("");
+  const [noPaspor, setNoPaspor] = useState("");
+  const [namaNegara, setNamaNegara] = useState("");
+  const [tanggalLahir, setTanggalLahir] = useState();
+  const [noKitasKitap, setNoKitasKitap] = useState("");
 
   const [fasilitasPajakPenghasilan, setFasilitasPajakPenghasilan] =
     useState("Tanpa Fasilitas");
 
   // 02.) Accordion 2
-  const [nomorSuratKeteranganBebas, setNomorSuratKeteranganBebas] =
-    useState("");
+  const [nomorSkdWpln, setNomorSkdWpln] = useState("");
   const [nomorPPhDitanggungPemerintah, setNomorPPhDitanggungPemerintah] =
     useState("");
-  const [
-    nomorSuratKeteranganBerdasarkanPPNo232018,
-    setNomorSuratKeteranganBerdasarkanPPNo232018,
-  ] = useState("");
   const [
     nomorFasilitasLainnyaberdasarkan,
     setNomorFasilitasLainnyaberdasarkan,
   ] = useState("");
   const [kodeObjekPajak, setKodeObjekPajak] = useState("");
   const [jumlahPenghasilanBruto, setJumlahPenghasilanBruto] = useState("");
+  const [perkiraanPenghasilanNetto, setPerkiraanPenghasilanNetto] =
+    useState("");
   const [tarif, setTarif] = useState("");
   const [pPhYangDipotongDipungut, setPPhYangDipotongDipungut] = useState("");
+  const [
+    pilihanPerkiraanPenghasilanNetto,
+    setPilihanPerkiraanPenghasilanNetto,
+  ] = useState("5");
+  const [
+    openPilihanPerkiraanPenghasilanNetto,
+    setOpenPilihanPerkiraanPenghasilanNetto,
+  ] = useState(false);
 
   // 03.) Accordion 3
   const [openSavedDokumenDasarPemotongan, setOpenSavedDokumenDasarPemotongan] =
@@ -297,13 +292,7 @@ function EbupotUnifikasiUbahPph42152223() {
   const [openFoundIdentitasWp, setOpenFoundIdentitasWp] = useState(false);
   const [objekPajaks, setObjekPajaks] = useState([]);
   const [penandatangans, setPenandatangans] = useState([]);
-
-  // Handle identitas input change
-  const handleIdentitasChange = (e) => {
-    setIdentitas(e.target.value);
-    setNpwpNitku("");
-    setNama("");
-  };
+  const [negaras, setNegaras] = useState([]);
 
   const handleClickOpenSavedDokumenDasarPemotongan = (e) => {
     e.preventDefault();
@@ -325,6 +314,10 @@ function EbupotUnifikasiUbahPph42152223() {
     setOpenSaved(false);
   };
 
+  const handleClosePilihanPerkiraanPenghasilanNetto = () => {
+    setOpenPilihanPerkiraanPenghasilanNetto(false);
+  };
+
   const hapusDaftarPemotongan = (index) => {
     dasarPemotonganPagination.splice(index, 1);
 
@@ -337,6 +330,10 @@ function EbupotUnifikasiUbahPph42152223() {
 
   let namaIdentitasOptions = penandatangans.map((namaIdentitas) => ({
     label: `${namaIdentitas.namaIdentitas}`,
+  }));
+
+  let negarasOptions = negaras.map((negara) => ({
+    label: `${negara.namaNegara}`,
   }));
 
   let bertindakSebagaiOptions = [
@@ -356,50 +353,55 @@ function EbupotUnifikasiUbahPph42152223() {
     parseInt(pPhYangDipotongDipungut) > parseInt(jumlahPenghasilanBruto);
 
   useEffect(() => {
-    getEbupotUnifikasiUbahPph42152223ById();
+    getEbupotUnifikasiUbahPphNonResidenById();
     getObjekPajakData();
+    getNegara();
   }, []);
 
-  const getEbupotUnifikasiUbahPph42152223ById = async () => {
+  const getEbupotUnifikasiUbahPphNonResidenById = async () => {
     setOpenSearchIdentitasWp(true);
     const response = await axios.post(
-      `${tempUrl}/eBupotUnifikasiPph42152223s/${id}`,
+      `${tempUrl}/eBupotUnifikasiPphNonResidens/${id}`,
       {
         _id: user.id,
         token: user.token,
       }
     );
     // 01.) Accordion 1
-    setTahunPajak(response.data.eBupotUnifikasiPph42152223.tahunPajak);
-    setMasaPajak(response.data.eBupotUnifikasiPph42152223.masaPajak);
-    setIdentitas(response.data.eBupotUnifikasiPph42152223.identitas);
-    setNpwpNitku(response.data.eBupotUnifikasiPph42152223.npwpNitku);
-    setNik(response.data.eBupotUnifikasiPph42152223.nik);
-    setNama(response.data.eBupotUnifikasiPph42152223.nama);
+    setTahunPajak(response.data.eBupotUnifikasiPphNonResiden.tahunPajak);
+    setMasaPajak(response.data.eBupotUnifikasiPphNonResiden.masaPajak);
+    setTin(response.data.eBupotUnifikasiPphNonResiden.tin);
+    setNama(response.data.eBupotUnifikasiPphNonResiden.nama);
+    setAlamat(response.data.eBupotUnifikasiPphNonResiden.alamat);
+    setTempatLahir(response.data.eBupotUnifikasiPphNonResiden.tempatLahir);
+    setNoPaspor(response.data.eBupotUnifikasiPphNonResiden.noPaspor);
+    setNamaNegara(response.data.eBupotUnifikasiPphNonResiden.negara.namaNegara);
+    setTanggalLahir(
+      new Date(response.data.eBupotUnifikasiPphNonResiden.tanggalLahir)
+    );
+    setNoKitasKitap(response.data.eBupotUnifikasiPphNonResiden.noKitasKitap);
 
     // 02.) Accordion 2
-    setNomorSuratKeteranganBebas(
-      response.data.eBupotUnifikasiPph42152223.nomorSuratKeteranganBebas
-    );
+    setNomorSkdWpln(response.data.eBupotUnifikasiPphNonResiden.nomorSkdWpln);
     setNomorPPhDitanggungPemerintah(
-      response.data.eBupotUnifikasiPph42152223.nomorPPhDitanggungPemerintah
-    );
-    setNomorSuratKeteranganBerdasarkanPPNo232018(
-      response.data.eBupotUnifikasiPph42152223
-        .nomorSuratKeteranganBerdasarkanPPNo232018
+      response.data.eBupotUnifikasiPphNonResiden.nomorPPhDitanggungPemerintah
     );
     setNomorFasilitasLainnyaberdasarkan(
-      response.data.eBupotUnifikasiPph42152223.nomorFasilitasLainnyaberdasarkan
+      response.data.eBupotUnifikasiPphNonResiden
+        .nomorFasilitasLainnyaberdasarkan
     );
     setKodeObjekPajak(
-      `${response.data.eBupotUnifikasiPph42152223.objekpajak.kodeObjekPajak} - ${response.data.eBupotUnifikasiPph42152223.objekpajak.namaObjekPajak}`
+      `${response.data.eBupotUnifikasiPphNonResiden.objekpajak.kodeObjekPajak} - ${response.data.eBupotUnifikasiPphNonResiden.objekpajak.namaObjekPajak}`
     );
     setJumlahPenghasilanBruto(
-      response.data.eBupotUnifikasiPph42152223.jumlahPenghasilanBruto
+      response.data.eBupotUnifikasiPphNonResiden.jumlahPenghasilanBruto
     );
-    setTarif(response.data.eBupotUnifikasiPph42152223.tarif);
+    setPerkiraanPenghasilanNetto(
+      response.data.eBupotUnifikasiPphNonResiden.perkiraanPenghasilanNetto
+    );
+    setTarif(response.data.eBupotUnifikasiPphNonResiden.tarif);
     setPPhYangDipotongDipungut(
-      response.data.eBupotUnifikasiPph42152223.pPhYangDipotongDipungut
+      response.data.eBupotUnifikasiPphNonResiden.pPhYangDipotongDipungut
     );
 
     // 03.) Accordion 3
@@ -407,13 +409,13 @@ function EbupotUnifikasiUbahPph42152223() {
 
     // 04.) Accordion 4
     setBertindakSebagai(
-      response.data.eBupotUnifikasiPph42152223.penandatangan.bertindakSebagai
+      response.data.eBupotUnifikasiPphNonResiden.penandatangan.bertindakSebagai
     );
     setNamaIdentitas(
-      response.data.eBupotUnifikasiPph42152223.penandatangan.namaIdentitas
+      response.data.eBupotUnifikasiPphNonResiden.penandatangan.namaIdentitas
     );
     setTindakanKelebihanPemotonganPph(
-      response.data.eBupotUnifikasiPph42152223.tindakanKelebihanPemotonganPph
+      response.data.eBupotUnifikasiPphNonResiden.tindakanKelebihanPemotonganPph
     );
 
     setOpenSearchIdentitasWp(false);
@@ -421,7 +423,7 @@ function EbupotUnifikasiUbahPph42152223() {
 
   const getObjekPajakData = async () => {
     const response = await axios.post(`${tempUrl}/objekPajaksBupot`, {
-      kodeBupot: "0",
+      kodeBupot: "1",
       _id: user.id,
       token: user.token,
     });
@@ -473,11 +475,19 @@ function EbupotUnifikasiUbahPph42152223() {
       token: user.token,
     });
     if (response.data) {
+      setPerkiraanPenghasilanNetto(response.data.perkiraanPenghasilanNetto);
       setTarif(response.data.tarifPersen);
 
       let hitungPph =
-        (jumlahPenghasilanBruto * response.data.tarifPersen) / 100;
+        (((jumlahPenghasilanBruto * response.data.perkiraanPenghasilanNetto) /
+          100) *
+          response.data.tarifPersen) /
+        100;
       setPPhYangDipotongDipungut(parseInt(hitungPph));
+
+      if (response.data.pilihanPerkiraanPenghasilanNetto == "1") {
+        setOpenPilihanPerkiraanPenghasilanNetto(true);
+      }
     }
   };
 
@@ -508,6 +518,20 @@ function EbupotUnifikasiUbahPph42152223() {
     }
   };
 
+  const getNegara = async () => {
+    const response = await axios.post(`${tempUrl}/negaras`, {
+      userId: user.id,
+      _id: user.id,
+      token: user.token,
+    });
+    setNegaras(response.data);
+    setOpenSearchIdentitasWp(true);
+
+    setTimeout(async () => {
+      setOpenSearchIdentitasWp(false);
+    }, 500);
+  };
+
   const handleCloseConfirmationSearchSuratSetoranPajak = () => {
     setOpenConfirmationSearchIdentitasWp(false);
   };
@@ -530,37 +554,9 @@ function EbupotUnifikasiUbahPph42152223() {
     setTindakanKelebihanPemotonganPph(e.target.value);
   };
 
-  const handleClickOpenConfirmationSearchIdentitasWpNpwpNitku = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (npwpNitku.length < 15) {
-      return;
-    } else {
-      setOpenSearchIdentitasWp(true);
-
-      setTimeout(async () => {
-        setNama(getRandomIndonesianName());
-        setOpenSearchIdentitasWp(false);
-      }, 500);
-    }
-  };
-
-  const handleClickOpenConfirmationSearchIdentitasWpNik = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (nik.length < 16 || nama.length === 0) {
-      return;
-    } else {
-      setOpenSearchIdentitasWp(true);
-
-      setTimeout(() => {
-        setIsNikValid(true);
-        setOpenSearchIdentitasWp(false);
-        setOpenFoundIdentitasWp(true);
-      }, 500);
-    }
+  // Handle Pilihan Perkiraan Penghasilan Netto input change
+  const handlePilihanPerkiraanPenghasilanNettoChange = (e) => {
+    setPilihanPerkiraanPenghasilanNetto(e.target.value);
   };
 
   const handleCloseConfirmationFoundSuratSetoranPajak = () => {
@@ -576,17 +572,14 @@ function EbupotUnifikasiUbahPph42152223() {
       form.checkValidity() &&
       tahunPajak.length !== 0 &&
       masaPajak.length !== 0 &&
-      npwpNitku.length >= 15 &&
-      nama.length !== 0;
-
-    if (identitas !== "NPWP/NITKU") {
-      tempCondition =
-        form.checkValidity() &&
-        tahunPajak.length !== 0 &&
-        masaPajak.length !== 0 &&
-        nik.length >= 16 &&
-        nama.length !== 0;
-    }
+      tin.length !== 0 &&
+      nama.length !== 0 &&
+      alamat.length !== 0 &&
+      tempatLahir.length !== 0 &&
+      noPaspor.length !== 0 &&
+      namaNegara.length !== 0 &&
+      tanggalLahir.length !== 0 &&
+      noKitasKitap.length !== 0;
 
     if (tempCondition) {
       setAccordionState("2");
@@ -611,25 +604,20 @@ function EbupotUnifikasiUbahPph42152223() {
       form.checkValidity() &&
       kodeObjekPajak.length !== 0 &&
       jumlahPenghasilanBruto.length !== 0 &&
+      perkiraanPenghasilanNetto.length !== 0 &&
       tarif.length !== 0 &&
       pPhYangDipotongDipungut.length !== 0;
 
     let tempConditionFasilitasPajakPenghasilan = form.checkValidity();
 
-    if (fasilitasPajakPenghasilan === "Surat Keterangan Bebas (SKB)") {
+    if (fasilitasPajakPenghasilan === "SKD WPLN") {
       tempConditionFasilitasPajakPenghasilan =
-        form.checkValidity() && nomorSuratKeteranganBebas.length !== 0;
+        form.checkValidity() && nomorSkdWpln.length !== 0;
     } else if (
       fasilitasPajakPenghasilan === "PPh Ditanggung Pemerintah (DTP)"
     ) {
       tempConditionFasilitasPajakPenghasilan =
         form.checkValidity() && nomorPPhDitanggungPemerintah.length !== 0;
-    } else if (
-      fasilitasPajakPenghasilan === "Surat Keterangan berdasarkan PP No 23 2018"
-    ) {
-      tempConditionFasilitasPajakPenghasilan =
-        form.checkValidity() &&
-        nomorSuratKeteranganBerdasarkanPPNo232018.length !== 0;
     } else if (fasilitasPajakPenghasilan === "Fasilitas lainnya berdasarkan") {
       tempConditionFasilitasPajakPenghasilan =
         form.checkValidity() && nomorFasilitasLainnyaberdasarkan.length !== 0;
@@ -674,7 +662,7 @@ function EbupotUnifikasiUbahPph42152223() {
     setAccordionState("3");
   };
 
-  const updateEbupotUnifikasiUbahPph42152223 = async (e) => {
+  const updateEbupotUnifikasiUbahPphNonResiden = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -683,26 +671,30 @@ function EbupotUnifikasiUbahPph42152223() {
 
     if (handlingInput) {
       try {
-        let updatedEBupotUnifikasiPph42152223 = await axios.post(
-          `${tempUrl}/updateEBupotUnifikasiPph42152223/${id}`,
+        let updatedEBupotUnifikasiPphNonResiden = await axios.post(
+          `${tempUrl}/updateEBupotUnifikasiPphNonResiden/${id}`,
           {
             userId: user.id,
 
             // 01.) Accordion 1
             tahunPajak,
             masaPajak,
-            identitas,
-            npwpNitku,
-            nik,
+            tin,
             nama,
+            alamat,
+            tempatLahir,
+            noPaspor,
+            namaNegara,
+            tanggalLahir,
+            noKitasKitap,
 
             // 02.) Accordion 2
             kodeObjekPajak: kodeObjekPajak.split(" -", 2)[0],
-            nomorSuratKeteranganBebas,
+            nomorSkdWpln,
             nomorPPhDitanggungPemerintah,
-            nomorSuratKeteranganBerdasarkanPPNo232018,
             nomorFasilitasLainnyaberdasarkan,
             jumlahPenghasilanBruto,
+            perkiraanPenghasilanNetto,
             tarif,
             pPhYangDipotongDipungut,
 
@@ -732,7 +724,20 @@ function EbupotUnifikasiUbahPph42152223() {
     setValidated(true);
   };
 
-  const savedEbupotUnifikasiUbahPph42152223 = async (e) => {
+  const pilihPerkiraanPenghasilanNetto = async (e) => {
+    setPerkiraanPenghasilanNetto(pilihanPerkiraanPenghasilanNetto);
+
+    let hitungPph =
+      (((jumlahPenghasilanBruto * pilihanPerkiraanPenghasilanNetto) / 100) *
+        tarif) /
+      100;
+    setPPhYangDipotongDipungut(parseInt(hitungPph));
+
+    setPernyataanBenar(false);
+    setOpenPilihanPerkiraanPenghasilanNetto(false);
+  };
+
+  const savedEbupotUnifikasiUbahPphNonResiden = async (e) => {
     setOpenSaved(false);
 
     setValidated(false);
@@ -742,22 +747,27 @@ function EbupotUnifikasiUbahPph42152223() {
     setTahunPajak("");
     setMasaPajak("");
     setMasaPajakOptions([]);
-    setIdentitas("NPWP/NITKU");
-    setNpwpNitku("");
-    setNik("");
+    setTin("");
     setNama("");
-    setIsNikValid(false);
+    setAlamat("");
+    setTempatLahir("");
+    setNoPaspor("");
+    setNamaNegara("");
+    setTanggalLahir();
+    setNoKitasKitap("");
     setFasilitasPajakPenghasilan("Tanpa Fasilitas");
 
     // 02.) Accordion 2
-    setNomorSuratKeteranganBebas("");
+    setNomorSkdWpln("");
     setNomorPPhDitanggungPemerintah("");
-    setNomorSuratKeteranganBerdasarkanPPNo232018("");
     setNomorFasilitasLainnyaberdasarkan("");
     setKodeObjekPajak("");
     setJumlahPenghasilanBruto("");
+    setPerkiraanPenghasilanNetto("");
+    setPerkiraanPenghasilanNetto("");
     setTarif("");
     setPPhYangDipotongDipungut("");
+    setPilihanPerkiraanPenghasilanNetto("5");
 
     // 03.) Accordion 3
     setOpenSavedDokumenDasarPemotongan(false);
@@ -821,15 +831,6 @@ function EbupotUnifikasiUbahPph42152223() {
     display: screenSize >= 600 && "flex",
     paddingLeft: screenSize >= 600 && "60px",
     paddingRight: screenSize >= 600 && "60px",
-  };
-
-  const inputRadioWrapper = {
-    display: screenSize >= 900 && "flex",
-  };
-
-  const inputRadio = {
-    cursor: "pointer",
-    marginLeft: screenSize >= 900 && "20px",
   };
 
   const inputTindakanRadio = {
@@ -961,210 +962,209 @@ function EbupotUnifikasiUbahPph42152223() {
                               controlId="formPlaintextPassword"
                             >
                               <Form.Label column sm="4">
-                                Identitas
+                                TIN
                               </Form.Label>
-                              <Col sm="8" className="mt-2">
-                                <div style={inputRadioWrapper}>
-                                  <Form.Check
-                                    type="radio"
-                                    label="NPWP/NITKU"
-                                    name="NPWP/NITKU"
-                                    value="NPWP/NITKU"
-                                    checked={identitas === "NPWP/NITKU"}
-                                    onChange={handleIdentitasChange}
-                                    style={{ cursor: "pointer" }}
-                                  />
-                                  <Form.Check
-                                    type="radio"
-                                    label="NIK"
-                                    name="NIK"
-                                    value="NIK"
-                                    checked={identitas === "NIK"}
-                                    onChange={handleIdentitasChange}
-                                    style={inputRadio}
-                                  />
-                                </div>
+                              <Col sm="8">
+                                <Form.Control
+                                  required
+                                  value={tin}
+                                  onChange={(e) => {
+                                    setTin(e.target.value.toUpperCase());
+                                  }}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  Kolom ini diperlukan.
+                                </Form.Control.Feedback>
                               </Col>
                             </Form.Group>
                           </div>
-                          {identitas === "NPWP/NITKU" ? (
-                            <div style={inputInput2}>
-                              <Form.Group
-                                as={Row}
-                                className="mb-4"
-                                controlId="formPlaintextPassword"
-                              >
-                                <Form.Label column sm="4">
-                                  NPWP/NITKU
-                                </Form.Label>
-                                <Col sm="6">
-                                  <Form.Control
-                                    required
-                                    value={npwpNitku}
-                                    isInvalid={
-                                      npwpNitku.length > 0 &&
-                                      npwpNitku.length < 15
-                                    }
-                                    onChange={(e) => {
-                                      let value = e.target.value.replace(
-                                        /\D/g,
-                                        ""
-                                      );
-
-                                      if (value.length <= 22) {
-                                        setNpwpNitku(value);
-                                      }
-
-                                      setNama("");
-                                    }}
-                                  />
-                                  <Form.Control.Feedback type="invalid">
-                                    {npwpNitku.length === 0
-                                      ? "Kolom ini diperlukan."
-                                      : "Isian belum lengkap."}
-                                  </Form.Control.Feedback>
-                                </Col>
-                                <Col sm="2">
-                                  <button
-                                    className="hover-button-no-icon"
-                                    onClick={
-                                      handleClickOpenConfirmationSearchIdentitasWpNpwpNitku
-                                    }
-                                  >
-                                    Cek
-                                  </button>
-                                </Col>
-                              </Form.Group>
-                            </div>
-                          ) : (
-                            <div style={inputInput2}>
-                              <Form.Group
-                                as={Row}
-                                className="mb-4"
-                                controlId="formPlaintextPassword"
-                              >
-                                <Form.Label column sm="4">
-                                  NIK
-                                </Form.Label>
-                                <Col sm="8">
-                                  <Form.Control
-                                    required
-                                    value={nik}
-                                    isInvalid={
-                                      nik.length > 0 && nik.length < 16
-                                    }
-                                    onChange={(e) => {
-                                      let value = e.target.value.replace(
-                                        /\D/g,
-                                        ""
-                                      );
-
-                                      if (value.length <= 16) {
-                                        setNik(value);
-                                      }
-                                      setIsNikValid(false);
-                                    }}
-                                  />
-                                  <Form.Control.Feedback type="invalid">
-                                    Isian belum lengkap.
-                                  </Form.Control.Feedback>
-                                </Col>
-                              </Form.Group>
-                            </div>
-                          )}
+                          <div style={inputInput2}></div>
                         </div>
                         <div style={inputWrapper}>
-                          {identitas === "NPWP/NITKU" ? (
-                            <>
-                              <div style={inputInput1}>
-                                <Form.Group
-                                  as={Row}
-                                  className="mb-4"
-                                  controlId="formPlaintextPassword"
-                                >
-                                  <Form.Label column sm="4">
-                                    Nama
-                                  </Form.Label>
-                                  <Col sm="8">
-                                    <Form.Control value={nama} readOnly />
-                                  </Col>
-                                </Form.Group>
-                              </div>
-                              <div style={inputInput2}></div>
-                            </>
-                          ) : (
-                            <>
-                              <div style={inputInput1}>
-                                <Form.Group
-                                  as={Row}
-                                  className="mb-4"
-                                  controlId="formPlaintextPassword"
-                                >
-                                  <Form.Label column sm="4">
-                                    Nama
-                                  </Form.Label>
-                                  <Col sm="8">
-                                    <Form.Control
-                                      required
-                                      value={nama}
-                                      readOnly={
-                                        identitas === "NPWP/NITKU" && true
+                          <div style={inputInput1}>
+                            <Form.Group
+                              as={Row}
+                              className="mb-4"
+                              controlId="formPlaintextPassword"
+                            >
+                              <Form.Label column sm="4">
+                                Nama
+                              </Form.Label>
+                              <Col sm="8">
+                                <Form.Control
+                                  required
+                                  value={nama}
+                                  onChange={(e) => {
+                                    setNama(e.target.value.toUpperCase());
+                                  }}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  Kolom ini diperlukan.
+                                </Form.Control.Feedback>
+                              </Col>
+                            </Form.Group>
+                          </div>
+                          <div style={inputInput2}></div>
+                        </div>
+                        <div style={inputWrapper}>
+                          <div style={inputInput1}>
+                            <Form.Group
+                              as={Row}
+                              className="mb-4"
+                              controlId="formPlaintextPassword"
+                            >
+                              <Form.Label column sm="4">
+                                Alamat
+                              </Form.Label>
+                              <Col sm="8">
+                                <Form.Control
+                                  required
+                                  value={alamat}
+                                  onChange={(e) => {
+                                    setAlamat(e.target.value.toUpperCase());
+                                  }}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  Kolom ini diperlukan.
+                                </Form.Control.Feedback>
+                              </Col>
+                            </Form.Group>
+                          </div>
+                          <div style={inputInput2}>
+                            <Form.Group
+                              as={Row}
+                              className="mb-4"
+                              controlId="formPlaintextPassword"
+                            >
+                              <Form.Label column sm="4">
+                                Negara
+                              </Form.Label>
+                              <Col sm="8">
+                                <Autocomplete
+                                  size="small"
+                                  disablePortal
+                                  id="combo-box-demo"
+                                  options={negarasOptions}
+                                  renderInput={(params) => (
+                                    <TextField
+                                      size="small"
+                                      error={
+                                        validated && namaNegara.length === 0
                                       }
-                                      onChange={(e) => {
-                                        setNama(e.target.value.toUpperCase());
-                                        setIsNikValid(false);
-                                      }}
+                                      helperText={
+                                        validated &&
+                                        namaNegara.length === 0 &&
+                                        "Kolom ini diperlukan."
+                                      }
+                                      {...params}
                                     />
-                                    <Form.Control.Feedback type="invalid">
-                                      Kolom ini diperlukan.
-                                    </Form.Control.Feedback>
-                                  </Col>
-                                </Form.Group>
-                              </div>
-                              <div style={inputInput2}>
-                                <Form.Group
-                                  as={Row}
-                                  className="mb-4"
-                                  controlId="formPlaintextPassword"
-                                >
-                                  <Col sm="3">
-                                    <button
-                                      className="hover-button"
-                                      onClick={
-                                        handleClickOpenConfirmationSearchIdentitasWpNik
-                                      }
-                                    >
-                                      <SearchIcon
-                                        fontSize="small"
-                                        style={{ marginRight: "4px" }}
-                                      />
-                                      Cek
-                                    </button>
-                                  </Col>
-                                  <Col sm="4">
-                                    <div style={{ marginTop: "8px" }}>
-                                      <p>Tidak Valid</p>
-                                    </div>
-                                  </Col>
-                                  <Col sm="5">
-                                    <div style={{ display: "flex" }}>
-                                      <FormGroup>
-                                        <FormControlLabel
-                                          control={
-                                            <Switch
-                                              checked={isNikValid}
-                                              disabled
-                                            />
-                                          }
-                                        />
-                                      </FormGroup>
-                                      <p style={{ marginTop: "8px" }}>Valid</p>
-                                    </div>
-                                  </Col>
-                                </Form.Group>
-                              </div>
-                            </>
-                          )}
+                                  )}
+                                  onInputChange={(e, value) => {
+                                    setNamaNegara(value);
+                                  }}
+                                  inputValue={namaNegara}
+                                  value={namaNegara}
+                                />
+                              </Col>
+                            </Form.Group>
+                          </div>
+                        </div>
+                        <div style={inputWrapper}>
+                          <div style={inputInput1}>
+                            <Form.Group
+                              as={Row}
+                              className="mb-4"
+                              controlId="formPlaintextPassword"
+                            >
+                              <Form.Label column sm="4">
+                                Tempat Lahir
+                              </Form.Label>
+                              <Col sm="8">
+                                <Form.Control
+                                  required
+                                  value={tempatLahir}
+                                  onChange={(e) => {
+                                    setTempatLahir(
+                                      e.target.value.toUpperCase()
+                                    );
+                                  }}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  Kolom ini diperlukan.
+                                </Form.Control.Feedback>
+                              </Col>
+                            </Form.Group>
+                          </div>
+                          <div style={inputInput2}>
+                            <Form.Group
+                              as={Row}
+                              className="mb-4"
+                              controlId="formPlaintextPassword"
+                            >
+                              <Form.Label column sm="4">
+                                Tanggal Lahir
+                              </Form.Label>
+                              <Col sm="8">
+                                <DatePicker
+                                  required
+                                  dateFormat="dd/MM/yyyy"
+                                  customInput={<Form.Control required />}
+                                  selected={tanggalLahir}
+                                  onChange={(date) => setTanggalLahir(date)}
+                                />
+                              </Col>
+                            </Form.Group>
+                          </div>
+                        </div>
+                        <div style={inputWrapper}>
+                          <div style={inputInput1}>
+                            <Form.Group
+                              as={Row}
+                              className="mb-4"
+                              controlId="formPlaintextPassword"
+                            >
+                              <Form.Label column sm="4">
+                                No. Paspor
+                              </Form.Label>
+                              <Col sm="8">
+                                <Form.Control
+                                  required
+                                  value={noPaspor}
+                                  onChange={(e) => {
+                                    setNoPaspor(e.target.value.toUpperCase());
+                                  }}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  Kolom ini diperlukan.
+                                </Form.Control.Feedback>
+                              </Col>
+                            </Form.Group>
+                          </div>
+                          <div style={inputInput2}>
+                            <Form.Group
+                              as={Row}
+                              className="mb-4"
+                              controlId="formPlaintextPassword"
+                            >
+                              <Form.Label column sm="4">
+                                No. KITAS/KITAP
+                              </Form.Label>
+                              <Col sm="8">
+                                <Form.Control
+                                  required
+                                  value={noKitasKitap}
+                                  onChange={(e) => {
+                                    setNoKitasKitap(
+                                      e.target.value.toUpperCase()
+                                    );
+                                  }}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  Kolom ini diperlukan.
+                                </Form.Control.Feedback>
+                              </Col>
+                            </Form.Group>
+                          </div>
                         </div>
                         <div style={{ display: "flex", justifyContent: "end" }}>
                           <button className="hover-button" type="submit">
@@ -1226,6 +1226,7 @@ function EbupotUnifikasiUbahPph42152223() {
 
                                     if (value.length === 0) {
                                       setJumlahPenghasilanBruto("");
+                                      setPerkiraanPenghasilanNetto("");
                                       setTarif("");
                                       setPPhYangDipotongDipungut("");
                                     } else {
@@ -1287,12 +1288,11 @@ function EbupotUnifikasiUbahPph42152223() {
                               <Col sm="7">
                                 <Form.Check
                                   type="radio"
-                                  label="Surat Keterangan Bebas (SKB)"
-                                  name="Surat Keterangan Bebas (SKB)"
-                                  value="Surat Keterangan Bebas (SKB)"
+                                  label="SKD WPLN"
+                                  name="SKD WPLN"
+                                  value="SKD WPLN"
                                   checked={
-                                    fasilitasPajakPenghasilan ===
-                                    "Surat Keterangan Bebas (SKB)"
+                                    fasilitasPajakPenghasilan === "SKD WPLN"
                                   }
                                   onChange={
                                     handleFasilitasPajakPenghasilanChange
@@ -1309,17 +1309,14 @@ function EbupotUnifikasiUbahPph42152223() {
                               controlId="formPlaintextPassword"
                             >
                               <Col sm="12">
-                                {fasilitasPajakPenghasilan ===
-                                "Surat Keterangan Bebas (SKB)" ? (
+                                {fasilitasPajakPenghasilan === "SKD WPLN" ? (
                                   <>
                                     <Form.Control
                                       required
-                                      placeholder="Nomor SKB"
-                                      value={nomorSuratKeteranganBebas}
+                                      placeholder="Nomor Tanda Terima SKD WPLN"
+                                      value={nomorSkdWpln}
                                       onChange={(e) => {
-                                        setNomorSuratKeteranganBebas(
-                                          e.target.value
-                                        );
+                                        setNomorSkdWpln(e.target.value);
                                       }}
                                     />
                                     <Form.Control.Feedback type="invalid">
@@ -1328,8 +1325,8 @@ function EbupotUnifikasiUbahPph42152223() {
                                   </>
                                 ) : (
                                   <Form.Control
-                                    placeholder="Nomor SKB"
-                                    value={nomorSuratKeteranganBebas}
+                                    placeholder="Nomor Tanda Terima SKD WPLN"
+                                    value={nomorSkdWpln}
                                     readOnly
                                   />
                                 )}
@@ -1397,77 +1394,6 @@ function EbupotUnifikasiUbahPph42152223() {
                                   <Form.Control
                                     placeholder="Nomor Aturan DTP"
                                     value={nomorPPhDitanggungPemerintah}
-                                    readOnly
-                                  />
-                                )}
-                              </Col>
-                            </Form.Group>
-                          </div>
-                        </div>
-                        <div style={inputWrapper}>
-                          <div style={inputInput1}>
-                            <Form.Group
-                              as={Row}
-                              className="mb-3"
-                              controlId="formPlaintextPassword"
-                            >
-                              <Form.Label
-                                column
-                                sm="5"
-                                style={{ visibility: "hidden" }}
-                              >
-                                Fasilitas Pajak Penghasilan
-                              </Form.Label>
-                              <Col sm="7">
-                                <Form.Check
-                                  type="radio"
-                                  label="Surat Keterangan berdasarkan PP No 23 2018"
-                                  name="Surat Keterangan berdasarkan PP No 23 2018"
-                                  value="Surat Keterangan berdasarkan PP No 23 2018"
-                                  checked={
-                                    fasilitasPajakPenghasilan ===
-                                    "Surat Keterangan berdasarkan PP No 23 2018"
-                                  }
-                                  onChange={
-                                    handleFasilitasPajakPenghasilanChange
-                                  }
-                                  style={{ cursor: "pointer" }}
-                                />
-                              </Col>
-                            </Form.Group>
-                          </div>
-                          <div style={inputInput2}>
-                            <Form.Group
-                              as={Row}
-                              className="mb-4"
-                              controlId="formPlaintextPassword"
-                            >
-                              <Col sm="12">
-                                {fasilitasPajakPenghasilan ===
-                                "Surat Keterangan berdasarkan PP No 23 2018" ? (
-                                  <>
-                                    <Form.Control
-                                      required
-                                      placeholder="Nomor Suket PP23"
-                                      value={
-                                        nomorSuratKeteranganBerdasarkanPPNo232018
-                                      }
-                                      onChange={(e) => {
-                                        setNomorSuratKeteranganBerdasarkanPPNo232018(
-                                          e.target.value
-                                        );
-                                      }}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                      Kolom ini diperlukan.
-                                    </Form.Control.Feedback>
-                                  </>
-                                ) : (
-                                  <Form.Control
-                                    placeholder="Nomor Suket PP23"
-                                    value={
-                                      nomorSuratKeteranganBerdasarkanPPNo232018
-                                    }
                                     readOnly
                                   />
                                 )}
@@ -1568,11 +1494,37 @@ function EbupotUnifikasiUbahPph42152223() {
 
                                     setJumlahPenghasilanBruto(tempValues);
 
-                                    let hitungPph = (tempValues * tarif) / 100;
+                                    let hitungPph =
+                                      (((tempValues *
+                                        perkiraanPenghasilanNetto) /
+                                        100) *
+                                        tarif) /
+                                      100;
                                     setPPhYangDipotongDipungut(
                                       parseInt(hitungPph)
                                     );
                                   }}
+                                />
+                              </Col>
+                            </Form.Group>
+                          </div>
+                          <div style={inputInput2}></div>
+                        </div>
+                        <div style={inputWrapper}>
+                          <div style={inputInput1}>
+                            <Form.Group
+                              as={Row}
+                              className="mb-4"
+                              controlId="formPlaintextPassword"
+                            >
+                              <Form.Label column sm="5">
+                                Perkiraan Penghasilan Netto
+                              </Form.Label>
+                              <Col sm="7">
+                                <Form.Control
+                                  style={{ textAlign: "right" }}
+                                  value={`${perkiraanPenghasilanNetto}%`} // Always append "%" to the value
+                                  readOnly
                                 />
                               </Col>
                             </Form.Group>
@@ -1608,6 +1560,16 @@ function EbupotUnifikasiUbahPph42152223() {
                                           ); // Allow only numbers
                                           if (value > 100) value = 100; // Cap the value at 100
                                           setTarif(value);
+
+                                          let hitungPph =
+                                            (((jumlahPenghasilanBruto *
+                                              perkiraanPenghasilanNetto) /
+                                              100) *
+                                              value) /
+                                            100;
+                                          setPPhYangDipotongDipungut(
+                                            parseInt(hitungPph)
+                                          );
                                         }}
                                       />
                                       <InputGroup.Text>%</InputGroup.Text>
@@ -1780,7 +1742,7 @@ function EbupotUnifikasiUbahPph42152223() {
                             <p style={{ paddingTop: "10px" }}>Entry</p>
                           </div>
                           <Box>
-                            <ShowTableDaftarDokumenPph42152223
+                            <ShowTableDaftarDokumenPphNonResiden
                               currentPosts={currentPosts}
                               hapusDaftarPemotongan={hapusDaftarPemotongan}
                             />
@@ -1831,7 +1793,7 @@ function EbupotUnifikasiUbahPph42152223() {
                       <Form
                         noValidate
                         validated={validated}
-                        onSubmit={updateEbupotUnifikasiUbahPph42152223}
+                        onSubmit={updateEbupotUnifikasiUbahPphNonResiden}
                       >
                         <div style={inputWrapper}>
                           <div style={inputInput1}>
@@ -2328,6 +2290,89 @@ function EbupotUnifikasiUbahPph42152223() {
         </div>
       </Dialog>
       <Dialog
+        open={openPilihanPerkiraanPenghasilanNetto}
+        onClose={handleClosePilihanPerkiraanPenghasilanNetto}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        maxWidth={"xs"}
+        fullWidth
+      >
+        <div style={{ padding: "30px" }}>
+          <DialogTitle id="alert-dialog-title">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "center",
+              }}
+            >
+              <b>Pilih Perkiraan Penghasilan Netto</b>
+            </div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Row>
+                  <Col sm="4">
+                    <Form.Check
+                      type="radio"
+                      label="5%"
+                      name="5%"
+                      value="5"
+                      checked={pilihanPerkiraanPenghasilanNetto === "5"}
+                      onChange={handlePilihanPerkiraanPenghasilanNettoChange}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Col>
+                  <Col sm="4">
+                    <Form.Check
+                      type="radio"
+                      label="10%"
+                      name="10%"
+                      value="10"
+                      checked={pilihanPerkiraanPenghasilanNetto === "10"}
+                      onChange={handlePilihanPerkiraanPenghasilanNettoChange}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Col>
+                  <Col sm="4">
+                    <Form.Check
+                      type="radio"
+                      label="50%"
+                      name="50%"
+                      value="50"
+                      checked={pilihanPerkiraanPenghasilanNetto === "50"}
+                      onChange={handlePilihanPerkiraanPenghasilanNettoChange}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Col>
+                </Row>
+              </div>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <button
+              className="hover-button-no-icon"
+              style={{ paddingLeft: "15px", paddingRight: "15px" }}
+              onClick={pilihPerkiraanPenghasilanNetto}
+            >
+              Pilih
+            </button>
+          </DialogActions>
+        </div>
+      </Dialog>
+      <Dialog
         open={openSaved}
         onClose={handleCloseSaved}
         aria-labelledby="alert-dialog-title"
@@ -2365,7 +2410,7 @@ function EbupotUnifikasiUbahPph42152223() {
                 }}
               >
                 Data berhasil disimpan. Apakah Anda ingin merekam Bukti Potong
-                Pasal 4(2), 15, 22, 23 lagi?
+                Pasal 26 lagi?
               </div>
             </DialogContentText>
           </DialogContent>
@@ -2379,7 +2424,7 @@ function EbupotUnifikasiUbahPph42152223() {
               variant="warning"
               style={{ paddingTop: "10px" }}
               onClick={() => {
-                navigate("/ebupotUnifikasi/daftarPph42152223");
+                navigate("/ebupotUnifikasi/daftarPphNonResiden");
               }}
             >
               Tidak
@@ -2387,7 +2432,7 @@ function EbupotUnifikasiUbahPph42152223() {
             <button
               className="hover-button-no-icon"
               style={{ paddingLeft: "15px", paddingRight: "15px" }}
-              onClick={savedEbupotUnifikasiUbahPph42152223}
+              onClick={savedEbupotUnifikasiUbahPphNonResiden}
             >
               Ya
             </button>
@@ -2398,7 +2443,7 @@ function EbupotUnifikasiUbahPph42152223() {
   );
 }
 
-export default EbupotUnifikasiUbahPph42152223;
+export default EbupotUnifikasiUbahPphNonResiden;
 
 const accordionBlue = {
   backgroundColor: "#a1ccf7",

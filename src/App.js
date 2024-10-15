@@ -25,6 +25,9 @@ import {
   EbupotUnifikasiDaftarPph42152223,
   EbupotUnifikasiInputPph42152223,
   EbupotUnifikasiUbahPph42152223,
+  EbupotUnifikasiDaftarPphNonResiden,
+  EbupotUnifikasiInputPphNonResiden,
+  EbupotUnifikasiUbahPphNonResiden,
   TampilPenandatangan,
 } from "./pages/index";
 
@@ -217,6 +220,30 @@ const App = () => {
             element={
               <USERRoute>
                 <EbupotUnifikasiUbahPph42152223 />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/daftarPphNonResiden"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiDaftarPphNonResiden />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/inputPphNonResiden"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiInputPphNonResiden />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/ubahPphNonResiden/:id"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiUbahPphNonResiden />
               </USERRoute>
             }
           />

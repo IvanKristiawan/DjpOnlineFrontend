@@ -24,7 +24,10 @@ export { default as EbupotUnifikasiUbahPphDisetorSendiri } from "./EbupotUnifika
 export { default as EbupotUnifikasiDaftarPph42152223 } from "./EbupotUnifikasi/EbupotUnifikasiPph42152223/EbupotUnifikasiDaftarPph42152223";
 export { default as EbupotUnifikasiInputPph42152223 } from "./EbupotUnifikasi/EbupotUnifikasiPph42152223/EbupotUnifikasiInputPph42152223";
 export { default as EbupotUnifikasiUbahPph42152223 } from "./EbupotUnifikasi/EbupotUnifikasiPph42152223/EbupotUnifikasiUbahPph42152223";
-// Pengaturan 
+export { default as EbupotUnifikasiDaftarPphNonResiden } from "./EbupotUnifikasi/EbupotUnifikasiPphNonResiden/EbupotUnifikasiDaftarPphNonResiden";
+export { default as EbupotUnifikasiInputPphNonResiden } from "./EbupotUnifikasi/EbupotUnifikasiPphNonResiden/EbupotUnifikasiInputPphNonResiden";
+export { default as EbupotUnifikasiUbahPphNonResiden } from "./EbupotUnifikasi/EbupotUnifikasiPphNonResiden/EbupotUnifikasiUbahPphNonResiden";
+// Pengaturan
 export { default as TampilPenandatangan } from "./Pengaturan/Penandatangan/TampilPenandatangan";
 // Utility Page
 export { default as ProfilUser } from "./Utility/ProfilUser/ProfilUser";
