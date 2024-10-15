@@ -25,6 +25,8 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import SearchIcon from "@mui/icons-material/Search";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
@@ -93,6 +95,8 @@ function EbupotUnifikasiDaftarPph42152223() {
   const [pencairanBerdasarkan, setPencairanBerdasarkan] = useState("Periode");
 
   const [openLoading, setOpenLoading] = useState(false);
+  const [eBupotUnifikasiPph42152223Data, setEBupotUnifikasiPph42152223Data] =
+    useState([]);
   const [
     eBupotUnifikasiPph42152223Pagination,
     setEBupotUnifikasiPph42152223Pagination,
@@ -213,6 +217,47 @@ function EbupotUnifikasiDaftarPph42152223() {
     }
   };
 
+  // Function to export the data to Excel
+  const exportToExcel = (dataExcel) => {
+    // Create a new workbook
+    const wb = XLSX.utils.book_new();
+
+    // Convert your data to a worksheet
+    // const ws = XLSX.utils.json_to_sheet(eBupotUnifikasiPph42152223Data);
+    const ws = XLSX.utils.json_to_sheet(dataExcel);
+
+    // Append the worksheet to the workbook
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    // Generate Excel file and trigger a download
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(data, "EKSPOR_BUKTI_POTONG.xlsx");
+  };
+
+  const getEBupotUnifikasiPph42152223AllData = async () => {
+    setOpenLoading(true);
+    const response = await axios.post(
+      `${tempUrl}/eBupotUnifikasiPph42152223sByUserForExcel`,
+      {
+        userEBupotUnifikasiPph42152223Id: user.id,
+        pencairanBerdasarkan,
+        masaTahunPajakSearch,
+        nomorBuktiSetor,
+        identitas,
+        _id: user.id,
+        token: user.token,
+        kodeCabang: user.cabang.id,
+      }
+    );
+    setEBupotUnifikasiPph42152223Data(response.data);
+
+    setTimeout(async () => {
+      setOpenLoading(false);
+      exportToExcel(response.data);
+    }, 500);
+  };
+
   const inputContainer = {
     flex: 1,
     marginLeft: screenSize >= 900 && "16px",
@@ -283,6 +328,10 @@ function EbupotUnifikasiDaftarPph42152223() {
                   <button
                     className="ebupot-unifikasi-refresh-button"
                     // onClick={handleCloseInfo}
+                    onClick={() => {
+                      getEBupotUnifikasiPph42152223AllData();
+                      // exportToExcel();
+                    }}
                   >
                     <InsertDriveFileIcon
                       fontSize="small"
