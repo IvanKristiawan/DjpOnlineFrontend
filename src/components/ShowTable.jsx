@@ -965,11 +965,12 @@ export function ShowTableEbupotUnifikasiPphDisetorSendiri({
           {user.ebilling.jumlahSetor.toLocaleString("de-DE")}
         </TableCell>
         <TableCell style={aksiButtonWrapper}>
-          <button className="aksi-button">
+          <button className="aksi-button" disabled={user.isHapus === true}>
             <RemoveRedEyeIcon fontSize="small" />
           </button>
           <button
             className="aksi-button"
+            disabled={user.isHapus === true}
             style={aksiButtonStyle}
             onClick={() => {
               handleClickOpenConfirmationEdit();
@@ -979,6 +980,7 @@ export function ShowTableEbupotUnifikasiPphDisetorSendiri({
           </button>
           <button
             className="aksi-button"
+            disabled={user.isHapus === true}
             style={aksiButtonStyle}
             onClick={() => {
               handleClickOpenConfirmationDelete();
@@ -986,7 +988,11 @@ export function ShowTableEbupotUnifikasiPphDisetorSendiri({
           >
             <DeleteIcon fontSize="small" />
           </button>
-          <button className="aksi-button" style={aksiButtonStyle}>
+          <button
+            className="aksi-button"
+            disabled={user.isHapus === true}
+            style={aksiButtonStyle}
+          >
             <EmailIcon fontSize="small" />
           </button>
         </TableCell>
@@ -1096,7 +1102,10 @@ export function ShowTableEbupotUnifikasiPphDisetorSendiri({
             <button
               className="hover-button-no-icon"
               style={{ paddingLeft: "15px", paddingRight: "15px" }}
-              onClick={() => deleteFunction(user.id)}
+              onClick={() => {
+                deleteFunction(user.id);
+                setOpenConfirmationDelete(false);
+              }}
             >
               Ya
             </button>

@@ -28,6 +28,7 @@ import {
   EbupotUnifikasiDaftarPphNonResiden,
   EbupotUnifikasiInputPphNonResiden,
   EbupotUnifikasiUbahPphNonResiden,
+  EbupotUnifikasiPosting,
   TampilPenandatangan,
 } from "./pages/index";
 
@@ -244,6 +245,14 @@ const App = () => {
             element={
               <USERRoute>
                 <EbupotUnifikasiUbahPphNonResiden />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/posting"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiPosting />
               </USERRoute>
             }
           />

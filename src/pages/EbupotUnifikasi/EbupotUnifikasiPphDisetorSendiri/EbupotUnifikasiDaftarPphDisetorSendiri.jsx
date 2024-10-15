@@ -161,14 +161,17 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
     setOpenLoading(true);
     try {
       await axios.post(
-        `${tempUrl}/deleteEBupotUnifikasiPphDisetorSendiri/${id}`,
+        `${tempUrl}/statusDeleteEBupotUnifikasiPphDisetorSendiri/${id}`,
         {
           _id: user.id,
           token: user.token,
         }
       );
-      setEBupotUnifikasiPphDisetorSendiriPagination([]);
-      navigate("/ebupotUnifikasi/daftarDisetorSendiri");
+
+      setTimeout(async () => {
+        getEBupotUnifikasiPphDisetorSendiriData();
+        setOpenLoading(false);
+      }, 500);
     } catch (error) {
       if (error.response.data.message.includes("foreign key")) {
         // alert(`${namaKategoriKlu} tidak bisa dihapus karena sudah ada data!`);

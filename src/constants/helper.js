@@ -226,3 +226,28 @@ export const getRandomIndonesianStreetName = function () {
     streetNames[Math.floor(Math.random() * streetNames.length)];
   return randomStreet;
 };
+
+let masaPajakList = [
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember",
+];
+
+export const getMonthIndex = function (month) {
+  let index = masaPajakList.indexOf(month);
+  if (index !== -1) {
+    // Add 1 to the index and pad the result to 2 digits
+    return String(index + 1).padStart(2, "0");
+  } else {
+    return "Month not found";
+  }
+};
