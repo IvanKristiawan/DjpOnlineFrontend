@@ -522,16 +522,13 @@ function EbupotUnifikasiPerekamanSptMasa() {
   const deleteEBupotUnifikasiPphDisetorSendiri = async (id) => {
     setOpenLoading(true);
     try {
-      await axios.post(
-        `${tempUrl}/statusDeleteEBupotUnifikasiPphDisetorSendiri/${id}`,
-        {
-          _id: user.id,
-          token: user.token,
-        }
-      );
+      await axios.post(`${tempUrl}/deleteEBupotUnifikasiBuktiSetor/${id}`, {
+        _id: user.id,
+        token: user.token,
+      });
 
       setTimeout(async () => {
-        getEBupotUnifikasiPphDisetorSendiriData();
+        getEBupotUnifikasiTagihanPemotonganData();
         setOpenLoading(false);
       }, 500);
     } catch (error) {
@@ -1184,7 +1181,9 @@ function EbupotUnifikasiPerekamanSptMasa() {
                       <Box>
                         <ShowTableEbupotUnifikasiBuktiSetor
                           currentPosts={eBupotUnifikasiBuktiSetorPagination}
-                          // hapusDaftarPemotongan={hapusDaftarPemotongan}
+                          deleteEBupotUnifikasiPphDisetorSendiri={
+                            deleteEBupotUnifikasiPphDisetorSendiri
+                          }
                         />
                       </Box>
                       <Box sx={tableContainer}>

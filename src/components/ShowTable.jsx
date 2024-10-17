@@ -2552,7 +2552,7 @@ export function ShowTableEbupotUnifikasiTagihanPemotongan({
 
 export function ShowTableEbupotUnifikasiBuktiSetor({
   currentPosts,
-  hapusDaftarPemotongan,
+  deleteEBupotUnifikasiPphDisetorSendiri,
 }) {
   let navigate = useNavigate();
   const classes = useStyles();
@@ -2610,7 +2610,7 @@ export function ShowTableEbupotUnifikasiBuktiSetor({
             className="aksi-button"
             style={aksiButtonStyle}
             onClick={() => {
-              hapusDaftarPemotongan(index);
+              deleteEBupotUnifikasiPphDisetorSendiri(user.id);
             }}
           >
             <DeleteIcon fontSize="small" />
