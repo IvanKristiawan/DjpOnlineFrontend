@@ -2582,15 +2582,23 @@ export function ShowTableEbupotUnifikasiBuktiSetor({
       }}
     >
       <TableCell component="th" scope="row" sx={textDataStyle}>
-        {user.namaDokumen}
+        {index + 1}
       </TableCell>
-      <TableCell sx={textDataStyle}>{user.noDokumen}</TableCell>
-      <TableCell sx={textDataStyle}>{user.noDokumen}</TableCell>
-      <TableCell sx={textDataStyle}>{user.noDokumen}</TableCell>
-      <TableCell sx={textDataStyle}>{user.noDokumen}</TableCell>
-      <TableCell sx={textDataStyle}>{user.noDokumen}</TableCell>
+      <TableCell sx={textDataStyle}>{user.nomorBuktiSetor}</TableCell>
       <TableCell sx={textDataStyle}>
-        {formatDate(user.tanggalDokumen)}
+        {user.jenissetoran.jenispajak.kodeJenisPajak}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.jenissetoran.kodeJenisSetoran}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.ebupotunifikasitagihanpemotongan.tahunPajak}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {formatDate(user.tanggalBuktiSetor)}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.pphYangDisetor.toLocaleString("de-DE")}
       </TableCell>
       <TableCell>
         <OverlayTrigger
@@ -2703,7 +2711,7 @@ export function ShowTableEbupotUnifikasiRingkasanPembayaran({ currentPosts }) {
         <TableCell style={dataStyleRight}>
           {user.pphYangDipotong.toLocaleString("de-DE")}
         </TableCell>
-        <TableCell style={dataStyle}>
+        <TableCell style={dataStyleRight}>
           {user.pphYangDisetor.toLocaleString("de-DE")}
         </TableCell>
         <TableCell style={dataStyle}>
