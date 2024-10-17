@@ -28,6 +28,7 @@ export { default as EbupotUnifikasiDaftarPphNonResiden } from "./EbupotUnifikasi
 export { default as EbupotUnifikasiInputPphNonResiden } from "./EbupotUnifikasi/EbupotUnifikasiPphNonResiden/EbupotUnifikasiInputPphNonResiden";
 export { default as EbupotUnifikasiUbahPphNonResiden } from "./EbupotUnifikasi/EbupotUnifikasiPphNonResiden/EbupotUnifikasiUbahPphNonResiden";
 export { default as EbupotUnifikasiPosting } from "./EbupotUnifikasi/Posting/EbupotUnifikasiPosting";
+export { default as EbupotUnifikasiPerekamanSptMasa } from "./EbupotUnifikasi/EbupotUnifikasiPerekamanSptMasa/EbupotUnifikasiPerekamanSptMasa";
 // Pengaturan
 export { default as TampilPenandatangan } from "./Pengaturan/Penandatangan/TampilPenandatangan";
 // Utility Page

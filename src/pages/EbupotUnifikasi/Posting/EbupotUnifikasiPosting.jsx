@@ -88,7 +88,6 @@ function EbupotUnifikasiPosting() {
   const { user, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // 01.) Accordion 1
   let currentDate = new Date(); // Get the current date
   let currentYear = currentDate.getFullYear(); // Get the current year
 

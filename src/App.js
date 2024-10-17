@@ -29,6 +29,7 @@ import {
   EbupotUnifikasiInputPphNonResiden,
   EbupotUnifikasiUbahPphNonResiden,
   EbupotUnifikasiPosting,
+  EbupotUnifikasiPerekamanSptMasa,
   TampilPenandatangan,
 } from "./pages/index";
 
@@ -253,6 +254,14 @@ const App = () => {
             element={
               <USERRoute>
                 <EbupotUnifikasiPosting />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/sptMasa/rekamBuktiSetor"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiPerekamanSptMasa />
               </USERRoute>
             }
           />

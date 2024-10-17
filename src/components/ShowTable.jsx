@@ -24,6 +24,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EmailIcon from "@mui/icons-material/Email";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
+import DescriptionIcon from "@mui/icons-material/Description";
+import PrintIcon from "@mui/icons-material/Print";
 import { formatDate } from "../constants/helper";
 
 const useStyles = makeStyles({
@@ -44,21 +46,21 @@ const useStyles = makeStyles({
 export function ShowTableUser({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
   return (
     <TableContainer component={Paper} sx={{ width: "100%" }}>
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               Username
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               Tipe User
             </TableCell>
           </TableRow>
@@ -91,27 +93,24 @@ export function ShowTableUser({ currentPosts }) {
 export function ShowTableUserPerCabang({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
   return (
     <TableContainer component={Paper} sx={{ width: "100%" }}>
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NPWP
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NITKU
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NAMA
             </TableCell>
           </TableRow>
@@ -141,6 +140,11 @@ export function ShowTableBayarRiwayatPembayaran({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
 
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
   let dataTable = currentPosts.map((user, index) => (
     <TableRow
       key={user.id}
@@ -173,34 +177,19 @@ export function ShowTableBayarRiwayatPembayaran({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               TAHUN/MASA PAJAK
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               TANGGAL BAYAR
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NTPN
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NOMINAL BAYAR
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               AKSI
             </TableCell>
           </TableRow>
@@ -215,6 +204,11 @@ export function ShowTableBayarRiwayatPbkKirim({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
 
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
   let dataTable = currentPosts.map((user, index) => (
     <TableRow
       key={user.id}
@@ -247,34 +241,19 @@ export function ShowTableBayarRiwayatPbkKirim({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               TAHUN/MASA PAJAK
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NOMOR BUKTI PBK
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NTPN
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               TANGGAL PBK
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               AKSI
             </TableCell>
           </TableRow>
@@ -289,6 +268,11 @@ export function ShowTableBayarRiwayatPbkTerima({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
 
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
   let dataTable = currentPosts.map((user, index) => (
     <TableRow
       key={user.id}
@@ -321,34 +305,19 @@ export function ShowTableBayarRiwayatPbkTerima({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               TAHUN/MASA PAJAK
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NOMOR BUKTI PBK
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NTPN
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               TANGGAL PBK
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               AKSI
             </TableCell>
           </TableRow>
@@ -363,6 +332,11 @@ export function ShowTableSpt({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
 
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
   let dataTable = currentPosts.map((user, index) => (
     <TableRow
       key={user.id}
@@ -395,34 +369,19 @@ export function ShowTableSpt({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               JENIS SPT
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               TAHUN / MASA PAJAK
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               PEMBETULAN KE
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               STATUS
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               AKSI
             </TableCell>
           </TableRow>
@@ -437,6 +396,11 @@ export function ShowTableSptPphUnifikasiTelahDikirim({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
 
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
   let dataTable = currentPosts.map((user, index) => (
     <TableRow
       key={user.id}
@@ -470,40 +434,22 @@ export function ShowTableSptPphUnifikasiTelahDikirim({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NO
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NO.BPE/NTTE
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               MASA/TAHUN PAJAK
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               PBTL KE
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               TANGGAL KIRIM
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               AKSI
             </TableCell>
           </TableRow>
@@ -517,6 +463,11 @@ export function ShowTableSptPphUnifikasiTelahDikirim({ currentPosts }) {
 export function ShowTableBuktiPotongSptPphUnifikasi({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
 
   let dataTable = currentPosts.map((user, index) => (
     <TableRow
@@ -553,52 +504,28 @@ export function ShowTableBuktiPotongSptPphUnifikasi({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NO
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               ID DIPOTONG
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               KODE OBJEK PAJAK
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NO BUKTI POTONG
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               TANGGAL BUKTI POTONG
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               JML PENGHASILAN BRUTO (RP)
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               PPH (RP)
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               AKSI
             </TableCell>
           </TableRow>
@@ -613,6 +540,11 @@ export function ShowTableEspop({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
 
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
   let dataTable = currentPosts.map((user, index) => (
     <TableRow
       key={user.id}
@@ -644,28 +576,16 @@ export function ShowTableEspop({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NOMOR BPS
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               TAHUN PAJAK
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               TANGGAL DITERIMA
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               AKSI
             </TableCell>
           </TableRow>
@@ -680,6 +600,11 @@ export function ShowTablePph21({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
 
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
   let dataTable = currentPosts.map((user, index) => (
     <TableRow
       key={user.id}
@@ -714,46 +639,25 @@ export function ShowTablePph21({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               KODE OBJEK PAJAK
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NOMOR BUKTI PEMOTONGAN
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NPWP PEMOTONG
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               JUMLAH BRUTO (RP)
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               JUMLAH DIPOTONG (RP)
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               SUMBER DATA
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               AKSI
             </TableCell>
           </TableRow>
@@ -768,6 +672,11 @@ export function ShowTablePphUnifikasi({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
 
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
   let dataTable = currentPosts.map((user, index) => (
     <TableRow
       key={user.id}
@@ -802,46 +711,25 @@ export function ShowTablePphUnifikasi({ currentPosts }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               KODE OBJEK PAJAK
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NOMOR BUKTI PEMOTONGAN
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NPWP PEMOTONG
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               JUMLAH BRUTO (RP)
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               JUMLAH DIPOTONG (RP)
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               SUMBER DATA
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               AKSI
             </TableCell>
           </TableRow>
@@ -912,19 +800,22 @@ export function ShowTableEbupotUnifikasiPphDisetorSendiri({
 }) {
   let navigate = useNavigate();
   const classes = useStyles();
+  const [id, setId] = useState("");
   const [openConfirmationEdit, setOpenConfirmationEdit] = useState(false);
   const [openConfirmationDelete, setOpenConfirmationDelete] = useState(false);
 
-  const handleClickOpenConfirmationEdit = () => {
+  const handleClickOpenConfirmationEdit = (id) => {
     setOpenConfirmationEdit(true);
+    setId(id);
   };
 
   const handleCloseConfirmationEdit = () => {
     setOpenConfirmationEdit(false);
   };
 
-  const handleClickOpenConfirmationDelete = () => {
+  const handleClickOpenConfirmationDelete = (id) => {
     setOpenConfirmationDelete(true);
+    setId(id);
   };
 
   const handleCloseConfirmationDelete = () => {
@@ -942,6 +833,35 @@ export function ShowTableEbupotUnifikasiPphDisetorSendiri({
   const aksiButtonStyle = {
     marginLeft: "5px",
   };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  const renderTooltipLihat = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Lihat</div>
+    </Tooltip>
+  );
+
+  const renderTooltipEdit = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Ubah</div>
+    </Tooltip>
+  );
+
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Hapus</div>
+    </Tooltip>
+  );
+
+  const renderTooltipEmail = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Kirim Email</div>
+    </Tooltip>
+  );
 
   let dataTable = currentPosts.map((user, index) => (
     <>
@@ -965,36 +885,60 @@ export function ShowTableEbupotUnifikasiPphDisetorSendiri({
           {user.ebilling.jumlahSetor.toLocaleString("de-DE")}
         </TableCell>
         <TableCell style={aksiButtonWrapper}>
-          <button className="aksi-button" disabled={user.isHapus === true}>
-            <RemoveRedEyeIcon fontSize="small" />
-          </button>
-          <button
-            className="aksi-button"
-            disabled={user.isHapus === true}
-            style={aksiButtonStyle}
-            onClick={() => {
-              handleClickOpenConfirmationEdit();
-            }}
+          <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 250, hide: 50 }}
+            overlay={renderTooltipLihat}
           >
-            <EditIcon fontSize="small" />
-          </button>
-          <button
-            className="aksi-button"
-            disabled={user.isHapus === true}
-            style={aksiButtonStyle}
-            onClick={() => {
-              handleClickOpenConfirmationDelete();
-            }}
+            <button className="aksi-button" disabled={user.isHapus === true}>
+              <RemoveRedEyeIcon fontSize="small" />
+            </button>
+          </OverlayTrigger>
+          <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 250, hide: 50 }}
+            overlay={renderTooltipEdit}
           >
-            <DeleteIcon fontSize="small" />
-          </button>
-          <button
-            className="aksi-button"
-            disabled={user.isHapus === true}
-            style={aksiButtonStyle}
+            <button
+              className="aksi-button"
+              disabled={user.isHapus === true}
+              style={aksiButtonStyle}
+              onClick={() => {
+                handleClickOpenConfirmationEdit(user.id);
+              }}
+            >
+              <EditIcon fontSize="small" />
+            </button>
+          </OverlayTrigger>
+          <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 250, hide: 50 }}
+            overlay={renderTooltipDelete}
           >
-            <EmailIcon fontSize="small" />
-          </button>
+            <button
+              className="aksi-button"
+              disabled={user.isHapus === true}
+              style={aksiButtonStyle}
+              onClick={() => {
+                handleClickOpenConfirmationDelete(user.id);
+              }}
+            >
+              <DeleteIcon fontSize="small" />
+            </button>
+          </OverlayTrigger>
+          <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 250, hide: 50 }}
+            overlay={renderTooltipEmail}
+          >
+            <button
+              className="aksi-button"
+              disabled={user.isHapus === true}
+              style={aksiButtonStyle}
+            >
+              <EmailIcon fontSize="small" />
+            </button>
+          </OverlayTrigger>
         </TableCell>
       </TableRow>
       <Dialog
@@ -1046,7 +990,7 @@ export function ShowTableEbupotUnifikasiPphDisetorSendiri({
               className="hover-button-no-icon"
               style={{ paddingLeft: "15px", paddingRight: "15px" }}
               onClick={() => {
-                navigate(`/ebupotUnifikasi/ubahDisetorSendiri/${user.id}`);
+                navigate(`/ebupotUnifikasi/ubahDisetorSendiri/${id}`);
               }}
             >
               Ya
@@ -1103,7 +1047,7 @@ export function ShowTableEbupotUnifikasiPphDisetorSendiri({
               className="hover-button-no-icon"
               style={{ paddingLeft: "15px", paddingRight: "15px" }}
               onClick={() => {
-                deleteFunction(user.id);
+                deleteFunction(id);
                 setOpenConfirmationDelete(false);
               }}
             >
@@ -1132,37 +1076,37 @@ export function ShowTableEbupotUnifikasiPphDisetorSendiri({
           <TableHead className={classes.root}>
             <TableRow>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 PERIODE
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 KODE OBJEK PAJAK
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 NOMOR BUKTI SETOR
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 JUMLAH PENGHASILAN BRUTO (RP)
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 PPH DISETOR (RP)
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 AKSI
@@ -1182,19 +1126,22 @@ export function ShowTableEbupotUnifikasiPph42152223({
 }) {
   let navigate = useNavigate();
   const classes = useStyles();
+  const [id, setId] = useState("");
   const [openConfirmationEdit, setOpenConfirmationEdit] = useState(false);
   const [openConfirmationDelete, setOpenConfirmationDelete] = useState(false);
 
-  const handleClickOpenConfirmationEdit = () => {
+  const handleClickOpenConfirmationEdit = (id) => {
     setOpenConfirmationEdit(true);
+    setId(id);
   };
 
   const handleCloseConfirmationEdit = () => {
     setOpenConfirmationEdit(false);
   };
 
-  const handleClickOpenConfirmationDelete = () => {
+  const handleClickOpenConfirmationDelete = (id) => {
     setOpenConfirmationDelete(true);
+    setId(id);
   };
 
   const handleCloseConfirmationDelete = () => {
@@ -1225,6 +1172,35 @@ export function ShowTableEbupotUnifikasiPph42152223({
     padding: 0,
   };
 
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  const renderTooltipLihat = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Lihat</div>
+    </Tooltip>
+  );
+
+  const renderTooltipEdit = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Ubah</div>
+    </Tooltip>
+  );
+
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Hapus</div>
+    </Tooltip>
+  );
+
+  const renderTooltipEmail = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Kirim Email</div>
+    </Tooltip>
+  );
+
   let dataTable = currentPosts.map((user, index) => {
     let showStatusPosting = <></>;
     if (user.isPost) {
@@ -1237,9 +1213,12 @@ export function ShowTableEbupotUnifikasiPph42152223({
             display: "inline-block",
             padding: "2px 10px",
             textAlign: "center",
+            whiteSpace: "nowrap", // Prevent the text from wrapping
+            overflow: "hidden", // Hide overflowed text
+            textOverflow: "ellipsis", // Add "..." if the text overflows
           }}
         >
-          <p style={statusTextStyle}>Posting</p>
+          <p style={statusTextStyle}>Sudah Posting</p>
         </div>
       );
     } else {
@@ -1326,36 +1305,60 @@ export function ShowTableEbupotUnifikasiPph42152223({
             </div>
           </TableCell>
           <TableCell style={aksiButtonWrapper}>
-            <button className="aksi-button" disabled={user.isHapus === true}>
-              <RemoveRedEyeIcon fontSize="small" />
-            </button>
-            <button
-              className="aksi-button"
-              disabled={user.isHapus === true}
-              style={aksiButtonStyle}
-              onClick={() => {
-                handleClickOpenConfirmationEdit();
-              }}
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipLihat}
             >
-              <EditIcon fontSize="small" />
-            </button>
-            <button
-              className="aksi-button"
-              disabled={user.isHapus === true}
-              style={aksiButtonStyle}
-              onClick={() => {
-                handleClickOpenConfirmationDelete();
-              }}
+              <button className="aksi-button" disabled={user.isHapus === true}>
+                <RemoveRedEyeIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipEdit}
             >
-              <DeleteIcon fontSize="small" />
-            </button>
-            <button
-              className="aksi-button"
-              disabled={user.isHapus === true}
-              style={aksiButtonStyle}
+              <button
+                className="aksi-button"
+                disabled={user.isHapus === true}
+                style={aksiButtonStyle}
+                onClick={() => {
+                  handleClickOpenConfirmationEdit(user.id);
+                }}
+              >
+                <EditIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipDelete}
             >
-              <EmailIcon fontSize="small" />
-            </button>
+              <button
+                className="aksi-button"
+                disabled={user.isHapus === true}
+                style={aksiButtonStyle}
+                onClick={() => {
+                  handleClickOpenConfirmationDelete(user.id);
+                }}
+              >
+                <DeleteIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipEmail}
+            >
+              <button
+                className="aksi-button"
+                disabled={user.isHapus === true}
+                style={aksiButtonStyle}
+              >
+                <EmailIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
           </TableCell>
         </TableRow>
         <Dialog
@@ -1407,7 +1410,7 @@ export function ShowTableEbupotUnifikasiPph42152223({
                 className="hover-button-no-icon"
                 style={{ paddingLeft: "15px", paddingRight: "15px" }}
                 onClick={() => {
-                  navigate(`/ebupotUnifikasi/ubahPph42152223/${user.id}`);
+                  navigate(`/ebupotUnifikasi/ubahPph42152223/${id}`);
                 }}
               >
                 Ya
@@ -1464,7 +1467,7 @@ export function ShowTableEbupotUnifikasiPph42152223({
                 className="hover-button-no-icon"
                 style={{ paddingLeft: "15px", paddingRight: "15px" }}
                 onClick={() => {
-                  deleteFunction(user.id);
+                  deleteFunction(id);
                   setOpenConfirmationDelete(false);
                 }}
               >
@@ -1494,55 +1497,55 @@ export function ShowTableEbupotUnifikasiPph42152223({
           <TableHead className={classes.root}>
             <TableRow>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 PERIODE
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 KODE OBJEK PAJAK
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 NOMOR BUKTI SETOR
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 IDENTITAS
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 NAMA
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 JUMLAH PENGHASILAN BRUTO (RP)
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 JUMLAH PPH TERUTANG (RP)
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 STATUS
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 AKSI
@@ -1629,28 +1632,16 @@ export function ShowTableDaftarDokumenPph42152223({
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NAMA DOKUMEN
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NOMOR DOKUMEN
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               TANGGAL
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               AKSI
             </TableCell>
           </TableRow>
@@ -1667,19 +1658,22 @@ export function ShowTableEbupotUnifikasiPphNonResiden({
 }) {
   let navigate = useNavigate();
   const classes = useStyles();
+  const [id, setId] = useState("");
   const [openConfirmationEdit, setOpenConfirmationEdit] = useState(false);
   const [openConfirmationDelete, setOpenConfirmationDelete] = useState(false);
 
-  const handleClickOpenConfirmationEdit = () => {
+  const handleClickOpenConfirmationEdit = (id) => {
     setOpenConfirmationEdit(true);
+    setId(id);
   };
 
   const handleCloseConfirmationEdit = () => {
     setOpenConfirmationEdit(false);
   };
 
-  const handleClickOpenConfirmationDelete = () => {
+  const handleClickOpenConfirmationDelete = (id) => {
     setOpenConfirmationDelete(true);
+    setId(id);
   };
 
   const handleCloseConfirmationDelete = () => {
@@ -1710,6 +1704,35 @@ export function ShowTableEbupotUnifikasiPphNonResiden({
     padding: 0,
   };
 
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  const renderTooltipLihat = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Lihat</div>
+    </Tooltip>
+  );
+
+  const renderTooltipEdit = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Ubah</div>
+    </Tooltip>
+  );
+
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Hapus</div>
+    </Tooltip>
+  );
+
+  const renderTooltipEmail = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Kirim Email</div>
+    </Tooltip>
+  );
+
   let dataTable = currentPosts.map((user, index) => {
     let showStatusPosting = <></>;
     if (user.isPost) {
@@ -1722,9 +1745,12 @@ export function ShowTableEbupotUnifikasiPphNonResiden({
             display: "inline-block",
             padding: "2px 10px",
             textAlign: "center",
+            whiteSpace: "nowrap", // Prevent the text from wrapping
+            overflow: "hidden", // Hide overflowed text
+            textOverflow: "ellipsis", // Add "..." if the text overflows
           }}
         >
-          <p style={statusTextStyle}>Posting</p>
+          <p style={statusTextStyle}>Sudah Posting</p>
         </div>
       );
     } else {
@@ -1809,36 +1835,60 @@ export function ShowTableEbupotUnifikasiPphNonResiden({
             </div>
           </TableCell>
           <TableCell style={aksiButtonWrapper}>
-            <button className="aksi-button" disabled={user.isHapus === true}>
-              <RemoveRedEyeIcon fontSize="small" />
-            </button>
-            <button
-              className="aksi-button"
-              disabled={user.isHapus === true}
-              style={aksiButtonStyle}
-              onClick={() => {
-                handleClickOpenConfirmationEdit();
-              }}
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipLihat}
             >
-              <EditIcon fontSize="small" />
-            </button>
-            <button
-              className="aksi-button"
-              disabled={user.isHapus === true}
-              style={aksiButtonStyle}
-              onClick={() => {
-                handleClickOpenConfirmationDelete();
-              }}
+              <button className="aksi-button" disabled={user.isHapus === true}>
+                <RemoveRedEyeIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipEdit}
             >
-              <DeleteIcon fontSize="small" />
-            </button>
-            <button
-              className="aksi-button"
-              disabled={user.isHapus === true}
-              style={aksiButtonStyle}
+              <button
+                className="aksi-button"
+                disabled={user.isHapus === true}
+                style={aksiButtonStyle}
+                onClick={() => {
+                  handleClickOpenConfirmationEdit(user.id);
+                }}
+              >
+                <EditIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipDelete}
             >
-              <EmailIcon fontSize="small" />
-            </button>
+              <button
+                className="aksi-button"
+                disabled={user.isHapus === true}
+                style={aksiButtonStyle}
+                onClick={() => {
+                  handleClickOpenConfirmationDelete(user.id);
+                }}
+              >
+                <DeleteIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipEmail}
+            >
+              <button
+                className="aksi-button"
+                disabled={user.isHapus === true}
+                style={aksiButtonStyle}
+              >
+                <EmailIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
           </TableCell>
         </TableRow>
         <Dialog
@@ -1890,7 +1940,7 @@ export function ShowTableEbupotUnifikasiPphNonResiden({
                 className="hover-button-no-icon"
                 style={{ paddingLeft: "15px", paddingRight: "15px" }}
                 onClick={() => {
-                  navigate(`/ebupotUnifikasi/ubahPphNonResiden/${user.id}`);
+                  navigate(`/ebupotUnifikasi/ubahPphNonResiden/${id}`);
                 }}
               >
                 Ya
@@ -1947,7 +1997,7 @@ export function ShowTableEbupotUnifikasiPphNonResiden({
                 className="hover-button-no-icon"
                 style={{ paddingLeft: "15px", paddingRight: "15px" }}
                 onClick={() => {
-                  deleteFunction(user.id);
+                  deleteFunction(id);
                   setOpenConfirmationDelete(false);
                 }}
               >
@@ -1977,55 +2027,55 @@ export function ShowTableEbupotUnifikasiPphNonResiden({
           <TableHead className={classes.root}>
             <TableRow>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 PERIODE
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 KODE OBJEK PAJAK
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 NOMOR BUKTI SETOR
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 IDENTITAS
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 NAMA
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 JUMLAH PENGHASILAN BRUTO (RP)
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 JUMLAH PPH TERUTANG (RP)
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 STATUS
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold" }}
+                sx={textDataStyle}
                 className={classes.tableRightBorder}
               >
                 AKSI
@@ -2112,28 +2162,16 @@ export function ShowTableDaftarDokumenPphNonResiden({
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NAMA DOKUMEN
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               NOMOR DOKUMEN
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               TANGGAL
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold" }}
-              className={classes.tableRightBorder}
-            >
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
               AKSI
             </TableCell>
           </TableRow>
@@ -2283,6 +2321,427 @@ export function ShowTablePenandatangan({
               </TableCell>
               <TableCell sx={dataStyle} className={classes.tableRightBorder}>
                 AKSI
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>{dataTable}</TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+}
+
+export function ShowTableEbupotUnifikasiTagihanPemotongan({
+  currentPosts,
+  generateIdBillingFunction,
+  downloadPdf,
+}) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  const [id, setId] = useState("");
+  const [openConfirmationEdit, setOpenConfirmationEdit] = useState(false);
+
+  const handleClickOpenConfirmationEdit = () => {
+    setOpenConfirmationEdit(true);
+  };
+
+  const handleCloseConfirmationEdit = () => {
+    setOpenConfirmationEdit(false);
+  };
+
+  const dataStyle = {
+    fontWeight: 700,
+  };
+
+  const dataStyleRight = {
+    fontWeight: 700,
+    textAlign: "right",
+  };
+
+  const aksiButtonWrapper = {
+    display: "flex",
+  };
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  const renderTooltipBuatKodeBilling = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Buat Kode Billing</div>
+    </Tooltip>
+  );
+
+  const renderTooltipCetakBilling = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Cetak Billing</div>
+    </Tooltip>
+  );
+
+  let dataTable = currentPosts.map((user, index) => (
+    <>
+      <TableRow
+        key={user.id}
+        sx={{
+          "&:last-child td, &:last-child th": { border: 0 },
+        }}
+      >
+        <TableCell component="th" scope="row" style={dataStyle}>
+          {user.objekpajak.jenissetoran.jenispajak.kodeJenisPajak}
+        </TableCell>
+        <TableCell style={dataStyle}>
+          {user.objekpajak.jenissetoran.kodeJenisSetoran}
+        </TableCell>
+        <TableCell style={dataStyleRight}>
+          {user.jumlahSetor.toLocaleString("de-DE")}
+        </TableCell>
+        <TableCell style={dataStyle}>{user.idBilling}</TableCell>
+        <TableCell style={aksiButtonWrapper}>
+          <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 250, hide: 50 }}
+            overlay={renderTooltipBuatKodeBilling}
+          >
+            <button
+              className="aksi-button"
+              disabled={user.isHapus === true}
+              onClick={() => {
+                generateIdBillingFunction(user.id);
+              }}
+            >
+              <DescriptionIcon fontSize="small" />
+            </button>
+          </OverlayTrigger>
+          <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 250, hide: 50 }}
+            overlay={renderTooltipCetakBilling}
+          >
+            <button
+              className="aksi-button"
+              disabled={user.idBilling.length === 0}
+              style={aksiButtonStyle}
+              onClick={() => {
+                downloadPdf(user.id);
+              }}
+            >
+              <PrintIcon fontSize="small" />
+            </button>
+          </OverlayTrigger>
+        </TableCell>
+      </TableRow>
+      <Dialog
+        open={openConfirmationEdit}
+        onClose={handleCloseConfirmationEdit}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        maxWidth={"xs"}
+      >
+        <div style={{ padding: "30px" }}>
+          <DialogTitle id="alert-dialog-title">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <HelpOutlineIcon color="primary" sx={{ fontSize: 80 }} />
+              </div>
+              <b>Ubah Bukti Potong</b>
+            </div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Apakah Anda yakin akan mengubah Bukti Potong?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              variant="warning"
+              style={{ paddingTop: "10px" }}
+              onClick={handleCloseConfirmationEdit}
+            >
+              Tidak
+            </Button>
+            <button
+              className="hover-button-no-icon"
+              style={{ paddingLeft: "15px", paddingRight: "15px" }}
+              onClick={() => {
+                navigate(`/ebupotUnifikasi/ubahDisetorSendiri/${user.id}`);
+              }}
+            >
+              Ya
+            </button>
+          </DialogActions>
+        </div>
+      </Dialog>
+    </>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={5} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <>
+      <TableContainer component={Paper} sx={{ width: "100%" }}>
+        <Table aria-label="simple table">
+          <TableHead className={classes.root}>
+            <TableRow>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                JENIS PAJAK
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                JENIS SETORAN
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                PPH YANG DIPOTONG
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                ID BILLING
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                AKSI
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>{dataTable}</TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+}
+
+export function ShowTableEbupotUnifikasiBuktiSetor({
+  currentPosts,
+  hapusDaftarPemotongan,
+}) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>
+        <p>Hapus Dokumen</p>
+      </div>
+    </Tooltip>
+  );
+
+  let dataTable = currentPosts.map((user, index) => (
+    <TableRow
+      key={user.id}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell component="th" scope="row" sx={textDataStyle}>
+        {user.namaDokumen}
+      </TableCell>
+      <TableCell sx={textDataStyle}>{user.noDokumen}</TableCell>
+      <TableCell sx={textDataStyle}>{user.noDokumen}</TableCell>
+      <TableCell sx={textDataStyle}>{user.noDokumen}</TableCell>
+      <TableCell sx={textDataStyle}>{user.noDokumen}</TableCell>
+      <TableCell sx={textDataStyle}>{user.noDokumen}</TableCell>
+      <TableCell sx={textDataStyle}>
+        {formatDate(user.tanggalDokumen)}
+      </TableCell>
+      <TableCell>
+        <OverlayTrigger
+          placement="bottom"
+          delay={{ show: 250, hide: 50 }}
+          overlay={renderTooltipDelete}
+        >
+          <button
+            className="aksi-button"
+            style={aksiButtonStyle}
+            onClick={() => {
+              hapusDaftarPemotongan(index);
+            }}
+          >
+            <DeleteIcon fontSize="small" />
+          </button>
+        </OverlayTrigger>
+      </TableCell>
+    </TableRow>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={8} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NO
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NOMOR BUKTI
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JENIS PAJAK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JENIS SETORAN
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              MASA TAHUN PAJAK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              TANGGAL SETOR
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH SETOR
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              AKSI
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{dataTable}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableEbupotUnifikasiRingkasanPembayaran({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const dataStyle = {
+    fontWeight: 700,
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  let dataTable = currentPosts.map((user, index) => (
+    <>
+      <TableRow
+        key={user.id}
+        sx={{
+          "&:last-child td, &:last-child th": { border: 0 },
+        }}
+      >
+        <TableCell component="th" scope="row" style={dataStyle}>
+          {user.ebilling.masaPajakDariBulan}
+        </TableCell>
+        <TableCell style={dataStyle}>
+          {user.objekpajak.kodeObjekPajak}
+        </TableCell>
+        <TableCell style={dataStyle}>{user.nomorBuktiSetor}</TableCell>
+        <TableCell style={dataStyle}>
+          {user.jumlahPenghasilanBruto.toLocaleString("de-DE")}
+        </TableCell>
+        <TableCell style={dataStyle}>
+          {user.jumlahPenghasilanBruto.toLocaleString("de-DE")}
+        </TableCell>
+      </TableRow>
+    </>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={5} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <>
+      <TableContainer component={Paper} sx={{ width: "100%" }}>
+        <Table aria-label="simple table">
+          <TableHead className={classes.root}>
+            <TableRow>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                JENIS PAJAK
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                JENIS SETORAN
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                PPH YANG DIPOTONG
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                PPH YANG DISETOR
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                SELISIH
               </TableCell>
             </TableRow>
           </TableHead>

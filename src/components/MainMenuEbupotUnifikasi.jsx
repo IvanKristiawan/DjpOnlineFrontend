@@ -49,12 +49,12 @@ function MainMenuEbupotUnifikasi({ activeLink }) {
           </div>
           <div
             style={
-              activeLink === "sptMasaEbupotUnifikasi"
+              activeLink === "/ebupotUnifikasi/sptMasa/rekamBuktiSetor"
                 ? menuButtonActiveStyle
                 : menuButtonStyle
             }
             onClick={() => {
-              navigate("/sptMasaEbupotUnifikasi");
+              navigate("/ebupotUnifikasi/sptMasa/rekamBuktiSetor");
             }}
           >
             SPT Masa
