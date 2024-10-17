@@ -1167,9 +1167,9 @@ function EbupotUnifikasiPerekamanSptMasa() {
                             marginLeft: "5px",
                             marginRight: "5px",
                           }}
-                          // onChange={(e) => {
-                          //   setPER_PAGE(e.target.value);
-                          // }}
+                          onChange={(e) => {
+                            setLimitEBupotUnifikasiBuktiSetor(e.target.value);
+                          }}
                         >
                           <option value="5">5</option>
                           <option value="10">10</option>
@@ -1225,9 +1225,11 @@ function EbupotUnifikasiPerekamanSptMasa() {
                             marginLeft: "5px",
                             marginRight: "5px",
                           }}
-                          // onChange={(e) => {
-                          //   setPER_PAGE(e.target.value);
-                          // }}
+                          onChange={(e) => {
+                            setLimitEBupotUnifikasiRingkasanPembayaran(
+                              e.target.value
+                            );
+                          }}
                         >
                           <option value="5">5</option>
                           <option value="10">10</option>

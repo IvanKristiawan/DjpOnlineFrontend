@@ -30,6 +30,8 @@ import {
   EbupotUnifikasiUbahPphNonResiden,
   EbupotUnifikasiPosting,
   EbupotUnifikasiPerekamanSptMasa,
+  EbupotUnifikasiDaftarPenyiapanSpt,
+  EbupotUnifikasiUbahPenyiapanSpt,
   TampilPenandatangan,
 } from "./pages/index";
 
@@ -262,6 +264,22 @@ const App = () => {
             element={
               <USERRoute>
                 <EbupotUnifikasiPerekamanSptMasa />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/sptMasa/penyiapanSpt"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiDaftarPenyiapanSpt />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/sptMasa/penyiapanSpt/lengkapiSpt/:id"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiUbahPenyiapanSpt />
               </USERRoute>
             }
           />
