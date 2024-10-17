@@ -119,6 +119,10 @@ function EbupotUnifikasiPerekamanSptMasa() {
     eBupotUnifikasiTagihanPemotonganPagination,
     setEBupotUnifikasiTagihanPemotonganPagination,
   ] = useState([]);
+  const [
+    eBupotUnifikasiRingkasanPembayaranPagination,
+    setEBupotUnifikasiRingkasanPembayaranPagination,
+  ] = useState([]);
   let [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [pages, setPages] = useState(0);
@@ -282,6 +286,32 @@ function EbupotUnifikasiPerekamanSptMasa() {
 
   const getEBupotUnifikasiTagihanPemotonganData = async () => {
     setOpenLoading(true);
+    const response = await axios.post(
+      `${tempUrl}/eBupotUnifikasiTagihanPemotongansByUserSearchPagination`,
+      {
+        userEBupotUnifikasiTagihanPemotonganId: user.id,
+        tahunPajak,
+        masaPajak,
+        _id: user.id,
+        token: user.token,
+        kodeCabang: user.cabang.id,
+      }
+    );
+    setEBupotUnifikasiTagihanPemotonganPagination(
+      response.data.eBupotUnifikasiTagihanPemotongans
+    );
+    setPage(response.data.page);
+    setPages(response.data.totalPage);
+    setRows(response.data.totalRows);
+    getEBupotUnifikasiRingkasanPembayaranData();
+
+    setTimeout(async () => {
+      setOpenLoading(false);
+    }, 500);
+  };
+
+  const getEBupotUnifikasiRingkasanPembayaranData = async () => {
+    setOpenLoading(true);
 
     setTimeout(async () => {
       const response = await axios.post(
@@ -295,7 +325,7 @@ function EbupotUnifikasiPerekamanSptMasa() {
           kodeCabang: user.cabang.id,
         }
       );
-      setEBupotUnifikasiTagihanPemotonganPagination(
+      setEBupotUnifikasiRingkasanPembayaranPagination(
         response.data.eBupotUnifikasiTagihanPemotongans
       );
       setPage(response.data.page);
@@ -887,7 +917,7 @@ function EbupotUnifikasiPerekamanSptMasa() {
                       <Box>
                         <ShowTableEbupotUnifikasiRingkasanPembayaran
                           currentPosts={
-                            eBupotUnifikasiPphDisetorSendiriPagination
+                            eBupotUnifikasiTagihanPemotonganPagination
                           }
                         />
                       </Box>

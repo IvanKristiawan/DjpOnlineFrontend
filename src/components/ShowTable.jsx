@@ -2398,7 +2398,7 @@ export function ShowTableEbupotUnifikasiTagihanPemotongan({
           {user.objekpajak.jenissetoran.kodeJenisSetoran}
         </TableCell>
         <TableCell style={dataStyleRight}>
-          {user.jumlahSetor.toLocaleString("de-DE")}
+          {user.pphYangDipotong.toLocaleString("de-DE")}
         </TableCell>
         <TableCell style={dataStyle}>{user.idBilling}</TableCell>
         <TableCell style={aksiButtonWrapper}>
@@ -2662,9 +2662,23 @@ export function ShowTableEbupotUnifikasiBuktiSetor({
 export function ShowTableEbupotUnifikasiRingkasanPembayaran({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
+  const [id, setId] = useState("");
 
   const dataStyle = {
     fontWeight: 700,
+  };
+
+  const dataStyleRight = {
+    fontWeight: 700,
+    textAlign: "right",
+  };
+
+  const aksiButtonWrapper = {
+    display: "flex",
+  };
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
   };
 
   const textDataStyle = {
@@ -2681,17 +2695,19 @@ export function ShowTableEbupotUnifikasiRingkasanPembayaran({ currentPosts }) {
         }}
       >
         <TableCell component="th" scope="row" style={dataStyle}>
-          {user.ebilling.masaPajakDariBulan}
+          {user.objekpajak.jenissetoran.jenispajak.kodeJenisPajak}
         </TableCell>
         <TableCell style={dataStyle}>
-          {user.objekpajak.kodeObjekPajak}
+          {user.objekpajak.jenissetoran.kodeJenisSetoran}
         </TableCell>
-        <TableCell style={dataStyle}>{user.nomorBuktiSetor}</TableCell>
-        <TableCell style={dataStyle}>
-          {user.jumlahPenghasilanBruto.toLocaleString("de-DE")}
+        <TableCell style={dataStyleRight}>
+          {user.pphYangDipotong.toLocaleString("de-DE")}
         </TableCell>
         <TableCell style={dataStyle}>
-          {user.jumlahPenghasilanBruto.toLocaleString("de-DE")}
+          {user.pphYangDisetor.toLocaleString("de-DE")}
+        </TableCell>
+        <TableCell style={dataStyle}>
+          {(user.pphYangDipotong - user.pphYangDisetor).toLocaleString("de-DE")}
         </TableCell>
       </TableRow>
     </>
