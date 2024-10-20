@@ -605,6 +605,7 @@ function EbupotUnifikasiInputPphNonResiden() {
       bertindakSebagai.length !== 0 && namaIdentitas.length !== 0;
 
     if (handlingInput) {
+      setOpenSearchIdentitasWp(true);
       try {
         let savedEBupotUnifikasiPphNonResiden = await axios.post(
           `${tempUrl}/saveEBupotUnifikasiPphNonResiden`,
@@ -647,7 +648,6 @@ function EbupotUnifikasiInputPphNonResiden() {
           }
         );
 
-        setOpenSearchIdentitasWp(true);
         setTimeout(async () => {
           setOpenSearchIdentitasWp(false);
           setOpenSaved(true);

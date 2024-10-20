@@ -505,9 +505,9 @@ function EbupotUnifikasiPerekamanSptMasa() {
           token: user.token,
         }
       );
+      getEBupotUnifikasiTagihanPemotonganData();
 
       setTimeout(async () => {
-        getEBupotUnifikasiTagihanPemotonganData();
         setOpenLoading(false);
         setOpenSuccessGenerateIdBilling(true);
       }, 500);

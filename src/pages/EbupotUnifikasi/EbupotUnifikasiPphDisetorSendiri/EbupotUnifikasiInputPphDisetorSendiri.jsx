@@ -206,6 +206,7 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
 
     if (handlingInput) {
       try {
+        setOpenSearchSuratSetoranPajak(true);
         let savedEBupotUnifikasiPphDisetorSendiri = await axios.post(
           `${tempUrl}/saveEBupotUnifikasiPphDisetorSendiri`,
           {
@@ -223,7 +224,6 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
           }
         );
 
-        setOpenSearchSuratSetoranPajak(true);
         setTimeout(async () => {
           navigate("/ebupotUnifikasi/daftarDisetorSendiri");
         }, 1000);

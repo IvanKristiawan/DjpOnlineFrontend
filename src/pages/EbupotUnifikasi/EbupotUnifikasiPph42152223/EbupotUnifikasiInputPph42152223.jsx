@@ -622,6 +622,7 @@ function EbupotUnifikasiInputPph42152223() {
 
     if (handlingInput) {
       try {
+        setOpenSearchIdentitasWp(true);
         let savedEBupotUnifikasiPph42152223 = await axios.post(
           `${tempUrl}/saveEBupotUnifikasiPph42152223`,
           {
@@ -659,7 +660,6 @@ function EbupotUnifikasiInputPph42152223() {
           }
         );
 
-        setOpenSearchIdentitasWp(true);
         setTimeout(async () => {
           setOpenSearchIdentitasWp(false);
           setOpenSaved(true);

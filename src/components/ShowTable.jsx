@@ -2410,7 +2410,10 @@ export function ShowTableEbupotUnifikasiTagihanPemotongan({
           >
             <button
               className="aksi-button"
-              disabled={user.isHapus === true}
+              disabled={
+                user.isHapus === true ||
+                user.pphYangDipotong - user.pphYangDisetor === 0
+              }
               onClick={() => {
                 generateIdBillingFunction(user.id);
               }}
@@ -2425,7 +2428,10 @@ export function ShowTableEbupotUnifikasiTagihanPemotongan({
           >
             <button
               className="aksi-button"
-              disabled={user.idBilling.length === 0}
+              disabled={
+                user.idBilling.length === 0 ||
+                user.pphYangDipotong - user.pphYangDisetor === 0
+              }
               style={aksiButtonStyle}
               onClick={() => {
                 downloadPdf(user.id);
