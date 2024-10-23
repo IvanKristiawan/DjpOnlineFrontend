@@ -396,7 +396,7 @@ function EBilling() {
     doc.text("MASA AKTIF", 30, tempY);
     doc.text(`: ${masaAktifKodeBilling}`, 70, tempY);
     tempY += 8;
-    doc.text("NTPN", 30, tempY);
+    doc.text("NTPN (Hanya Simulasi)", 30, tempY);
     doc.text(`: ${ntpnBilling}`, 70, tempY);
 
     tempY += 14;
@@ -1626,7 +1626,7 @@ function EBilling() {
                     controlId="formPlaintextPassword"
                   >
                     <Form.Label column sm="4">
-                      Kode NTPN
+                      Kode NTPN (Hanya Simulasi)
                     </Form.Label>
                     <Col sm="8">
                       <Form.Control value={ntpnBilling} disabled />

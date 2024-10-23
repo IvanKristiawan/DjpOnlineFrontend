@@ -834,7 +834,7 @@ function EbupotUnifikasiPerekamanSptMasa() {
       tempY
     );
     tempY += 8;
-    doc.text("NTPN", 30, tempY);
+    doc.text("NTPN (Hanya Simulasi)", 30, tempY);
     doc.text(
       `: ${findEBupotUnifikasiTagihanPemotongan.data.ntpnBilling}`,
       70,
@@ -1332,7 +1332,7 @@ function EbupotUnifikasiPerekamanSptMasa() {
                       controlId="formPlaintextPassword"
                     >
                       <Form.Label column sm="4">
-                        NTPN
+                        NTPN (Hanya Simulasi)
                       </Form.Label>
                       <Col sm="8">
                         <Form.Control

@@ -371,7 +371,7 @@ function EbupotUnifikasiInputPphDisetorSendiri() {
                           controlId="formPlaintextPassword"
                         >
                           <Form.Label column sm="4">
-                            NTPN
+                            NTPN (Hanya Simulasi)
                           </Form.Label>
                           <Col sm="8">
                             <Form.Control
