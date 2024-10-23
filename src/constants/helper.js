@@ -251,3 +251,7 @@ export const getMonthIndex = function (month) {
     return "Month not found";
   }
 };
+
+export const getLastDateOfMonth = function (year, month) {
+  return new Date(year, month, 0);
+};

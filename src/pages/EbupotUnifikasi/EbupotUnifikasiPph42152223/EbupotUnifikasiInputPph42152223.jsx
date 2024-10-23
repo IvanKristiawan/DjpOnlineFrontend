@@ -15,6 +15,8 @@ import {
 import "../../../constants/defaultProgram.css";
 import {
   dasarPemotonganDokumenOptions,
+  getLastDateOfMonth,
+  getMonthIndex,
   getRandomIndonesianName,
 } from "../../../constants/helper";
 import { ShowTableDaftarDokumenPph42152223 } from "../../../components/ShowTable";
@@ -221,6 +223,7 @@ function EbupotUnifikasiInputPph42152223() {
   }
   const [tahunPajak, setTahunPajak] = useState("");
 
+  const [maxMasaPajak, setMaxMasaPajak] = useState(new Date());
   const [masaPajak, setMasaPajak] = useState("");
   const [masaPajakOptions, setMasaPajakOptions] = useState([]);
   const [identitas, setIdentitas] = useState("NPWP/NITKU");
@@ -679,6 +682,7 @@ function EbupotUnifikasiInputPph42152223() {
 
     // 01.) Accordion 1
     setTahunPajak("");
+    setMaxMasaPajak("");
     setMasaPajak("");
     setMasaPajakOptions([]);
     setIdentitas("NPWP/NITKU");
@@ -889,6 +893,14 @@ function EbupotUnifikasiInputPph42152223() {
                                   )}
                                   onInputChange={(e, value) => {
                                     setMasaPajak(value);
+
+                                    const month = getMonthIndex(value);
+                                    const lastDate = getLastDateOfMonth(
+                                      tahunPajak,
+                                      month
+                                    );
+                                    setMaxMasaPajak(lastDate);
+                                    setTanggalDokumen(lastDate);
                                   }}
                                   inputValue={masaPajak}
                                   value={masaPajak}
@@ -2083,6 +2095,7 @@ function EbupotUnifikasiInputPph42152223() {
                     <Col sm="8">
                       <DatePicker
                         required
+                        maxDate={maxMasaPajak}
                         dateFormat="dd/MM/yyyy"
                         customInput={<Form.Control required />}
                         selected={tanggalDokumen}

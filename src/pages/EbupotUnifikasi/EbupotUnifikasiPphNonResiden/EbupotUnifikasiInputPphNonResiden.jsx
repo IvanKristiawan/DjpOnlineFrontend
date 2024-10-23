@@ -13,7 +13,11 @@ import {
   usePagination,
 } from "../../../components/index";
 import "../../../constants/defaultProgram.css";
-import { dasarPemotonganDokumenOptions } from "../../../constants/helper";
+import {
+  dasarPemotonganDokumenOptions,
+  getLastDateOfMonth,
+  getMonthIndex,
+} from "../../../constants/helper";
 import { ShowTableDaftarDokumenPphNonResiden } from "../../../components/ShowTable";
 import {
   Card,
@@ -208,6 +212,7 @@ function EbupotUnifikasiInputPphNonResiden() {
   }
   const [tahunPajak, setTahunPajak] = useState("");
 
+  const [maxMasaPajak, setMaxMasaPajak] = useState(new Date());
   const [masaPajak, setMasaPajak] = useState("");
   const [masaPajakOptions, setMasaPajakOptions] = useState([]);
   const [tin, setTin] = useState("");
@@ -680,6 +685,7 @@ function EbupotUnifikasiInputPphNonResiden() {
 
     // 01.) Accordion 1
     setTahunPajak("");
+    setMaxMasaPajak("");
     setMasaPajak("");
     setMasaPajakOptions([]);
     setTin("");
@@ -886,6 +892,14 @@ function EbupotUnifikasiInputPphNonResiden() {
                                   )}
                                   onInputChange={(e, value) => {
                                     setMasaPajak(value);
+
+                                    const month = getMonthIndex(value);
+                                    const lastDate = getLastDateOfMonth(
+                                      tahunPajak,
+                                      month
+                                    );
+                                    setMaxMasaPajak(lastDate);
+                                    setTanggalDokumen(lastDate);
                                   }}
                                   inputValue={masaPajak}
                                   value={masaPajak}
@@ -2041,6 +2055,7 @@ function EbupotUnifikasiInputPphNonResiden() {
                     <Col sm="8">
                       <DatePicker
                         required
+                        maxDate={maxMasaPajak}
                         dateFormat="dd/MM/yyyy"
                         customInput={<Form.Control required />}
                         selected={tanggalDokumen}
