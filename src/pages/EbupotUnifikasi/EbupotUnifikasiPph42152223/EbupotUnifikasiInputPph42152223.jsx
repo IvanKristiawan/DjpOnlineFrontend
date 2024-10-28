@@ -363,7 +363,7 @@ function EbupotUnifikasiInputPph42152223() {
 
   const getObjekPajakData = async () => {
     const response = await axios.post(`${tempUrl}/objekPajaksBupot`, {
-      kodeBupot: "0",
+      untukBupotUnifikasi: "PPh 42152223",
       _id: user.id,
       token: user.token,
     });

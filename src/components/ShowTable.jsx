@@ -2980,6 +2980,17 @@ export function ShowTableEbupotUnifikasiPenyiapanSpt({
               className="aksi-button"
               disabled={user.isHapus === true}
               style={aksiButtonStyle}
+              onClick={() => {
+                if (user.penandatanganId === null) {
+                  navigate(
+                    `/ebupotUnifikasi/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
+                  );
+                } else {
+                  navigate(
+                    `/ebupotUnifikasi/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}/kirimSpt`
+                  );
+                }
+              }}
             >
               <SendIcon fontSize="small" />
             </button>
@@ -3168,5 +3179,744 @@ export function ShowTableEbupotUnifikasiPenyiapanSpt({
         </Table>
       </TableContainer>
     </>
+  );
+}
+
+export function ShowTableEbupotUnifikasiObjekPphYangDisetorSendiri({
+  currentPosts,
+}) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  let dataTable = currentPosts.map((user, index) => (
+    <TableRow
+      key={user.id}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell component="th" scope="row" sx={textDataStyle}>
+        {user.nomorBuktiSetor}
+      </TableCell>
+      <TableCell sx={textDataStyle}>{user.nomorBuktiSetor}</TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.jenissetoran.jenispajak.kodeJenisPajak}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.jenissetoran.kodeJenisSetoran}
+      </TableCell>
+    </TableRow>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={4} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              URAIAN
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              KODE OBJEK PAJAK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH DPP (RP)
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PPH (RP)
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{dataTable}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableEbupotUnifikasiObjekPajak({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyleLeft = {
+    fontWeight: "bold",
+    textAlign: "left",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  let dataTable = currentPosts.map((user, index) => (
+    <TableRow
+      key={user.id}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell component="th" scope="row" sx={textDataStyleLeft}>
+        {user.objekpajak.namaObjekPajak}
+      </TableCell>
+      <TableCell sx={textDataStyle}>{user.objekpajak.kodeObjekPajak}</TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.jumlahDpp.toLocaleString("de-DE")}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.jumlahPph.toLocaleString("de-DE")}
+      </TableCell>
+    </TableRow>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={4} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              URAIAN
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              KODE OBJEK PAJAK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH DPP (RP)
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PPH (RP)
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{dataTable}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableEbupotUnifikasiDaftarBuktiPemungutan({
+  currentPosts,
+}) {
+  console.log(currentPosts);
+
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  const textDataStyleRight = {
+    fontWeight: "bold",
+    textAlign: "right",
+  };
+
+  let dataTable = currentPosts.map((user, index) => {
+    let tempIdentitas = "";
+    if (user.ebilling) {
+      tempIdentitas = user.ebilling.subjekPajakNpwp;
+    } else if (user.npwpNitku) {
+      tempIdentitas = user.npwpNitku;
+    } else if (user.nik) {
+      tempIdentitas = user.nik;
+    } else if (user.noKitasKitap.length !== 0) {
+      tempIdentitas = user.noKitasKitap;
+    }
+
+    let tempNama = "";
+    if (user.ebilling) {
+      tempNama = user.ebilling.subjekPajakNama;
+    } else if (user.nama.length !== 0) {
+      tempNama = user.nama;
+    }
+
+    let tempPph = "0";
+    if (user.ebilling) {
+      tempPph = user.ebilling.jumlahSetor;
+    } else if (user.pPhYangDipotongDipungut) {
+      tempPph = user.pPhYangDipotongDipungut;
+    }
+
+    return (
+      <TableRow
+        key={user.id}
+        sx={{
+          "&:last-child td, &:last-child th": { border: 0 },
+        }}
+      >
+        <TableCell component="th" scope="row" sx={textDataStyle}>
+          {user.objekpajak.jenissetoran.jenispajak.namaJenisPajak}
+        </TableCell>
+        <TableCell sx={textDataStyle}>{tempIdentitas}</TableCell>
+        <TableCell sx={textDataStyle}>{tempNama}</TableCell>
+        <TableCell sx={textDataStyle}>
+          {user.objekpajak.kodeObjekPajak}
+        </TableCell>
+        <TableCell sx={textDataStyle}>{user.nomorBuktiSetor}</TableCell>
+        <TableCell sx={textDataStyle}>
+          {formatDate(user.tanggalBuktiSetor)}
+        </TableCell>
+        <TableCell sx={textDataStyleRight}>
+          {user.jumlahPenghasilanBruto.toLocaleString("de-DE")}
+        </TableCell>
+        <TableCell sx={textDataStyleRight}>
+          {tempPph.toLocaleString("de-DE")}
+        </TableCell>
+        <TableCell sx={textDataStyle}>-</TableCell>
+      </TableRow>
+    );
+  });
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={9} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              PASAL
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NPWP/NIK/TIN
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NAMA
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              KODE OBJEK PAJAK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NOMOR BUKTI POTONG/PUNGUT
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              TANGGAL BUKTI POTONG/PUNGUT
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH DPP (RP)
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PAJAK (RP)
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              KETERANGAN
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{dataTable}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableEbupotUnifikasiDaftarSuratSetoranPajak({
+  currentPosts,
+}) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  let dataTable = currentPosts.map((user, index) => (
+    <TableRow
+      key={user.id}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell component="th" scope="row" sx={textDataStyle}>
+        {user.nomorBuktiSetor}
+      </TableCell>
+      <TableCell sx={textDataStyle}>{user.nomorBuktiSetor}</TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.jenissetoran.jenispajak.kodeJenisPajak}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.jenissetoran.kodeJenisSetoran}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.jenissetoran.kodeJenisSetoran}
+      </TableCell>
+    </TableRow>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={5} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              KODE AKUN PAJAK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              KODE JENIS SETORAN
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NTPN/NO BUKTI PBK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              TANGGAL SSP/BPN/BUKTI PBK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PPH DISETOR
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{dataTable}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableEbupotUnifikasiPphYangDisetorSendiri({
+  currentPosts,
+}) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  const textDataStyleLeft = {
+    fontWeight: "bold",
+    textAlign: "left",
+  };
+
+  const textDataStyleRight = {
+    fontWeight: "bold",
+    textAlign: "right",
+  };
+
+  let tempNo = 0;
+  let tempPphYangDipotong = 0;
+  let tempPphYangDitanggungPemerintah = 0;
+  let tempPphYangDisetor = 0;
+
+  let dataTable = currentPosts.map((user, index) => {
+    if (user.jenis === "PphDisetorSendiri") {
+      tempNo++;
+      tempPphYangDipotong += user.pphYangDipotong;
+      tempPphYangDitanggungPemerintah += 0;
+      tempPphYangDisetor += user.pphYangDisetor;
+
+      return (
+        <TableRow
+          key={user.id}
+          sx={{
+            "&:last-child td, &:last-child th": { border: 0 },
+          }}
+        >
+          <TableCell component="th" scope="row" sx={textDataStyle}>
+            {index + 1}
+          </TableCell>
+          <TableCell sx={textDataStyleLeft}>
+            {user.objekpajak.jenissetoran.jenispajak.namaJenisPajak}
+          </TableCell>
+          <TableCell sx={textDataStyleRight}>
+            {user.pphYangDipotong.toLocaleString("de-DE")}
+          </TableCell>
+          <TableCell sx={textDataStyleRight}>0</TableCell>
+          <TableCell sx={textDataStyleRight}>
+            {user.pphYangDisetor.toLocaleString("de-DE")}
+          </TableCell>
+        </TableRow>
+      );
+    }
+  });
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={5} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NO
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              URAIAN
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              PPH TERUTANG
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PPH YANG DITANGGUNG PEMERINTAH
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PPH YANG DISETOR (RP)
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {dataTable}
+          {currentPosts.length !== 0 && (
+            <TableRow
+              key="total"
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+              }}
+            >
+              <TableCell component="th" scope="row" sx={textDataStyle}>
+                {tempNo + 1}
+              </TableCell>
+              <TableCell sx={textDataStyleLeft}>
+                JUMLAH YANG DISETORKAN SENDIRI
+              </TableCell>
+              <TableCell sx={textDataStyleRight}>
+                {tempPphYangDipotong.toLocaleString("de-DE")}
+              </TableCell>
+              <TableCell sx={textDataStyleRight}>
+                {tempPphYangDitanggungPemerintah.toLocaleString("de-DE")}
+              </TableCell>
+              <TableCell sx={textDataStyleRight}>
+                {tempPphYangDisetor.toLocaleString("de-DE")}
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableEbupotUnifikasiPphYangTelahDipotong({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  const textDataStyleLeft = {
+    fontWeight: "bold",
+    textAlign: "left",
+  };
+
+  const textDataStyleRight = {
+    fontWeight: "bold",
+    textAlign: "right",
+  };
+
+  let tempNo = 0;
+  let tempPphYangDipotong = 0;
+  let tempPphYangDitanggungPemerintah = 0;
+  let tempPphYangDisetor = 0;
+
+  let dataTable = currentPosts.map((user, index) => {
+    if (user.jenis !== "PphDisetorSendiri") {
+      tempNo++;
+      tempPphYangDipotong += user.pphYangDipotong;
+      tempPphYangDitanggungPemerintah += 0;
+      tempPphYangDisetor += user.pphYangDisetor;
+
+      return (
+        <TableRow
+          key={user.id}
+          sx={{
+            "&:last-child td, &:last-child th": { border: 0 },
+          }}
+        >
+          <TableCell component="th" scope="row" sx={textDataStyle}>
+            {index + 1}
+          </TableCell>
+          <TableCell sx={textDataStyleLeft}>
+            {user.objekpajak.jenissetoran.jenispajak.namaJenisPajak}
+          </TableCell>
+          <TableCell sx={textDataStyleRight}>
+            {user.pphYangDipotong.toLocaleString("de-DE")}
+          </TableCell>
+          <TableCell sx={textDataStyleRight}>0</TableCell>
+          <TableCell sx={textDataStyleRight}>
+            {user.pphYangDisetor.toLocaleString("de-DE")}
+          </TableCell>
+        </TableRow>
+      );
+    }
+  });
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={5} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NO
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              URAIAN
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              PPH TERUTANG
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PPH YANG DITANGGUNG PEMERINTAH
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PPH YANG DISETOR (RP)
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {dataTable}
+          {currentPosts.length !== 0 && (
+            <>
+              <TableRow
+                key="total"
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                }}
+              >
+                <TableCell component="th" scope="row" sx={textDataStyle}>
+                  {tempNo + 1}
+                </TableCell>
+                <TableCell sx={textDataStyleLeft}>
+                  JUMLAH YANG DISETORKAN SENDIRI
+                </TableCell>
+                <TableCell sx={textDataStyleRight}>
+                  {tempPphYangDipotong.toLocaleString("de-DE")}
+                </TableCell>
+                <TableCell sx={textDataStyleRight}>
+                  {tempPphYangDitanggungPemerintah.toLocaleString("de-DE")}
+                </TableCell>
+                <TableCell sx={textDataStyleRight}>
+                  {tempPphYangDisetor.toLocaleString("de-DE")}
+                </TableCell>
+              </TableRow>
+              <TableRow
+                key="total"
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                }}
+              >
+                <TableCell
+                  component="th"
+                  scope="row"
+                  sx={textDataStyle}
+                ></TableCell>
+                <TableCell sx={textDataStyle}>
+                  JUMLAH BUKTI PEMOTONGAN/PEMUNGUTAN
+                </TableCell>
+                <TableCell sx={textDataStyleRight}></TableCell>
+                <TableCell sx={textDataStyleRight}></TableCell>
+                <TableCell sx={textDataStyleRight}>
+                  {tempNo.toLocaleString("de-DE")}
+                </TableCell>
+              </TableRow>
+            </>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableEbupotUnifikasiRekapitulasiPph({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  const textDataStyleLeft = {
+    fontWeight: "bold",
+    textAlign: "left",
+  };
+
+  const textDataStyleRight = {
+    fontWeight: "bold",
+    textAlign: "right",
+  };
+
+  let tempNo = 0;
+  let tempPphYangDipotong = 0;
+  let tempPphYangDitanggungPemerintah = 0;
+  let tempPphYangDisetor = 0;
+
+  currentPosts.map((user, index) => {
+    tempNo++;
+    tempPphYangDipotong += user.pphYangDipotong;
+    tempPphYangDitanggungPemerintah += 0;
+    tempPphYangDisetor += user.pphYangDisetor;
+
+    return;
+  });
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NO
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              URAIAN
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              PPH TERUTANG
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PPH YANG DITANGGUNG PEMERINTAH
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PPH YANG DISETOR (RP)
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow
+            key="total"
+            sx={{
+              "&:last-child td, &:last-child th": { border: 0 },
+            }}
+          >
+            <TableCell component="th" scope="row" sx={textDataStyle}>
+              1
+            </TableCell>
+            <TableCell sx={textDataStyleLeft}>
+              JUMLAH TOTAL PPh DAN PPh YANG DISETOR
+            </TableCell>
+            <TableCell sx={textDataStyleRight}>
+              {tempPphYangDipotong.toLocaleString("de-DE")}
+            </TableCell>
+            <TableCell sx={textDataStyleRight}>
+              {tempPphYangDitanggungPemerintah.toLocaleString("de-DE")}
+            </TableCell>
+            <TableCell sx={textDataStyleRight}>
+              {tempPphYangDisetor.toLocaleString("de-DE")}
+            </TableCell>
+          </TableRow>
+          <TableRow
+            key="total"
+            sx={{
+              "&:last-child td, &:last-child th": { border: 0 },
+            }}
+          >
+            <TableCell component="th" scope="row" sx={textDataStyle}>
+              2
+            </TableCell>
+            <TableCell sx={textDataStyleLeft}>
+              JUMLAH TOTAL PPh YANG DISETOR PADA SPT YANG DIBETULKAN
+            </TableCell>
+            <TableCell sx={textDataStyleRight}></TableCell>
+            <TableCell sx={textDataStyleRight}></TableCell>
+            <TableCell sx={textDataStyleRight}>0</TableCell>
+          </TableRow>
+          <TableRow
+            key="total"
+            sx={{
+              "&:last-child td, &:last-child th": { border: 0 },
+            }}
+          >
+            <TableCell component="th" scope="row" sx={textDataStyle}>
+              3
+            </TableCell>
+            <TableCell sx={textDataStyleLeft}>
+              JUMLAH PPh YANG KURANG (LEBIH) DISETOR KARENA PEMBETULAN
+            </TableCell>
+            <TableCell sx={textDataStyleRight}></TableCell>
+            <TableCell sx={textDataStyleRight}></TableCell>
+            <TableCell sx={textDataStyleRight}>0</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }

@@ -181,7 +181,7 @@
 
 .menu-data-profil-text-active {
     color: #ffb822;
-    border-bottom: 1px solid #ffb822;
+    border-bottom: 2px solid #ffb822;
     cursor: pointer;
     height: 50px;
     display: flex;
@@ -200,7 +200,31 @@
   
 .menu-data-profil-text:hover {
     color: #ffb822;
-    border-bottom: 1px solid #ffb822;
+    border-bottom: 2px solid #ffb822;
+}
+
+.menu-data-kirim-spt-text-active {
+    color: #5578eb;
+    border-bottom: 2px solid #5578eb;
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    transition: color 0.5s ease; /* Smooth transition on hover */
+}
+
+.menu-data-kirim-spt-text {
+    color: #646c9a;
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    transition: color 0.5s ease; /* Smooth transition on hover */
+}
+  
+.menu-data-kirim-spt-text:hover {
+    color: #5578eb;
+    border-bottom: 2px solid #5578eb;
 }
 
 .menu-data-bayar-text-active {

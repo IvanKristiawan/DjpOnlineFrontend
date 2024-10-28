@@ -363,7 +363,7 @@ function EbupotUnifikasiInputPphNonResiden() {
 
   const getObjekPajakData = async () => {
     const response = await axios.post(`${tempUrl}/objekPajaksBupot`, {
-      kodeBupot: "1",
+      untukBupotUnifikasi: "PPh Non Residen",
       _id: user.id,
       token: user.token,
     });

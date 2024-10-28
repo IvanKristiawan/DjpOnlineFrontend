@@ -121,24 +121,12 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
     setPenghasilanDariLuarIndonesiaJumlahPph,
   ] = useState("0");
   const [
-    pphPasal24YangDapatDiperhitungkanJumlahDasar,
-    setPphPasal24YangDapatDiperhitungkanJumlahDasar,
-  ] = useState("0");
-  const [
     pphPasal24YangDapatDiperhitungkanJumlahPph,
     setPphPasal24YangDapatDiperhitungkanJumlahPph,
   ] = useState("0");
   const [
-    pphYangDipotongPihakLainJumlahDasar,
-    setPphYangDipotongPihakLainJumlahDasar,
-  ] = useState("0");
-  const [
     pphYangDipotongPihakLainJumlahPph,
     setPphYangDipotongPihakLainJumlahPph,
-  ] = useState("0");
-  const [
-    pphYangDisetorSendiriJumlahDasar,
-    setPphYangDisetorSendiriJumlahDasar,
   ] = useState("0");
   const [pphYangDisetorSendiriJumlahPph, setPphYangDisetorSendiriJumlahPph] =
     useState("0");
@@ -235,7 +223,20 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
   ] = useState(false);
   const [openSearchIdentitasWp, setOpenSearchIdentitasWp] = useState(false);
   const [openFoundIdentitasWp, setOpenFoundIdentitasWp] = useState(false);
+  const [eBupotUnifikasiPostings, setEBupotUnifikasiPostings] = useState([]);
   const [penandatangans, setPenandatangans] = useState([]);
+
+  const [inputValues, setInputValues] = useState([]);
+  // Function to handle value change
+  const handleValueChange = (id, field, formattedValue) => {
+    setInputValues((prevValues) => ({
+      ...prevValues,
+      [id]: {
+        ...prevValues[id],
+        [field]: formattedValue.split(".").join("").replace(/,/g, ""),
+      },
+    }));
+  };
 
   const handleClickOpenSaved = (e) => {
     e.preventDefault();
@@ -261,8 +262,30 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
   ];
 
   useEffect(() => {
+    getEBupotUnifikasiPostingDoss();
     getEbupotUnifikasiUbahPenyiapanSptById();
   }, []);
+
+  const getEBupotUnifikasiPostingDoss = async () => {
+    setOpenSearchIdentitasWp(true);
+    const response = await axios.post(`${tempUrl}/getEBupotUnifikasiPostingDoss`, {
+      _id: user.id,
+      token: user.token,
+    });
+    setEBupotUnifikasiPostings(response.data);
+    setInputValues(
+      response.data.reduce((acc, item) => {
+        acc[item.id] = {
+          // ...item,
+          jumlahDpp: item.jumlahDpp,
+          jumlahPph: item.jumlahPph,
+        };
+        return acc;
+      }, {})
+    );
+
+    setOpenSearchIdentitasWp(false);
+  };
 
   const getEbupotUnifikasiUbahPenyiapanSptById = async () => {
     setOpenSearchIdentitasWp(true);
@@ -296,20 +319,11 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
     setPenghasilanDariLuarIndonesiaJumlahPph(
       response.data.penghasilanDariLuarIndonesiaJumlahPph
     );
-    setPphPasal24YangDapatDiperhitungkanJumlahDasar(
-      response.data.pphPasal24YangDapatDiperhitungkanJumlahDasar
-    );
     setPphPasal24YangDapatDiperhitungkanJumlahPph(
       response.data.pphPasal24YangDapatDiperhitungkanJumlahPph
     );
-    setPphYangDipotongPihakLainJumlahDasar(
-      response.data.pphYangDipotongPihakLainJumlahDasar
-    );
     setPphYangDipotongPihakLainJumlahPph(
       response.data.pphYangDipotongPihakLainJumlahPph
-    );
-    setPphYangDisetorSendiriJumlahDasar(
-      response.data.pphYangDisetorSendiriJumlahDasar
     );
     setPphYangDisetorSendiriJumlahPph(
       response.data.pphYangDisetorSendiriJumlahPph
@@ -467,11 +481,8 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
             penghasilanDariIndonesiaJumlahPph,
             penghasilanDariLuarIndonesiaJumlahDasar,
             penghasilanDariLuarIndonesiaJumlahPph,
-            pphPasal24YangDapatDiperhitungkanJumlahDasar,
             pphPasal24YangDapatDiperhitungkanJumlahPph,
-            pphYangDipotongPihakLainJumlahDasar,
             pphYangDipotongPihakLainJumlahPph,
-            pphYangDisetorSendiriJumlahDasar,
             pphYangDisetorSendiriJumlahPph,
 
             // DOPP
@@ -538,12 +549,16 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
             kode2840418JumlahDasar,
             kode2840418JumlahPph,
 
+            eBupotUnifikasiPosting: inputValues,
+
             userIdInput: user.id,
             kodeCabang: user.cabang.id,
             _id: user.id,
             token: user.token,
           }
         );
+        // console.log(Object.keys(inputValues).length);
+        // console.log(inputValues);
 
         setOpenSearchIdentitasWp(true);
         setTimeout(async () => {
@@ -819,11 +834,26 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
                                     : "",
                               }}
                               onValueChange={(values) => {
+                                let tempNumber = values.formattedValue
+                                  .split(".")
+                                  .join("")
+                                  .replace(/,/g, "");
+
                                 setPenghasilanDariIndonesiaJumlahPph(
-                                  values.formattedValue
-                                    .split(".")
-                                    .join("")
-                                    .replace(/,/g, "")
+                                  tempNumber
+                                );
+
+                                let tempPphYangDisetorSendiriJumlahPph =
+                                  parseInt(tempNumber) +
+                                  parseInt(
+                                    penghasilanDariLuarIndonesiaJumlahPph
+                                  ) +
+                                  parseInt(
+                                    pphPasal24YangDapatDiperhitungkanJumlahPph
+                                  ) -
+                                  parseInt(pphYangDipotongPihakLainJumlahPph);
+                                setPphYangDisetorSendiriJumlahPph(
+                                  tempPphYangDisetorSendiriJumlahPph
                                 );
                               }}
                             />
@@ -892,11 +922,24 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
                                     : "",
                               }}
                               onValueChange={(values) => {
+                                let tempNumber = values.formattedValue
+                                  .split(".")
+                                  .join("")
+                                  .replace(/,/g, "");
+
                                 setPenghasilanDariLuarIndonesiaJumlahPph(
-                                  values.formattedValue
-                                    .split(".")
-                                    .join("")
-                                    .replace(/,/g, "")
+                                  tempNumber
+                                );
+
+                                let tempPphYangDisetorSendiriJumlahPph =
+                                  parseInt(penghasilanDariIndonesiaJumlahPph) +
+                                  parseInt(tempNumber) +
+                                  parseInt(
+                                    pphPasal24YangDapatDiperhitungkanJumlahPph
+                                  ) -
+                                  parseInt(pphYangDipotongPihakLainJumlahPph);
+                                setPphYangDisetorSendiriJumlahPph(
+                                  tempPphYangDisetorSendiriJumlahPph
                                 );
                               }}
                             />
@@ -913,40 +956,7 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
                           <Form.Label column sm="5">
                             c. PPh Pasal 24 yang dapat diperhitungkan
                           </Form.Label>
-                          <Col sm="3">
-                            <NumericFormat
-                              required
-                              value={
-                                pphPasal24YangDapatDiperhitungkanJumlahDasar
-                              }
-                              decimalSeparator={","}
-                              thousandSeparator={"."}
-                              customInput={Form.Control}
-                              isInvalid={
-                                pphPasal24YangDapatDiperhitungkanJumlahDasar.length ===
-                                0
-                              }
-                              style={{
-                                textAlign: "right",
-                                borderColor:
-                                  pphPasal24YangDapatDiperhitungkanJumlahDasar.length ===
-                                  0
-                                    ? "red"
-                                    : "",
-                              }}
-                              onValueChange={(values) => {
-                                setPphPasal24YangDapatDiperhitungkanJumlahDasar(
-                                  values.formattedValue
-                                    .split(".")
-                                    .join("")
-                                    .replace(/,/g, "")
-                                );
-                              }}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                              Kolom ini diperlukan.
-                            </Form.Control.Feedback>
-                          </Col>
+                          <Col sm="3"></Col>
                           <Col sm="3">
                             <NumericFormat
                               required
@@ -967,11 +977,24 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
                                     : "",
                               }}
                               onValueChange={(values) => {
+                                let tempNumber = values.formattedValue
+                                  .split(".")
+                                  .join("")
+                                  .replace(/,/g, "");
+
                                 setPphPasal24YangDapatDiperhitungkanJumlahPph(
-                                  values.formattedValue
-                                    .split(".")
-                                    .join("")
-                                    .replace(/,/g, "")
+                                  tempNumber
+                                );
+
+                                let tempPphYangDisetorSendiriJumlahPph =
+                                  parseInt(penghasilanDariIndonesiaJumlahPph) +
+                                  parseInt(
+                                    penghasilanDariLuarIndonesiaJumlahPph
+                                  ) +
+                                  parseInt(tempNumber) -
+                                  parseInt(pphYangDipotongPihakLainJumlahPph);
+                                setPphYangDisetorSendiriJumlahPph(
+                                  tempPphYangDisetorSendiriJumlahPph
                                 );
                               }}
                             />
@@ -988,37 +1011,7 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
                           <Form.Label column sm="5">
                             d. PPh yang dipotong pihak lain
                           </Form.Label>
-                          <Col sm="3">
-                            <NumericFormat
-                              required
-                              value={pphYangDipotongPihakLainJumlahDasar}
-                              decimalSeparator={","}
-                              thousandSeparator={"."}
-                              customInput={Form.Control}
-                              isInvalid={
-                                pphYangDipotongPihakLainJumlahDasar.length === 0
-                              }
-                              style={{
-                                textAlign: "right",
-                                borderColor:
-                                  pphYangDipotongPihakLainJumlahDasar.length ===
-                                  0
-                                    ? "red"
-                                    : "",
-                              }}
-                              onValueChange={(values) => {
-                                setPphYangDipotongPihakLainJumlahDasar(
-                                  values.formattedValue
-                                    .split(".")
-                                    .join("")
-                                    .replace(/,/g, "")
-                                );
-                              }}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                              Kolom ini diperlukan.
-                            </Form.Control.Feedback>
-                          </Col>
+                          <Col sm="3"></Col>
                           <Col sm="3">
                             <NumericFormat
                               required
@@ -1037,11 +1030,26 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
                                     : "",
                               }}
                               onValueChange={(values) => {
+                                let tempNumber = values.formattedValue
+                                  .split(".")
+                                  .join("")
+                                  .replace(/,/g, "");
+
                                 setPphYangDipotongPihakLainJumlahPph(
-                                  values.formattedValue
-                                    .split(".")
-                                    .join("")
-                                    .replace(/,/g, "")
+                                  tempNumber
+                                );
+
+                                let tempPphYangDisetorSendiriJumlahPph =
+                                  parseInt(penghasilanDariIndonesiaJumlahPph) +
+                                  parseInt(
+                                    penghasilanDariLuarIndonesiaJumlahPph
+                                  ) +
+                                  parseInt(
+                                    pphPasal24YangDapatDiperhitungkanJumlahPph
+                                  ) -
+                                  parseInt(tempNumber);
+                                setPphYangDisetorSendiriJumlahPph(
+                                  tempPphYangDisetorSendiriJumlahPph
                                 );
                               }}
                             />
@@ -1058,39 +1066,10 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
                           <Form.Label column sm="5">
                             e. PPh yang disetor sendiri
                           </Form.Label>
+                          <Col sm="3"></Col>
                           <Col sm="3">
                             <NumericFormat
-                              required
-                              value={pphYangDisetorSendiriJumlahDasar}
-                              decimalSeparator={","}
-                              thousandSeparator={"."}
-                              customInput={Form.Control}
-                              isInvalid={
-                                pphYangDisetorSendiriJumlahDasar.length === 0
-                              }
-                              style={{
-                                textAlign: "right",
-                                borderColor:
-                                  pphYangDisetorSendiriJumlahDasar.length === 0
-                                    ? "red"
-                                    : "",
-                              }}
-                              onValueChange={(values) => {
-                                setPphYangDisetorSendiriJumlahDasar(
-                                  values.formattedValue
-                                    .split(".")
-                                    .join("")
-                                    .replace(/,/g, "")
-                                );
-                              }}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                              Kolom ini diperlukan.
-                            </Form.Control.Feedback>
-                          </Col>
-                          <Col sm="3">
-                            <NumericFormat
-                              required
+                              disabled
                               value={pphYangDisetorSendiriJumlahPph}
                               decimalSeparator={","}
                               thousandSeparator={"."}
@@ -1104,14 +1083,6 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
                                   pphYangDisetorSendiriJumlahPph.length === 0
                                     ? "red"
                                     : "",
-                              }}
-                              onValueChange={(values) => {
-                                setPphYangDisetorSendiriJumlahPph(
-                                  values.formattedValue
-                                    .split(".")
-                                    .join("")
-                                    .replace(/,/g, "")
-                                );
                               }}
                             />
                             <Form.Control.Feedback type="invalid">
@@ -1135,6 +1106,102 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
                   <AccordionDetails>
                     <div style={{ color: "#646c9a", marginTop: "20px" }}>
                       <div>
+                        <Form.Group
+                          as={Row}
+                          className="mb-2"
+                          controlId="formPlaintextPassword"
+                        >
+                          <Form.Label
+                            column
+                            sm="5"
+                            style={{ visibility: "hidden" }}
+                          >
+                            Tahun/Masa Pajak
+                          </Form.Label>
+                          <Col sm="3">
+                            <p style={{ textAlign: "center" }}>
+                              Jumlah Dasar Pengenaan Pajak (Rp)
+                            </p>
+                          </Col>
+                          <Col sm="3">
+                            <p style={{ textAlign: "center" }}>
+                              Jumlah PPh (Rp)
+                            </p>
+                          </Col>
+                        </Form.Group>
+                        {eBupotUnifikasiPostings.map((item) => (
+                          <Form.Group
+                            as={Row}
+                            className="mb-2"
+                            key={item.id}
+                            controlId={`form${item.id}`}
+                          >
+                            <Form.Label column sm="5">
+                              {item.objekpajak.kodeObjekPajak} -{" "}
+                              {item.objekpajak.namaObjekPajak}
+                            </Form.Label>
+                            <Col sm="3">
+                              <NumericFormat
+                                required
+                                value={inputValues[item.id].jumlahDpp}
+                                decimalSeparator=","
+                                thousandSeparator="."
+                                customInput={Form.Control}
+                                isInvalid={
+                                  inputValues[item.id].jumlahDpp.length === 0
+                                }
+                                style={{
+                                  textAlign: "right",
+                                  borderColor:
+                                    inputValues[item.id].jumlahDpp.length === 0
+                                      ? "red"
+                                      : "",
+                                }}
+                                onValueChange={(values) =>
+                                  handleValueChange(
+                                    item.id,
+                                    "jumlahDpp",
+                                    values.formattedValue
+                                  )
+                                }
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                Kolom ini diperlukan.
+                              </Form.Control.Feedback>
+                            </Col>
+                            <Col sm="3">
+                              <NumericFormat
+                                required
+                                value={inputValues[item.id].jumlahPph}
+                                decimalSeparator=","
+                                thousandSeparator="."
+                                customInput={Form.Control}
+                                isInvalid={
+                                  inputValues[item.id].jumlahPph.length === 0
+                                }
+                                style={{
+                                  textAlign: "right",
+                                  borderColor:
+                                    inputValues[item.id].jumlahPph.length === 0
+                                      ? "red"
+                                      : "",
+                                }}
+                                onValueChange={(values) =>
+                                  handleValueChange(
+                                    item.id,
+                                    "jumlahPph",
+                                    values.formattedValue
+                                  )
+                                }
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                Kolom ini diperlukan.
+                              </Form.Control.Feedback>
+                            </Col>
+                          </Form.Group>
+                        ))}
+                      </div>
+                      {/* <div>
                         <Form.Group
                           as={Row}
                           className="mb-2"
@@ -3232,7 +3299,7 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
                             </Form.Control.Feedback>
                           </Col>
                         </Form.Group>
-                      </div>
+                      </div> */}
                     </div>
                   </AccordionDetails>
                 </Accordion>

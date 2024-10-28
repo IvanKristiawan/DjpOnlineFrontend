@@ -4,10 +4,10 @@ export const formatDate = (date) => {
   return `${tempDate.getDate().toLocaleString("en-US", {
     minimumIntegerDigits: 2,
     useGrouping: false,
-  })}/${(tempDate.getMonth() + 1).toLocaleString("en-US", {
+  })}-${(tempDate.getMonth() + 1).toLocaleString("en-US", {
     minimumIntegerDigits: 2,
     useGrouping: false,
-  })}/${tempDate.getFullYear()}`;
+  })}-${tempDate.getFullYear()}`;
 };
 
 export const formatTime = (datetime) => {
@@ -21,30 +21,30 @@ export const formatTime = (datetime) => {
 };
 
 export const findMonth = (monthNumber) => {
-  if (monthNumber === 1) {
-    return "JANUARI";
-  } else if (monthNumber === 2) {
-    return "FEBRUARI";
-  } else if (monthNumber === 3) {
-    return "MARET";
-  } else if (monthNumber === 4) {
-    return "APRIL";
-  } else if (monthNumber === 5) {
-    return "MEI";
-  } else if (monthNumber === 6) {
-    return "JUNI";
-  } else if (monthNumber === 7) {
-    return "JULI";
-  } else if (monthNumber === 8) {
-    return "AGUSTUS";
-  } else if (monthNumber === 9) {
-    return "SEPTEMBER";
-  } else if (monthNumber === 10) {
-    return "OKTOBER";
-  } else if (monthNumber === 11) {
-    return "NOVEMBER";
-  } else if (monthNumber === 12) {
-    return "DESEMBER";
+  if (monthNumber == 1) {
+    return "Januari";
+  } else if (monthNumber == 2) {
+    return "Februari";
+  } else if (monthNumber == 3) {
+    return "Maret";
+  } else if (monthNumber == 4) {
+    return "April";
+  } else if (monthNumber == 5) {
+    return "Mei";
+  } else if (monthNumber == 6) {
+    return "Juni";
+  } else if (monthNumber == 7) {
+    return "Juli";
+  } else if (monthNumber == 8) {
+    return "Agustus";
+  } else if (monthNumber == 9) {
+    return "September";
+  } else if (monthNumber == 10) {
+    return "Oktober";
+  } else if (monthNumber == 11) {
+    return "November";
+  } else if (monthNumber == 12) {
+    return "Desember";
   }
 };
 

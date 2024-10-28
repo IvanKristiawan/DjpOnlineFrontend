@@ -32,6 +32,7 @@ import {
   EbupotUnifikasiPerekamanSptMasa,
   EbupotUnifikasiDaftarPenyiapanSpt,
   EbupotUnifikasiUbahPenyiapanSpt,
+  EbupotUnifikasiPenyiapanSptKirimSpt,
   TampilPenandatangan,
 } from "./pages/index";
 
@@ -280,6 +281,14 @@ const App = () => {
             element={
               <USERRoute>
                 <EbupotUnifikasiUbahPenyiapanSpt />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/sptMasa/penyiapanSpt/lengkapiSpt/:id/kirimSpt"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiPenyiapanSptKirimSpt />
               </USERRoute>
             }
           />
