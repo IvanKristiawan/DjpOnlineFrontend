@@ -34,6 +34,7 @@ import {
   EbupotUnifikasiUbahPenyiapanSpt,
   EbupotUnifikasiPenyiapanSptKirimSpt,
   TampilPenandatangan,
+  TampilBuatAuthKey,
 } from "./pages/index";
 
 import { FaBars } from "react-icons/fa";
@@ -298,6 +299,14 @@ const App = () => {
             element={
               <USERRoute>
                 <TampilPenandatangan />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/pengaturan/authKey"
+            element={
+              <USERRoute>
+                <TampilBuatAuthKey />
               </USERRoute>
             }
           />

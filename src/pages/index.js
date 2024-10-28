@@ -34,6 +34,7 @@ export { default as EbupotUnifikasiUbahPenyiapanSpt } from "./EbupotUnifikasi/Eb
 export { default as EbupotUnifikasiPenyiapanSptKirimSpt } from "./EbupotUnifikasi/EbupotUnifikasiPenyiapanSpt/EbupotUnifikasiPenyiapanSptKirimSpt";
 // Pengaturan
 export { default as TampilPenandatangan } from "./Pengaturan/Penandatangan/TampilPenandatangan";
+export { default as TampilBuatAuthKey } from "./Pengaturan/BuatAuthKey/TampilBuatAuthKey";
 // Utility Page
 export { default as ProfilUser } from "./Utility/ProfilUser/ProfilUser";
 export { default as UbahProfilUser } from "./Utility/ProfilUser/UbahProfilUser";

@@ -344,3 +344,18 @@
     background-color: blue;
     color: white
 }
+
+.copy-button {
+    background-color: white;   /* Default background color */
+    color: #646c9a;
+    border: 1px solid rgb(211, 211, 211);
+    border-radius: 10px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.copy-button:hover {
+    background-color: rgb(230, 230, 230); /* Change color on hover */
+    color: #646c9a;
+}
