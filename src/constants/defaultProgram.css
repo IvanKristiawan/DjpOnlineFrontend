@@ -328,3 +328,19 @@
     background-color: #f8aa00;
     color: #212c5f
 }
+
+.upload-sertifikat-elektronik-button {
+    background-color: rgba(55,74,251,0.1);
+    color: #646c9a;
+    border: none;
+    border-radius: .2rem;
+    padding: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.upload-sertifikat-elektronik-button:hover {
+    background-color: blue;
+    color: white
+}

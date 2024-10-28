@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useStateContext, tempUrl } from "../../../contexts/ContextProvider";
@@ -244,6 +244,26 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
   // Toggle Passphrase visibility
   const togglePassphraseVisibility = () => {
     setPassphraseVisible(!passphraseVisible);
+  };
+  const [fileSertifikatElektronik, setFileSertifikatElektronik] =
+    useState(null);
+  const fileInputSertifikatElektronikRef = useRef(null);
+
+  const handleButtonClickSertifikatElektronik = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    fileInputSertifikatElektronikRef.current.click();
+  };
+  const handleFileSertifikatElektronikChange = (event) => {
+    setFileSertifikatElektronik(event.target.files[0]);
+  };
+  const handleSubmit = () => {
+    if (fileSertifikatElektronik) {
+      alert(`File selected: ${fileSertifikatElektronik.name}`);
+      // You can add further logic to upload the file
+    } else {
+      alert("No file selected.");
+    }
   };
 
   // 03.) Accordion 3
@@ -1668,8 +1688,12 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
                                   shape="rounded"
                                   color="primary"
                                   count={pagesEBupotUnifikasiTagihanPemotongan}
-                                  page={pageEBupotUnifikasiTagihanPemotongan + 1}
-                                  onChange={handleChangeEBupotUnifikasiTagihanPemotongan}
+                                  page={
+                                    pageEBupotUnifikasiTagihanPemotongan + 1
+                                  }
+                                  onChange={
+                                    handleChangeEBupotUnifikasiTagihanPemotongan
+                                  }
                                   size={screenSize <= 600 ? "small" : "large"}
                                 />
                               </Box>
@@ -1748,31 +1772,26 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
                                   File (*.p12)
                                 </Form.Label>
                                 <Col sm="8">
-                                  <InputGroup>
-                                    <Form.Control
-                                      required
-                                      type={
-                                        passphraseVisible ? "text" : "password"
-                                      }
-                                      value={passphrase}
-                                      onChange={(e) =>
-                                        setPassphrase(
-                                          e.target.value.toUpperCase()
-                                        )
-                                      }
-                                    />
-                                    <Button
-                                      variant="outline-secondary"
-                                      onClick={togglePassphraseVisibility}
-                                      className="no-hover"
-                                    >
-                                      {passphraseVisible ? (
-                                        <VisibilityIcon />
-                                      ) : (
-                                        <VisibilityOffIcon />
-                                      )}
-                                    </Button>
-                                  </InputGroup>
+                                  <button
+                                    className="upload-sertifikat-elektronik-button"
+                                    variant="primary"
+                                    onClick={
+                                      handleButtonClickSertifikatElektronik
+                                    }
+                                  >
+                                    Pilih Sertifikat Elektronik
+                                  </button>
+                                  <Form.Control
+                                    type="file"
+                                    ref={fileInputSertifikatElektronikRef}
+                                    onChange={
+                                      handleFileSertifikatElektronikChange
+                                    }
+                                    style={{ display: "none" }} // Hide the file input
+                                  />
+                                  <Form.Label>
+                                    Upload Sertifikat Elektronik
+                                  </Form.Label>
                                 </Col>
                               </Form.Group>
                               <div
@@ -1787,11 +1806,11 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
                                   style={{ marginRight: "4px" }}
                                   type="submit"
                                 >
-                                  <SaveIcon
+                                  <SendIcon
                                     fontSize="small"
                                     style={{ marginRight: "4px" }}
                                   />
-                                  Simpan
+                                  Kirim SPT
                                 </button>
                                 <button
                                   className="blank-button"
