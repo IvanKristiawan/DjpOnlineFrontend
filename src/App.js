@@ -28,6 +28,7 @@ import {
   EbupotUnifikasiDaftarPphNonResiden,
   EbupotUnifikasiInputPphNonResiden,
   EbupotUnifikasiUbahPphNonResiden,
+  EbupotUnifikasiImporData,
   EbupotUnifikasiPosting,
   EbupotUnifikasiPerekamanSptMasa,
   EbupotUnifikasiDaftarPenyiapanSpt,
@@ -250,6 +251,14 @@ const App = () => {
             element={
               <USERRoute>
                 <EbupotUnifikasiUbahPphNonResiden />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupotUnifikasi/imporData"
+            element={
+              <USERRoute>
+                <EbupotUnifikasiImporData />
               </USERRoute>
             }
           />

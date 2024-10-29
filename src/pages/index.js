@@ -27,6 +27,7 @@ export { default as EbupotUnifikasiUbahPph42152223 } from "./EbupotUnifikasi/Ebu
 export { default as EbupotUnifikasiDaftarPphNonResiden } from "./EbupotUnifikasi/EbupotUnifikasiPphNonResiden/EbupotUnifikasiDaftarPphNonResiden";
 export { default as EbupotUnifikasiInputPphNonResiden } from "./EbupotUnifikasi/EbupotUnifikasiPphNonResiden/EbupotUnifikasiInputPphNonResiden";
 export { default as EbupotUnifikasiUbahPphNonResiden } from "./EbupotUnifikasi/EbupotUnifikasiPphNonResiden/EbupotUnifikasiUbahPphNonResiden";
+export { default as EbupotUnifikasiImporData } from "./EbupotUnifikasi/ImporData/EbupotUnifikasiImporData";
 export { default as EbupotUnifikasiPosting } from "./EbupotUnifikasi/Posting/EbupotUnifikasiPosting";
 export { default as EbupotUnifikasiPerekamanSptMasa } from "./EbupotUnifikasi/EbupotUnifikasiPerekamanSptMasa/EbupotUnifikasiPerekamanSptMasa";
 export { default as EbupotUnifikasiDaftarPenyiapanSpt } from "./EbupotUnifikasi/EbupotUnifikasiPenyiapanSpt/EbupotUnifikasiDaftarPenyiapanSpt";

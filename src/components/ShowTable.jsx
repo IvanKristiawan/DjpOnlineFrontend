@@ -4046,3 +4046,206 @@ export function ShowTableEbupotUnifikasiRekapitulasiPph({ currentPosts }) {
     </TableContainer>
   );
 }
+
+export function ShowTableEbupotUnifikasiDaftarDokumenImporData({
+  currentPosts,
+}) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  const [id, setId] = useState("");
+  const [openConfirmationEdit, setOpenConfirmationEdit] = useState(false);
+
+  const handleClickOpenConfirmationEdit = (id) => {
+    setOpenConfirmationEdit(true);
+    setId(id);
+  };
+
+  const handleCloseConfirmationEdit = () => {
+    setOpenConfirmationEdit(false);
+  };
+
+  const dataStyle = {
+    fontWeight: 700,
+  };
+
+  const aksiButtonWrapper = {
+    display: "flex",
+  };
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  const renderTooltipLihat = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Lihat</div>
+    </Tooltip>
+  );
+
+  let dataTable = currentPosts.map((user, index) => (
+    <>
+      <TableRow
+        key={user.id}
+        sx={{
+          "&:last-child td, &:last-child th": { border: 0 },
+        }}
+      >
+        <TableCell component="th" scope="row" style={dataStyle}>
+          {user.ebilling.masaPajakDariBulan}
+        </TableCell>
+        <TableCell style={dataStyle}>
+          {user.objekpajak.kodeObjekPajak}
+        </TableCell>
+        <TableCell style={dataStyle}>{user.nomorBuktiSetor}</TableCell>
+        <TableCell style={dataStyle}>
+          {user.jumlahPenghasilanBruto.toLocaleString("de-DE")}
+        </TableCell>
+        <TableCell style={dataStyle}>
+          {user.jumlahPenghasilanBruto.toLocaleString("de-DE")}
+        </TableCell>
+        <TableCell style={dataStyle}>
+          {user.ebilling.jumlahSetor.toLocaleString("de-DE")}
+        </TableCell>
+        <TableCell style={aksiButtonWrapper}>
+          <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 250, hide: 50 }}
+            overlay={renderTooltipLihat}
+          >
+            <button className="aksi-button" disabled={user.isHapus === true}>
+              <RemoveRedEyeIcon fontSize="small" />
+            </button>
+          </OverlayTrigger>
+        </TableCell>
+      </TableRow>
+      <Dialog
+        open={openConfirmationEdit}
+        onClose={handleCloseConfirmationEdit}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        maxWidth={"xs"}
+      >
+        <div style={{ padding: "30px" }}>
+          <DialogTitle id="alert-dialog-title">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <HelpOutlineIcon color="primary" sx={{ fontSize: 80 }} />
+              </div>
+              <b>Ubah Bukti Potong</b>
+            </div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Apakah Anda yakin akan mengubah Bukti Potong?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              variant="warning"
+              style={{ paddingTop: "10px" }}
+              onClick={handleCloseConfirmationEdit}
+            >
+              Tidak
+            </Button>
+            <button
+              className="hover-button-no-icon"
+              style={{ paddingLeft: "15px", paddingRight: "15px" }}
+              onClick={() => {
+                navigate(`/ebupotUnifikasi/ubahDisetorSendiri/${id}`);
+              }}
+            >
+              Ya
+            </button>
+          </DialogActions>
+        </div>
+      </Dialog>
+    </>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={7} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <>
+      <TableContainer component={Paper} sx={{ width: "100%" }}>
+        <Table aria-label="simple table">
+          <TableHead className={classes.root}>
+            <TableRow>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                NOMOR TIKET
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                NAMA FILE
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                TANGGAL UPLOAD
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                JUMLAH BARIS
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                STATUS
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                KETERANGAN UPLOAD
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                AKSI
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>{dataTable}</TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+}

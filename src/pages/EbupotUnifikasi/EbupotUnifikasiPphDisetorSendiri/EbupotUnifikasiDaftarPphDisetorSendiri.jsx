@@ -398,7 +398,6 @@ export default EbupotUnifikasiDaftarPphDisetorSendiri;
 
 const menuLaporContainer = {
   display: "flex",
-  borderBottom: "1px solid rgba(33, 44, 95, 0.1)",
   marginTop: "40px",
   marginBottom: "20px",
 };

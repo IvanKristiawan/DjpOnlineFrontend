@@ -765,7 +765,6 @@ const logoMenuStyle = {
 
 const menuLaporContainer = {
   display: "flex",
-  borderBottom: "1px solid rgba(33, 44, 95, 0.1)",
   marginBottom: "20px",
 };
 

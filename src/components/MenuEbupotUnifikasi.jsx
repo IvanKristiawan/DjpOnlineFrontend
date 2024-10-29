@@ -171,7 +171,7 @@ function MenuEbupotUnifikasi({ username }) {
           className="paper-background"
           style={menuLaporanWrapper}
           onClick={() => {
-            navigate("/ebupotUnifikasi/import");
+            navigate("/ebupotUnifikasi/imporData");
           }}
         >
           <IosShareIcon style={{ fill: "#ffb822" }} fontSize="large" />
