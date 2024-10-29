@@ -12,10 +12,7 @@ import {
   MainMenuEbupotUnifikasi,
 } from "../../../components/index";
 import "../../../constants/defaultProgram.css";
-import {
-  dasarPemotonganDokumenOptions,
-  findMonth,
-} from "../../../constants/helper";
+import { findMonth } from "../../../constants/helper";
 import {
   ShowTableEbupotUnifikasiObjekPphYangDisetorSendiri,
   ShowTableEbupotUnifikasiObjekPajak,
@@ -49,19 +46,13 @@ import {
   Box,
   Pagination,
 } from "@mui/material";
-import DatePicker from "react-datepicker";
 import { NumericFormat } from "react-number-format";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EditIcon from "@mui/icons-material/Edit";
-import SearchIcon from "@mui/icons-material/Search";
 import ReplayIcon from "@mui/icons-material/Replay";
-import SaveIcon from "@mui/icons-material/Save";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import SendIcon from "@mui/icons-material/Send";
@@ -175,70 +166,6 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
   const [pphYangDisetorSendiriJumlahPph, setPphYangDisetorSendiriJumlahPph] =
     useState("0");
 
-  // DOPP
-  const [kode2210101JumlahDasar, setKode2210101JumlahDasar] = useState("0");
-  const [kode2210101JumlahPph, setKode2210101JumlahPph] = useState("0");
-  const [kode2240501JumlahDasar, setKode2240501JumlahDasar] = useState("0");
-  const [kode2240501JumlahPph, setKode2240501JumlahPph] = useState("0");
-  const [kode2240502JumlahDasar, setKode2240502JumlahDasar] = useState("0");
-  const [kode2240502JumlahPph, setKode2240502JumlahPph] = useState("0");
-  const [kode2710007JumlahDasar, setKode2710007JumlahDasar] = useState("0");
-  const [kode2710007JumlahPph, setKode2710007JumlahPph] = useState("0");
-  const [kode2710203JumlahDasar, setKode2710203JumlahDasar] = useState("0");
-  const [kode2710203JumlahPph, setKode2710203JumlahPph] = useState("0");
-  const [kode2840101JumlahDasar, setKode2840101JumlahDasar] = useState("0");
-  const [kode2840101JumlahPph, setKode2840101JumlahPph] = useState("0");
-  const [kode2840104JumlahDasar, setKode2840104JumlahDasar] = useState("0");
-  const [kode2840104JumlahPph, setKode2840104JumlahPph] = useState("0");
-  const [kode2840105JumlahDasar, setKode2840105JumlahDasar] = useState("0");
-  const [kode2840105JumlahPph, setKode2840105JumlahPph] = useState("0");
-  const [kode2840106JumlahDasar, setKode2840106JumlahDasar] = useState("0");
-  const [kode2840106JumlahPph, setKode2840106JumlahPph] = useState("0");
-  const [kode2840401JumlahDasar, setKode2840401JumlahDasar] = useState("0");
-  const [kode2840401JumlahPph, setKode2840401JumlahPph] = useState("0");
-  const [kode2840402JumlahDasar, setKode2840402JumlahDasar] = useState("0");
-  const [kode2840402JumlahPph, setKode2840402JumlahPph] = useState("0");
-  const [kode2840403JumlahDasar, setKode2840403JumlahDasar] = useState("0");
-  const [kode2840403JumlahPph, setKode2840403JumlahPph] = useState("0");
-  const [kode2840404JumlahDasar, setKode2840404JumlahDasar] = useState("0");
-  const [kode2840404JumlahPph, setKode2840404JumlahPph] = useState("0");
-  const [kode2840405JumlahDasar, setKode2840405JumlahDasar] = useState("0");
-  const [kode2840405JumlahPph, setKode2840405JumlahPph] = useState("0");
-  const [kode2840406JumlahDasar, setKode2840406JumlahDasar] = useState("0");
-  const [kode2840406JumlahPph, setKode2840406JumlahPph] = useState("0");
-  const [kode2840407JumlahDasar, setKode2840407JumlahDasar] = useState("0");
-  const [kode2840407JumlahPph, setKode2840407JumlahPph] = useState("0");
-  const [kode2840408JumlahDasar, setKode2840408JumlahDasar] = useState("0");
-  const [kode2840408JumlahPph, setKode2840408JumlahPph] = useState("0");
-  const [kode2840409JumlahDasar, setKode2840409JumlahDasar] = useState("0");
-  const [kode2840409JumlahPph, setKode2840409JumlahPph] = useState("0");
-  const [kode2840410JumlahDasar, setKode2840410JumlahDasar] = useState("0");
-  const [kode2840410JumlahPph, setKode2840410JumlahPph] = useState("0");
-  const [kode2840411JumlahDasar, setKode2840411JumlahDasar] = useState("0");
-  const [kode2840411JumlahPph, setKode2840411JumlahPph] = useState("0");
-  const [kode2840601JumlahDasar, setKode2840601JumlahDasar] = useState("0");
-  const [kode2840601JumlahPph, setKode2840601JumlahPph] = useState("0");
-  const [kode2840701JumlahDasar, setKode2840701JumlahDasar] = useState("0");
-  const [kode2840701JumlahPph, setKode2840701JumlahPph] = useState("0");
-  const [kode2840801JumlahDasar, setKode2840801JumlahDasar] = useState("0");
-  const [kode2840801JumlahPph, setKode2840801JumlahPph] = useState("0");
-  const [kode2840503JumlahDasar, setKode2840503JumlahDasar] = useState("0");
-  const [kode2840503JumlahPph, setKode2840503JumlahPph] = useState("0");
-  const [kode2840412JumlahDasar, setKode2840412JumlahDasar] = useState("0");
-  const [kode2840412JumlahPph, setKode2840412JumlahPph] = useState("0");
-  const [kode2840413JumlahDasar, setKode2840413JumlahDasar] = useState("0");
-  const [kode2840413JumlahPph, setKode2840413JumlahPph] = useState("0");
-  const [kode2840414JumlahDasar, setKode2840414JumlahDasar] = useState("0");
-  const [kode2840414JumlahPph, setKode2840414JumlahPph] = useState("0");
-  const [kode2840415JumlahDasar, setKode2840415JumlahDasar] = useState("0");
-  const [kode2840415JumlahPph, setKode2840415JumlahPph] = useState("0");
-  const [kode2840416JumlahDasar, setKode2840416JumlahDasar] = useState("0");
-  const [kode2840416JumlahPph, setKode2840416JumlahPph] = useState("0");
-  const [kode2840417JumlahDasar, setKode2840417JumlahDasar] = useState("0");
-  const [kode2840417JumlahPph, setKode2840417JumlahPph] = useState("0");
-  const [kode2840418JumlahDasar, setKode2840418JumlahDasar] = useState("0");
-  const [kode2840418JumlahPph, setKode2840418JumlahPph] = useState("0");
-
   const [passphrase, setPassphrase] = useState("");
   const [passphraseVisible, setPassphraseVisible] = useState(false);
   // Toggle Passphrase visibility
@@ -270,10 +197,6 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
   const [
     eBupotUnifikasiObjekPphYangDisetorSendiriPagination,
     setEBupotUnifikasiObjekPphYangDisetorSendiriPagination,
-  ] = useState([]);
-  const [
-    eBupotUnifikasiObjekPajakPagination,
-    setEBupotUnifikasiObjekPajakPagination,
   ] = useState([]);
   const [
     eBupotUnifikasiPostingsPagination,
@@ -314,10 +237,6 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
     eBupotUnifikasiDaftarSuratSetoranPajakPagination,
     setEBupotUnifikasiDaftarSuratSetoranPajakPagination,
   ] = useState([]);
-  const [
-    eBupotUnifikasiPphYangDisetorSendiriPagination,
-    setEBupotUnifikasiPphYangDisetorSendiriPagination,
-  ] = useState([]);
 
   const [
     eBupotUnifikasiTagihanPemotonganPagination,
@@ -347,18 +266,6 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
     setPageEBupotUnifikasiTagihanPemotongan(p - 1);
   };
 
-  const [
-    eBupotUnifikasiPphYangTelahDipotongPagination,
-    setEBupotUnifikasiPphYangTelahDipotongPagination,
-  ] = useState([]);
-  const [
-    eBupotUnifikasiRekapitulasiPphPagination,
-    setEBupotUnifikasiRekapitulasiPphPagination,
-  ] = useState([]);
-  const [
-    eBupotUnifikasiBuktiSetorPagination,
-    setEBupotUnifikasiBuktiSetorPagination,
-  ] = useState([]);
   let [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [pages, setPages] = useState(0);
@@ -370,8 +277,6 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
   };
 
   // 04.) Accordion 4
-  const [bertindakSebagai, setBertindakSebagai] = useState("");
-  const [namaIdentitas, setNamaIdentitas] = useState("");
   const [openSaved, setOpenSaved] = useState(false);
 
   const [validated, setValidated] = useState(false);
@@ -382,30 +287,10 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
   ] = useState(false);
   const [openSearchIdentitasWp, setOpenSearchIdentitasWp] = useState(false);
   const [openFoundIdentitasWp, setOpenFoundIdentitasWp] = useState(false);
-  const [penandatangans, setPenandatangans] = useState([]);
-
-  const handleClickOpenSaved = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setOpenSaved(true);
-  };
 
   const handleCloseSaved = () => {
     setOpenSaved(false);
   };
-
-  let namaIdentitasOptions = penandatangans.map((namaIdentitas) => ({
-    label: `${namaIdentitas.namaIdentitas}`,
-  }));
-
-  let bertindakSebagaiOptions = [
-    {
-      label: "Pengurus",
-    },
-    {
-      label: "Kuasa",
-    },
-  ];
 
   useEffect(() => {
     getEbupotUnifikasiUbahPenyiapanSptById();
@@ -413,11 +298,12 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
 
   useEffect(() => {
     getEbupotUnifikasiUbahPenyiapanSptById();
-  }, [pageEBupotUnifikasiPosting, limitEBupotUnifikasiPosting]);
-
-  useEffect(() => {
-    getEBupotUnifikasiCombinedData();
-  }, [pageEBupotUnifikasiCombined, limitEBupotUnifikasiCombined]);
+  }, [
+    pageEBupotUnifikasiPosting,
+    limitEBupotUnifikasiPosting,
+    pageEBupotUnifikasiCombined,
+    limitEBupotUnifikasiCombined,
+  ]);
 
   const getEbupotUnifikasiUbahPenyiapanSptById = async () => {
     setOpenSearchIdentitasWp(true);
@@ -439,12 +325,11 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
       response.data.tahunPajak,
       response.data.masaPajak
     );
-    setPembetulanKe(response.data.pembetulanKe);
-
-    getEBupotUnifikasiBuktiSetorData(
+    getEBupotUnifikasiCombinedData(
       response.data.tahunPajak,
       response.data.masaPajak
     );
+    setPembetulanKe(response.data.pembetulanKe);
 
     // DOSS
     setPenghasilanDariIndonesiaJumlahDasar(
@@ -468,74 +353,6 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
     setPphYangDisetorSendiriJumlahPph(
       response.data.pphYangDisetorSendiriJumlahPph
     );
-
-    // DOPP
-    setKode2210101JumlahDasar(response.data.kode2210101JumlahDasar);
-    setKode2210101JumlahPph(response.data.kode2210101JumlahPph);
-    setKode2240501JumlahDasar(response.data.kode2240501JumlahDasar);
-    setKode2240501JumlahPph(response.data.kode2240501JumlahPph);
-    setKode2240502JumlahDasar(response.data.kode2240502JumlahDasar);
-    setKode2240502JumlahPph(response.data.kode2240502JumlahPph);
-    setKode2710007JumlahDasar(response.data.kode2710007JumlahDasar);
-    setKode2710007JumlahPph(response.data.kode2710007JumlahPph);
-    setKode2710203JumlahDasar(response.data.kode2710203JumlahDasar);
-    setKode2710203JumlahPph(response.data.kode2710203JumlahPph);
-    setKode2840101JumlahDasar(response.data.kode2840101JumlahDasar);
-    setKode2840101JumlahPph(response.data.kode2840101JumlahPph);
-    setKode2840104JumlahDasar(response.data.kode2840104JumlahDasar);
-    setKode2840104JumlahPph(response.data.kode2840104JumlahPph);
-    setKode2840105JumlahDasar(response.data.kode2840105JumlahDasar);
-    setKode2840105JumlahPph(response.data.kode2840105JumlahPph);
-    setKode2840106JumlahDasar(response.data.kode2840106JumlahDasar);
-    setKode2840106JumlahPph(response.data.kode2840106JumlahPph);
-    setKode2840401JumlahDasar(response.data.kode2840401JumlahDasar);
-    setKode2840401JumlahPph(response.data.kode2840401JumlahPph);
-    setKode2840402JumlahDasar(response.data.kode2840402JumlahDasar);
-    setKode2840402JumlahPph(response.data.kode2840402JumlahPph);
-    setKode2840403JumlahDasar(response.data.kode2840403JumlahDasar);
-    setKode2840403JumlahPph(response.data.kode2840403JumlahPph);
-    setKode2840404JumlahDasar(response.data.kode2840404JumlahDasar);
-    setKode2840404JumlahPph(response.data.kode2840404JumlahPph);
-    setKode2840405JumlahDasar(response.data.kode2840405JumlahDasar);
-    setKode2840405JumlahPph(response.data.kode2840405JumlahPph);
-    setKode2840406JumlahDasar(response.data.kode2840406JumlahDasar);
-    setKode2840406JumlahPph(response.data.kode2840406JumlahPph);
-    setKode2840407JumlahDasar(response.data.kode2840407JumlahDasar);
-    setKode2840407JumlahPph(response.data.kode2840407JumlahPph);
-    setKode2840408JumlahDasar(response.data.kode2840408JumlahDasar);
-    setKode2840408JumlahPph(response.data.kode2840408JumlahPph);
-    setKode2840409JumlahDasar(response.data.kode2840409JumlahDasar);
-    setKode2840409JumlahPph(response.data.kode2840409JumlahPph);
-    setKode2840410JumlahDasar(response.data.kode2840410JumlahDasar);
-    setKode2840410JumlahPph(response.data.kode2840410JumlahPph);
-    setKode2840411JumlahDasar(response.data.kode2840411JumlahDasar);
-    setKode2840411JumlahPph(response.data.kode2840411JumlahPph);
-    setKode2840601JumlahDasar(response.data.kode2840601JumlahDasar);
-    setKode2840601JumlahPph(response.data.kode2840601JumlahPph);
-    setKode2840701JumlahDasar(response.data.kode2840701JumlahDasar);
-    setKode2840701JumlahPph(response.data.kode2840701JumlahPph);
-    setKode2840801JumlahDasar(response.data.kode2840801JumlahDasar);
-    setKode2840801JumlahPph(response.data.kode2840801JumlahPph);
-    setKode2840503JumlahDasar(response.data.kode2840503JumlahDasar);
-    setKode2840503JumlahPph(response.data.kode2840503JumlahPph);
-    setKode2840412JumlahDasar(response.data.kode2840412JumlahDasar);
-    setKode2840412JumlahPph(response.data.kode2840412JumlahPph);
-    setKode2840413JumlahDasar(response.data.kode2840413JumlahDasar);
-    setKode2840413JumlahPph(response.data.kode2840413JumlahPph);
-    setKode2840414JumlahDasar(response.data.kode2840414JumlahDasar);
-    setKode2840414JumlahPph(response.data.kode2840414JumlahPph);
-    setKode2840415JumlahDasar(response.data.kode2840415JumlahDasar);
-    setKode2840415JumlahPph(response.data.kode2840415JumlahPph);
-    setKode2840416JumlahDasar(response.data.kode2840416JumlahDasar);
-    setKode2840416JumlahPph(response.data.kode2840416JumlahPph);
-    setKode2840417JumlahDasar(response.data.kode2840417JumlahDasar);
-    setKode2840417JumlahPph(response.data.kode2840417JumlahPph);
-    setKode2840418JumlahDasar(response.data.kode2840418JumlahDasar);
-    setKode2840418JumlahPph(response.data.kode2840418JumlahPph);
-
-    // 04.) Accordion 4
-    setBertindakSebagai(response.data.penandatangan.bertindakSebagai);
-    setNamaIdentitas(response.data.penandatangan.namaIdentitas);
 
     setOpenSearchIdentitasWp(false);
   };
@@ -562,12 +379,14 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
     }, 500);
   };
 
-  const getEBupotUnifikasiCombinedData = async () => {
+  const getEBupotUnifikasiCombinedData = async (tahunPajak, masaPajak) => {
     setOpenSearchIdentitasWp(true);
     const response = await axios.post(
       `${tempUrl}/eBupotUnifikasiCombinedPagination?search_query=&page=${pageEBupotUnifikasiCombined}&limit=${limitEBupotUnifikasiCombined}`,
       {
         userIdInput: user.id,
+        tahunPajak,
+        masaPajak,
         _id: user.id,
         token: user.token,
         kodeCabang: user.cabang.id,
@@ -577,31 +396,6 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
     setPageEBupotUnifikasiCombined(response.data.page);
     setPagesEBupotUnifikasiCombined(response.data.totalPage);
     setRowsEBupotUnifikasiCombined(response.data.totalRows);
-
-    setTimeout(async () => {
-      setOpenSearchIdentitasWp(false);
-    }, 500);
-  };
-
-  const getEBupotUnifikasiBuktiSetorData = async (tahunPajak, masaPajak) => {
-    setOpenSearchIdentitasWp(true);
-    const response = await axios.post(
-      `${tempUrl}/eBupotUnifikasiBuktiSetorsByUserForPenyiapanSptPagination`,
-      {
-        userEBupotUnifikasiBuktiSetorId: user.id,
-        tahunPajak,
-        masaPajak,
-        _id: user.id,
-        token: user.token,
-        kodeCabang: user.cabang.id,
-      }
-    );
-    setEBupotUnifikasiBuktiSetorPagination(
-      response.data.eBupotUnifikasiBuktiSetors
-    );
-    setPage(response.data.page);
-    setPages(response.data.totalPage);
-    setRows(response.data.totalRows);
 
     setTimeout(async () => {
       setOpenSearchIdentitasWp(false);
@@ -636,33 +430,6 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
     }, 500);
   };
 
-  const getPenandatangan = async (bertindakSebagai) => {
-    if (bertindakSebagai === "Pengurus") {
-      bertindakSebagai = "Wakil Wajib Pajak (Pengurus)";
-    }
-
-    const response = await axios.post(
-      `${tempUrl}/penandatangansByUserByBertindakSebagai`,
-      {
-        bertindakSebagai,
-        userPenandatanganId: user.id,
-        _id: user.id,
-        token: user.token,
-      }
-    );
-    if (response.data.length > 0) {
-      setPenandatangans(response.data);
-      setOpenSearchIdentitasWp(true);
-
-      setTimeout(async () => {
-        setOpenSearchIdentitasWp(false);
-      }, 500);
-    } else {
-      setPenandatangans([]);
-      setNamaIdentitas("");
-    }
-  };
-
   const handleCloseConfirmationSearchSuratSetoranPajak = () => {
     setOpenConfirmationSearchIdentitasWp(false);
   };
@@ -671,95 +438,25 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
     setOpenFoundIdentitasWp(false);
   };
 
-  const updateEbupotUnifikasiUbahPenyiapanSpt = async (e) => {
+  const kirimSptEbupotUnifikasiPenyiapanSpt = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const handlingInput =
-      bertindakSebagai.length !== 0 && namaIdentitas.length !== 0;
+    const handlingInput = passphrase.length !== 0;
 
     if (handlingInput) {
+      if (user.passphrase !== passphrase) {
+        setDetilSearchIdentitasWp("Passphrase salah!");
+        setOpenConfirmationSearchIdentitasWp(true);
+        return;
+      }
+
       try {
-        let updatedEBupotUnifikasiPenyiapanSpt = await axios.post(
-          `${tempUrl}/updateEBupotUnifikasiPenyiapanSpt/${id}`,
+        let terkirimSptEBupotUnifikasiPenyiapanSpt = await axios.post(
+          `${tempUrl}/kirimSptEBupotUnifikasiPenyiapanSpt/${id}`,
           {
-            userId: user.id,
-
-            namaIdentitas,
-
-            // DOSS
-            penghasilanDariIndonesiaJumlahDasar,
-            penghasilanDariIndonesiaJumlahPph,
-            penghasilanDariLuarIndonesiaJumlahDasar,
-            penghasilanDariLuarIndonesiaJumlahPph,
-            pphPasal24YangDapatDiperhitungkanJumlahPph,
-            pphYangDipotongPihakLainJumlahPph,
-            pphYangDisetorSendiriJumlahPph,
-
-            // DOPP
-            kode2210101JumlahDasar,
-            kode2210101JumlahPph,
-            kode2240501JumlahDasar,
-            kode2240501JumlahPph,
-            kode2240502JumlahDasar,
-            kode2240502JumlahPph,
-            kode2710007JumlahDasar,
-            kode2710007JumlahPph,
-            kode2710203JumlahDasar,
-            kode2710203JumlahPph,
-            kode2840101JumlahDasar,
-            kode2840101JumlahPph,
-            kode2840104JumlahDasar,
-            kode2840104JumlahPph,
-            kode2840105JumlahDasar,
-            kode2840105JumlahPph,
-            kode2840106JumlahDasar,
-            kode2840106JumlahPph,
-            kode2840401JumlahDasar,
-            kode2840401JumlahPph,
-            kode2840402JumlahDasar,
-            kode2840402JumlahPph,
-            kode2840403JumlahDasar,
-            kode2840403JumlahPph,
-            kode2840404JumlahDasar,
-            kode2840404JumlahPph,
-            kode2840405JumlahDasar,
-            kode2840405JumlahPph,
-            kode2840406JumlahDasar,
-            kode2840406JumlahPph,
-            kode2840407JumlahDasar,
-            kode2840407JumlahPph,
-            kode2840408JumlahDasar,
-            kode2840408JumlahPph,
-            kode2840409JumlahDasar,
-            kode2840409JumlahPph,
-            kode2840410JumlahDasar,
-            kode2840410JumlahPph,
-            kode2840411JumlahDasar,
-            kode2840411JumlahPph,
-            kode2840601JumlahDasar,
-            kode2840601JumlahPph,
-            kode2840701JumlahDasar,
-            kode2840701JumlahPph,
-            kode2840801JumlahDasar,
-            kode2840801JumlahPph,
-            kode2840503JumlahDasar,
-            kode2840503JumlahPph,
-            kode2840412JumlahDasar,
-            kode2840412JumlahPph,
-            kode2840413JumlahDasar,
-            kode2840413JumlahPph,
-            kode2840414JumlahDasar,
-            kode2840414JumlahPph,
-            kode2840415JumlahDasar,
-            kode2840415JumlahPph,
-            kode2840416JumlahDasar,
-            kode2840416JumlahPph,
-            kode2840417JumlahDasar,
-            kode2840417JumlahPph,
-            kode2840418JumlahDasar,
-            kode2840418JumlahPph,
-
+            passphraseBenar: user.passphrase,
+            passphrase,
             userIdInput: user.id,
             kodeCabang: user.cabang.id,
             _id: user.id,
@@ -789,9 +486,6 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
     setTahunPajak("");
     setMasaPajak("");
 
-    // 04.) Accordion 4
-    setBertindakSebagai("");
-    setNamaIdentitas("");
     setOpenSaved(false);
   };
 
@@ -1716,7 +1410,7 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
                           noValidate
                           validated={validated}
                           className="d-flex flex-column"
-                          // onSubmit={handleClickOpenConfirmation}
+                          onSubmit={kirimSptEbupotUnifikasiPenyiapanSpt}
                         >
                           <div
                             style={{
@@ -1847,6 +1541,7 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         maxWidth={"xs"}
+        fullWidth={true}
       >
         <div style={{ padding: "30px" }}>
           <DialogTitle id="alert-dialog-title">
@@ -1869,7 +1564,10 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
             </div>
           </DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText
+              id="alert-dialog-description"
+              style={{ textAlign: "center" }}
+            >
               {detilSearchIdentitasWp}
             </DialogContentText>
           </DialogContent>

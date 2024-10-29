@@ -27,6 +27,9 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import DescriptionIcon from "@mui/icons-material/Description";
 import PrintIcon from "@mui/icons-material/Print";
 import SendIcon from "@mui/icons-material/Send";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
+import MenuIcon from "@mui/icons-material/Menu";
+import DownloadIcon from "@mui/icons-material/Download";
 import { formatDate } from "../constants/helper";
 
 const useStyles = makeStyles({
@@ -393,7 +396,11 @@ export function ShowTableSpt({ currentPosts }) {
   );
 }
 
-export function ShowTableSptPphUnifikasiTelahDikirim({ currentPosts }) {
+export function ShowTableSptPphUnifikasiTelahDikirim({
+  currentPosts,
+  lihatBuktiPotongPadaSpt,
+  mengajukanUnduhBuktiPotong,
+}) {
   let navigate = useNavigate();
   const classes = useStyles();
 
@@ -402,6 +409,40 @@ export function ShowTableSptPphUnifikasiTelahDikirim({ currentPosts }) {
     textAlign: "center",
   };
 
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const renderTooltipLihatBpe = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Lihat BPE</div>
+    </Tooltip>
+  );
+
+  const renderTooltipLihatBuktiPotongPadaSpt = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Lihat Bukti Potong pada SPT</div>
+    </Tooltip>
+  );
+
+  const renderTooltipCetakSpt = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Cetak SPT</div>
+    </Tooltip>
+  );
+
+  const renderTooltipAjukanUnduhBuktiPotong = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Ajukan unduh Bukti Potong</div>
+    </Tooltip>
+  );
+
+  const renderTooltipUnduhBuktiPotongPadaSpt = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Unduh Bukti Potong Pada SPT</div>
+    </Tooltip>
+  );
+
   let dataTable = currentPosts.map((user, index) => (
     <TableRow
       key={user.id}
@@ -409,14 +450,77 @@ export function ShowTableSptPphUnifikasiTelahDikirim({ currentPosts }) {
         "&:last-child td, &:last-child th": { border: 0 },
       }}
     >
-      <TableCell component="th" scope="row">
-        {user.npwp15}
+      <TableCell component="th" scope="row" sx={textDataStyle}>
+        {index + 1}
       </TableCell>
-      <TableCell>{user.nitku}</TableCell>
-      <TableCell>{user.nama}</TableCell>
-      <TableCell>{user.nama}</TableCell>
-      <TableCell>{user.nama}</TableCell>
-      <TableCell>{user.nama}</TableCell>
+      <TableCell sx={textDataStyle}>{user.noBpeNtte}</TableCell>
+      <TableCell
+        sx={textDataStyle}
+      >{`${user.tahunPajak}-${user.masaPajak}`}</TableCell>
+      <TableCell sx={textDataStyle}>{user.pembetulanKe}</TableCell>
+      <TableCell sx={textDataStyle}>{formatDate(user.tanggalKirim)}</TableCell>
+      <TableCell sx={textDataStyle}>
+        <OverlayTrigger
+          placement="bottom"
+          delay={{ show: 250, hide: 50 }}
+          overlay={renderTooltipLihatBpe}
+        >
+          <button className="aksi-button">
+            <Inventory2Icon fontSize="small" />
+          </button>
+        </OverlayTrigger>
+        <OverlayTrigger
+          placement="bottom"
+          delay={{ show: 250, hide: 50 }}
+          overlay={renderTooltipLihatBuktiPotongPadaSpt}
+        >
+          <button
+            className="aksi-button"
+            style={aksiButtonStyle}
+            onClick={() => {
+              lihatBuktiPotongPadaSpt(user.tahunPajak, user.masaPajak);
+            }}
+          >
+            <MenuIcon fontSize="small" />
+          </button>
+        </OverlayTrigger>
+        <OverlayTrigger
+          placement="bottom"
+          delay={{ show: 250, hide: 50 }}
+          overlay={renderTooltipCetakSpt}
+        >
+          <button className="aksi-button" style={aksiButtonStyle}>
+            <PrintIcon fontSize="small" />
+          </button>
+        </OverlayTrigger>
+        {user.ajukanUnduhBuktiPotong === false ? (
+          <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 250, hide: 50 }}
+            overlay={renderTooltipAjukanUnduhBuktiPotong}
+          >
+            <button
+              className="aksi-button"
+              style={aksiButtonStyle}
+              onClick={() => {
+                mengajukanUnduhBuktiPotong(user.id);
+              }}
+            >
+              <SendIcon fontSize="small" />
+            </button>
+          </OverlayTrigger>
+        ) : (
+          <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 250, hide: 50 }}
+            overlay={renderTooltipUnduhBuktiPotongPadaSpt}
+          >
+            <button className="aksi-button" style={aksiButtonStyle}>
+              <DownloadIcon fontSize="small" />
+            </button>
+          </OverlayTrigger>
+        )}
+      </TableCell>
     </TableRow>
   ));
 
@@ -470,25 +574,47 @@ export function ShowTableBuktiPotongSptPphUnifikasi({ currentPosts }) {
     textAlign: "center",
   };
 
-  let dataTable = currentPosts.map((user, index) => (
-    <TableRow
-      key={user.id}
-      sx={{
-        "&:last-child td, &:last-child th": { border: 0 },
-      }}
-    >
-      <TableCell component="th" scope="row">
-        {user.npwp15}
-      </TableCell>
-      <TableCell>{user.nitku}</TableCell>
-      <TableCell>{user.nama}</TableCell>
-      <TableCell>{user.nama}</TableCell>
-      <TableCell>{user.nama}</TableCell>
-      <TableCell>{user.nama}</TableCell>
-      <TableCell>{user.nama}</TableCell>
-      <TableCell>{user.nama}</TableCell>
-    </TableRow>
-  ));
+  const textDataStyleRight = {
+    fontWeight: "bold",
+    textAlign: "right",
+  };
+
+  let dataTable = currentPosts.map((user, index) => {
+    let tempPph = "0";
+    if (user.ebilling) {
+      tempPph = user.ebilling.jumlahSetor;
+    } else if (user.pPhYangDipotongDipungut) {
+      tempPph = user.pPhYangDipotongDipungut;
+    }
+
+    return (
+      <TableRow
+        key={user.id}
+        sx={{
+          "&:last-child td, &:last-child th": { border: 0 },
+        }}
+      >
+        <TableCell component="th" scope="row" sx={textDataStyle}>
+          {index + 1}
+        </TableCell>
+        <TableCell sx={textDataStyle}>{user.id}</TableCell>
+        <TableCell sx={textDataStyle}>
+          {user.objekpajak.kodeObjekPajak}
+        </TableCell>
+        <TableCell sx={textDataStyle}>{user.nomorBuktiSetor}</TableCell>
+        <TableCell sx={textDataStyle}>
+          {formatDate(user.tanggalBuktiSetor)}
+        </TableCell>
+        <TableCell sx={textDataStyleRight}>
+          {user.jumlahPenghasilanBruto.toLocaleString("de-DE")}
+        </TableCell>
+        <TableCell sx={textDataStyleRight}>
+          {tempPph.toLocaleString("de-DE")}
+        </TableCell>
+        <TableCell>-</TableCell>
+      </TableRow>
+    );
+  });
 
   if (currentPosts.length === 0) {
     dataTable = (

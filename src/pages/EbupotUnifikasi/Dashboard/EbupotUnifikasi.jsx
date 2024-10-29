@@ -15,8 +15,16 @@ import {
   ShowTableBuktiPotongSptPphUnifikasi,
 } from "../../../components/ShowTable";
 import "../../../constants/defaultProgram.css";
-import { Card, Tooltip, Form } from "react-bootstrap";
-import { Paper, Box, Pagination } from "@mui/material";
+import { Card, Tooltip, Form, Spinner } from "react-bootstrap";
+import {
+  Paper,
+  Box,
+  Pagination,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 
@@ -52,17 +60,126 @@ const PetunjukPengisianComponent = () => {
 function EbupotUnifikasi() {
   const { screenSize } = useStateContext();
   const navigate = useNavigate();
-
-  const [pbkTerimaPagination, setPbkTerimaPagination] = useState([]);
   const { user, dispatch } = useContext(AuthContext);
+
+  const [tahunPajak, setTahunPajak] = useState("");
+  const [masaPajak, setMasaPajak] = useState("");
+
+  const [openLoading, setOpenLoading] = useState(false);
+  const [
+    ebupotUnifikasiDaftarPenyiapanSptPagination,
+    setEbupotUnifikasiDaftarPenyiapanSptPagination,
+  ] = useState([]);
   let [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [pages, setPages] = useState(0);
   const [rows, setRows] = useState(0);
   const [query, setQuery] = useState("");
-
   const handleChange = (e, p) => {
     setPage(p - 1);
+  };
+
+  const [
+    eBupotUnifikasiCombinedPagination,
+    setEBupotUnifikasiCombinedPagination,
+  ] = useState([]);
+  let [pageEBupotUnifikasiCombined, setPageEBupotUnifikasiCombined] =
+    useState(0);
+  const [limitEBupotUnifikasiCombined, setLimitEBupotUnifikasiCombined] =
+    useState(10);
+  const [pagesEBupotUnifikasiCombined, setPagesEBupotUnifikasiCombined] =
+    useState(0);
+  const [rowsEBupotUnifikasiCombined, setRowsEBupotUnifikasiCombined] =
+    useState(0);
+  const [queryEBupotUnifikasiCombined, setQueryEBupotUnifikasiCombined] =
+    useState("");
+  const handleChangeEBupotUnifikasiCombined = (e, p) => {
+    setPageEBupotUnifikasiCombined(p - 1);
+  };
+
+  useEffect(() => {
+    getEBupotUnifikasiPenyiapanSptTerkirimData();
+  }, []);
+
+  useEffect(() => {
+    getEBupotUnifikasiCombinedData();
+  }, [tahunPajak, masaPajak]);
+
+  const getEBupotUnifikasiPenyiapanSptTerkirimData = async () => {
+    setOpenLoading(true);
+    const response = await axios.post(
+      `${tempUrl}/eBupotUnifikasiPenyiapanSptsTerkirimByUserSearchPagination`,
+      {
+        userEBupotUnifikasiPenyiapanSptId: user.id,
+        _id: user.id,
+        token: user.token,
+        kodeCabang: user.cabang.id,
+      }
+    );
+    setEbupotUnifikasiDaftarPenyiapanSptPagination(
+      response.data.eBupotUnifikasiPenyiapanSpts
+    );
+    setPage(response.data.page);
+    setPages(response.data.totalPage);
+    setRows(response.data.totalRows);
+
+    setTahunPajak(response.data.eBupotUnifikasiPenyiapanSpts[0].tahunPajak);
+    setMasaPajak(response.data.eBupotUnifikasiPenyiapanSpts[0].masaPajak);
+
+    setTimeout(async () => {
+      setOpenLoading(false);
+    }, 500);
+  };
+
+  const getEBupotUnifikasiCombinedData = async () => {
+    setOpenLoading(true);
+    const response = await axios.post(
+      `${tempUrl}/eBupotUnifikasiCombinedPagination?search_query=&page=${pageEBupotUnifikasiCombined}&limit=${limitEBupotUnifikasiCombined}`,
+      {
+        userIdInput: user.id,
+        tahunPajak,
+        masaPajak,
+        _id: user.id,
+        token: user.token,
+        kodeCabang: user.cabang.id,
+      }
+    );
+    setEBupotUnifikasiCombinedPagination(response.data.data);
+    setPageEBupotUnifikasiCombined(response.data.page);
+    setPagesEBupotUnifikasiCombined(response.data.totalPage);
+    setRowsEBupotUnifikasiCombined(response.data.totalRows);
+
+    setTimeout(async () => {
+      setOpenLoading(false);
+    }, 500);
+  };
+
+  const lihatBuktiPotongPadaSpt = async (tahunPajak, masaPajak) => {
+    setTahunPajak(tahunPajak);
+    setMasaPajak(masaPajak);
+  };
+
+  const mengajukanUnduhBuktiPotongEBupotUnifikasiPenyiapanSpt = async (id) => {
+    setOpenLoading(true);
+    try {
+      await axios.post(
+        `${tempUrl}/ajukanUnduhBuktiPotongEBupotUnifikasiPenyiapanSpt/${id}`,
+        {
+          _id: user.id,
+          token: user.token,
+        }
+      );
+
+      setTimeout(async () => {
+        getEBupotUnifikasiPenyiapanSptTerkirimData();
+        setOpenLoading(false);
+      }, 500);
+    } catch (error) {
+      if (error.response.data.message.includes("foreign key")) {
+        // alert(`${namaKategoriKlu} tidak bisa dihapus karena sudah ada data!`);
+      }
+    }
+    setOpenLoading(false);
   };
 
   const inputContainer = {
@@ -113,7 +230,7 @@ function EbupotUnifikasi() {
                 <div>
                   <button
                     className="ebupot-unifikasi-refresh-button"
-                    // onClick={handleCloseInfo}
+                    onClick={getEBupotUnifikasiPenyiapanSptTerkirimData}
                   >
                     <RefreshIcon
                       fontSize="small"
@@ -147,7 +264,11 @@ function EbupotUnifikasi() {
               </div>
               <Box>
                 <ShowTableSptPphUnifikasiTelahDikirim
-                  currentPosts={pbkTerimaPagination}
+                  currentPosts={ebupotUnifikasiDaftarPenyiapanSptPagination}
+                  lihatBuktiPotongPadaSpt={lihatBuktiPotongPadaSpt}
+                  mengajukanUnduhBuktiPotong={
+                    mengajukanUnduhBuktiPotongEBupotUnifikasiPenyiapanSpt
+                  }
                 />
               </Box>
               <Box sx={tableContainer}>
@@ -170,16 +291,16 @@ function EbupotUnifikasi() {
             <Card.Body>
               <Box>
                 <ShowTableBuktiPotongSptPphUnifikasi
-                  currentPosts={pbkTerimaPagination}
+                  currentPosts={eBupotUnifikasiCombinedPagination}
                 />
               </Box>
               <Box sx={tableContainer}>
                 <Pagination
                   shape="rounded"
                   color="primary"
-                  count={pages}
-                  page={page + 1}
-                  onChange={handleChange}
+                  count={pagesEBupotUnifikasiCombined}
+                  page={pageEBupotUnifikasiCombined + 1}
+                  onChange={handleChangeEBupotUnifikasiCombined}
                   size={screenSize <= 600 ? "small" : "large"}
                 />
               </Box>
@@ -187,6 +308,41 @@ function EbupotUnifikasi() {
           </Card>
         </div>
       </Paper>
+      <Dialog
+        open={openLoading}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        fullWidth={true}
+        maxWidth={"xs"}
+      >
+        <div style={{ padding: "30px" }}>
+          <DialogTitle id="alert-dialog-title">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "center",
+              }}
+            >
+              <b>Memproses</b>
+            </div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p>Mohon Sabar Menunggu</p>
+                <Spinner animation="border" variant="primary" />
+              </div>
+            </DialogContentText>
+          </DialogContent>
+        </div>
+      </Dialog>
     </div>
   );
 }
@@ -195,7 +351,6 @@ export default EbupotUnifikasi;
 
 const menuLaporContainer = {
   display: "flex",
-  borderBottom: "1px solid rgba(33, 44, 95, 0.1)",
   marginBottom: "20px",
 };
 
