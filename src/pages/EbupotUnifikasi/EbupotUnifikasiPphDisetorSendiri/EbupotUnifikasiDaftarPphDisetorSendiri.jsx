@@ -118,7 +118,7 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
 
   useEffect(() => {
     getEBupotUnifikasiPphDisetorSendiriData();
-  }, []);
+  }, [page, limit]);
 
   const getEBupotUnifikasiPphDisetorSendiriData = async () => {
     let tempCondition = pencairanBerdasarkan.length !== 0;
@@ -135,7 +135,7 @@ function EbupotUnifikasiDaftarPphDisetorSendiri() {
 
       setTimeout(async () => {
         const response = await axios.post(
-          `${tempUrl}/eBupotUnifikasiPphDisetorSendirisByUserSearchPagination`,
+          `${tempUrl}/eBupotUnifikasiPphDisetorSendirisByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
           {
             userEBupotUnifikasiPphDisetorSendiriId: user.id,
             pencairanBerdasarkan,

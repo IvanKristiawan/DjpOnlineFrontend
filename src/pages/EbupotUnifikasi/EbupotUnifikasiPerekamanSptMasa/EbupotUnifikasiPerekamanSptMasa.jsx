@@ -106,9 +106,6 @@ function EbupotUnifikasiPerekamanSptMasa() {
   const [masaPajakOptions, setMasaPajakOptions] = useState([]);
   const [validated, setValidated] = useState(false);
 
-  const [kataKunciSearch, setKataKunciSearch] = useState("");
-  const [pencairanBerdasarkan, setPencairanBerdasarkan] = useState("Periode");
-
   const [subjekPajakNpwp, setSubjekPajakNpwp] = useState(user.npwp15);
   const [subjekPajakNitku, setSubjekPajakNitku] = useState(user.nitku);
   const [subjekPajakNikNpwp16, setSubjekPajakNikNpwp16] = useState(
@@ -117,7 +114,6 @@ function EbupotUnifikasiPerekamanSptMasa() {
   const [subjekPajakNama, setSubjekPajakNama] = useState(user.nama);
   const [subjekPajakAlamat, setSubjekPajakAlamat] = useState(user.alamat);
 
-  const [reloadDasarPemotongan, setReloadDasarPemotongan] = useState(0);
   const [openPerekamanDataBuktiSetor, setOpenPerekamanDataBuktiSetor] =
     useState(false);
   const [jenisBuktiPenyetoran, setJenisBuktiPenyetoran] = useState(
@@ -149,10 +145,6 @@ function EbupotUnifikasiPerekamanSptMasa() {
   const [openSuccessGenerateIdBilling, setOpenSuccessGenerateIdBilling] =
     useState(false);
   const [
-    eBupotUnifikasiPphDisetorSendiriPagination,
-    setEBupotUnifikasiPphDisetorSendiriPagination,
-  ] = useState([]);
-  const [
     eBupotUnifikasiTagihanPemotonganPagination,
     setEBupotUnifikasiTagihanPemotonganPagination,
   ] = useState([]);
@@ -160,19 +152,16 @@ function EbupotUnifikasiPerekamanSptMasa() {
     eBupotUnifikasiRingkasanPembayaranPagination,
     setEBupotUnifikasiRingkasanPembayaranPagination,
   ] = useState([]);
-  const [
-    eBupotUnifikasiBuktiSetorPagination,
-    setEBupotUnifikasiBuktiSetorPagination,
-  ] = useState([]);
   let [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [pages, setPages] = useState(0);
   const [rows, setRows] = useState(0);
   const [query, setQuery] = useState("");
 
-  const [eBupotUnifikasiBuktiSetor, setEBupotUnifikasiBuktiSetor] = useState(
-    []
-  );
+  const [
+    eBupotUnifikasiBuktiSetorPagination,
+    setEBupotUnifikasiBuktiSetorPagination,
+  ] = useState([]);
   let [pageEBupotUnifikasiBuktiSetor, setPageEBupotUnifikasiBuktiSetor] =
     useState(0);
   const [limitEBupotUnifikasiBuktiSetor, setLimitEBupotUnifikasiBuktiSetor] =
@@ -184,10 +173,6 @@ function EbupotUnifikasiPerekamanSptMasa() {
   const [queryEBupotUnifikasiBuktiSetor, setQueryEBupotUnifikasiBuktiSetor] =
     useState("");
 
-  const [
-    eBupotUnifikasiRingkasanPembayaran,
-    setEBupotUnifikasiRingkasanPembayaran,
-  ] = useState([]);
   let [
     pageEBupotUnifikasiRingkasanPembayaran,
     setPageEBupotUnifikasiRingkasanPembayaran,
@@ -340,9 +325,7 @@ function EbupotUnifikasiPerekamanSptMasa() {
     },
   ];
 
-  useEffect(() => {
-    // getEBupotUnifikasiPphDisetorSendiriData();
-  }, []);
+  useEffect(() => {}, []);
 
   const findMasaPajakOptions = async (tahunPajak) => {
     setOpenLoading(true);
@@ -381,47 +364,10 @@ function EbupotUnifikasiPerekamanSptMasa() {
     setOpenLoading(false);
   };
 
-  const getEBupotUnifikasiPphDisetorSendiriData = async () => {
-    let tempCondition = pencairanBerdasarkan.length !== 0;
-    if (pencairanBerdasarkan === "Periode") {
-      tempCondition =
-        pencairanBerdasarkan.length !== 0 && masaTahunPajakSearch.length !== 0;
-    } else {
-      tempCondition =
-        pencairanBerdasarkan.length !== 0 && kataKunciSearch.length !== 0;
-    }
-
-    if (tempCondition) {
-      setOpenLoading(true);
-
-      setTimeout(async () => {
-        const response = await axios.post(
-          `${tempUrl}/eBupotUnifikasiPphDisetorSendirisByUserSearchPagination`,
-          {
-            userEBupotUnifikasiPphDisetorSendiriId: user.id,
-            pencairanBerdasarkan,
-            masaTahunPajakSearch,
-            kataKunciSearch,
-            _id: user.id,
-            token: user.token,
-            kodeCabang: user.cabang.id,
-          }
-        );
-        setEBupotUnifikasiPphDisetorSendiriPagination(
-          response.data.eBupotUnifikasiPphDisetorSendiris
-        );
-        setPage(response.data.page);
-        setPages(response.data.totalPage);
-        setRows(response.data.totalRows);
-        setOpenLoading(false);
-      }, 500);
-    }
-  };
-
   const getEBupotUnifikasiTagihanPemotonganData = async () => {
     setOpenLoading(true);
     const response = await axios.post(
-      `${tempUrl}/eBupotUnifikasiTagihanPemotongansByUserSearchPagination`,
+      `${tempUrl}/eBupotUnifikasiTagihanPemotongansByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
       {
         userEBupotUnifikasiTagihanPemotonganId: user.id,
         tahunPajak,
@@ -450,7 +396,7 @@ function EbupotUnifikasiPerekamanSptMasa() {
 
     setTimeout(async () => {
       const response = await axios.post(
-        `${tempUrl}/eBupotUnifikasiBuktiSetorsByUserSearchPagination`,
+        `${tempUrl}/eBupotUnifikasiBuktiSetorsByUserSearchPagination?search_query=&page=${pageEBupotUnifikasiBuktiSetor}&limit=${limitEBupotUnifikasiBuktiSetor}`,
         {
           userEBupotUnifikasiBuktiSetorId: user.id,
           tahunPajak,
@@ -475,7 +421,7 @@ function EbupotUnifikasiPerekamanSptMasa() {
 
     setTimeout(async () => {
       const response = await axios.post(
-        `${tempUrl}/eBupotUnifikasiTagihanPemotongansByUserSearchPagination`,
+        `${tempUrl}/eBupotUnifikasiTagihanPemotongansByUserSearchPagination?search_query=&page=${pageEBupotUnifikasiRingkasanPembayaran}&limit=${limitEBupotUnifikasiRingkasanPembayaran}`,
         {
           userEBupotUnifikasiTagihanPemotonganId: user.id,
           tahunPajak,

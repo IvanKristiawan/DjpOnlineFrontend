@@ -151,7 +151,7 @@ function EbupotUnifikasiDaftarPph42152223() {
 
   useEffect(() => {
     getEBupotUnifikasiPph42152223Data();
-  }, []);
+  }, [page, limit]);
 
   const getEBupotUnifikasiPph42152223Data = async () => {
     let tempCondition = pencairanBerdasarkan.length !== 0;
@@ -169,7 +169,7 @@ function EbupotUnifikasiDaftarPph42152223() {
     if (tempCondition) {
       setOpenLoading(true);
       const response = await axios.post(
-        `${tempUrl}/eBupotUnifikasiPph42152223sByUserSearchPagination`,
+        `${tempUrl}/eBupotUnifikasiPph42152223sByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
         {
           userEBupotUnifikasiPph42152223Id: user.id,
           pencairanBerdasarkan,

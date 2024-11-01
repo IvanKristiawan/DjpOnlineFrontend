@@ -103,12 +103,12 @@ function EbupotUnifikasi() {
 
   useEffect(() => {
     getEBupotUnifikasiCombinedData();
-  }, [tahunPajak, masaPajak]);
+  }, [page, limit, tahunPajak, masaPajak]);
 
   const getEBupotUnifikasiPenyiapanSptTerkirimData = async () => {
     setOpenLoading(true);
     const response = await axios.post(
-      `${tempUrl}/eBupotUnifikasiPenyiapanSptsTerkirimByUserSearchPagination`,
+      `${tempUrl}/eBupotUnifikasiPenyiapanSptsTerkirimByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
       {
         userEBupotUnifikasiPenyiapanSptId: user.id,
         _id: user.id,

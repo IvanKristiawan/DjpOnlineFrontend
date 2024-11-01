@@ -186,14 +186,14 @@ function TampilPenandatangan() {
 
   useEffect(() => {
     getAllPenandatanganData();
-  }, []);
+  }, [page, limit]);
 
   const getAllPenandatanganData = async () => {
     setOpenLoading(true);
 
     setTimeout(async () => {
       const response = await axios.post(
-        `${tempUrl}/penandatangansByUserPagination`,
+        `${tempUrl}/penandatangansByUserPagination?search_query=&page=${page}&limit=${limit}`,
         {
           userPenandatanganId: user.id,
           _id: user.id,
@@ -215,7 +215,7 @@ function TampilPenandatangan() {
 
       setTimeout(async () => {
         const response = await axios.post(
-          `${tempUrl}/penandatangansByUserSearchPagination`,
+          `${tempUrl}/penandatangansByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
           {
             pencairanBerdasarkan,
             kataKunciSearch,

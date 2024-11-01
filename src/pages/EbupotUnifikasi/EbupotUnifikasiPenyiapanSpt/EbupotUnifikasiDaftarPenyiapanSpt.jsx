@@ -100,12 +100,12 @@ function EbupotUnifikasiDaftarPenyiapanSpt() {
 
   useEffect(() => {
     getEBupotUnifikasiPenyiapanSptData();
-  }, []);
+  }, [page, limit]);
 
   const getEBupotUnifikasiPenyiapanSptData = async () => {
     setOpenLoading(true);
     const response = await axios.post(
-      `${tempUrl}/eBupotUnifikasiPenyiapanSptsByUserSearchPagination`,
+      `${tempUrl}/eBupotUnifikasiPenyiapanSptsByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
       {
         userEBupotUnifikasiPenyiapanSptId: user.id,
         _id: user.id,

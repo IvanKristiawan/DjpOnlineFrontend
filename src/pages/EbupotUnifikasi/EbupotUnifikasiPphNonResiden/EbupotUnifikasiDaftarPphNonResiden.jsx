@@ -153,7 +153,7 @@ function EbupotUnifikasiDaftarPphNonResiden() {
 
   useEffect(() => {
     getEBupotUnifikasiPphNonResidenData();
-  }, []);
+  }, [page, limit]);
 
   const getEBupotUnifikasiPphNonResidenData = async () => {
     let tempCondition = pencairanBerdasarkan.length !== 0;
@@ -173,7 +173,7 @@ function EbupotUnifikasiDaftarPphNonResiden() {
 
       setTimeout(async () => {
         const response = await axios.post(
-          `${tempUrl}/eBupotUnifikasiPphNonResidensByUserSearchPagination`,
+          `${tempUrl}/eBupotUnifikasiPphNonResidensByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
           {
             userEBupotUnifikasiPphNonResidenId: user.id,
             pencairanBerdasarkan,
