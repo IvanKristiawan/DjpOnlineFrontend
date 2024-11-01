@@ -10,6 +10,28 @@ export const formatDate = (date) => {
   })}-${tempDate.getFullYear()}`;
 };
 
+export const formatDateTime = (dateString) => {
+  // Parse the date from UTC to Indonesian time (WIB)
+  const date = new Date(dateString);
+
+  // Use Intl.DateTimeFormat for formatting and specifying timezone
+  const options = {
+    timeZone: "Asia/Jakarta",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  };
+
+  const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(date);
+
+  // Adjust format from "dd/mm/yyyy, hh:mm:ss" to "dd/mm/yyyy hh:mm:ss"
+  return formattedDate.replace(",", "");
+};
+
 export const formatTime = (datetime) => {
   let hours = String(datetime.getHours()).padStart(2, "0");
   let minutes = String(datetime.getMinutes()).padStart(2, "0");

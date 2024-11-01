@@ -30,7 +30,7 @@ import SendIcon from "@mui/icons-material/Send";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import MenuIcon from "@mui/icons-material/Menu";
 import DownloadIcon from "@mui/icons-material/Download";
-import { formatDate } from "../constants/helper";
+import { formatDate, formatDateTime } from "../constants/helper";
 
 const useStyles = makeStyles({
   root: {
@@ -4049,6 +4049,8 @@ export function ShowTableEbupotUnifikasiRekapitulasiPph({ currentPosts }) {
 
 export function ShowTableEbupotUnifikasiDaftarDokumenImporData({
   currentPosts,
+  getDetilValidasi,
+  setOpenDetilValidasi,
 }) {
   let navigate = useNavigate();
   const classes = useStyles();
@@ -4094,23 +4096,21 @@ export function ShowTableEbupotUnifikasiDaftarDokumenImporData({
         sx={{
           "&:last-child td, &:last-child th": { border: 0 },
         }}
+        onClick={() => {
+          getDetilValidasi(user.id);
+          setOpenDetilValidasi(true);
+        }}
       >
-        <TableCell component="th" scope="row" style={dataStyle}>
-          {user.ebilling.masaPajakDariBulan}
+        <TableCell component="th" scope="row" style={textDataStyle}>
+          {user.nomorTiket}
         </TableCell>
-        <TableCell style={dataStyle}>
-          {user.objekpajak.kodeObjekPajak}
+        <TableCell style={textDataStyle}>{user.namaFile}</TableCell>
+        <TableCell style={textDataStyle}>
+          {formatDateTime(user.tanggalUpload)}
         </TableCell>
-        <TableCell style={dataStyle}>{user.nomorBuktiSetor}</TableCell>
-        <TableCell style={dataStyle}>
-          {user.jumlahPenghasilanBruto.toLocaleString("de-DE")}
-        </TableCell>
-        <TableCell style={dataStyle}>
-          {user.jumlahPenghasilanBruto.toLocaleString("de-DE")}
-        </TableCell>
-        <TableCell style={dataStyle}>
-          {user.ebilling.jumlahSetor.toLocaleString("de-DE")}
-        </TableCell>
+        <TableCell style={textDataStyle}>{user.jumlahBaris}</TableCell>
+        <TableCell style={textDataStyle}>{user.status}</TableCell>
+        <TableCell style={textDataStyle}>{user.keteranganUpload}</TableCell>
         <TableCell style={aksiButtonWrapper}>
           <OverlayTrigger
             placement="bottom"
@@ -4240,6 +4240,82 @@ export function ShowTableEbupotUnifikasiDaftarDokumenImporData({
                 className={classes.tableRightBorder}
               >
                 AKSI
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>{dataTable}</TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+}
+
+export function ShowTableEbupotUnifikasiDaftarDetilValidasi({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  let dataTable = currentPosts.map((user, index) => (
+    <>
+      <TableRow
+        key={user.id}
+        sx={{
+          "&:last-child td, &:last-child th": { border: 0 },
+        }}
+      >
+        <TableCell component="th" scope="row" style={textDataStyle}>
+          {user.pasal}
+        </TableCell>
+        <TableCell style={textDataStyle}>{user.barisExcel}</TableCell>
+        <TableCell style={textDataStyle}>{user.statusValidasi}</TableCell>
+        <TableCell style={textDataStyle}>{user.keteranganValidasi}</TableCell>
+      </TableRow>
+    </>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={4} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <>
+      <TableContainer component={Paper} sx={{ width: "100%" }}>
+        <Table aria-label="simple table">
+          <TableHead className={classes.root}>
+            <TableRow>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                PASAL
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                BARIS EXCEL
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                STATUS VALIDASI
+              </TableCell>
+              <TableCell
+                sx={textDataStyle}
+                className={classes.tableRightBorder}
+              >
+                KETERANGAN VALIDASI
               </TableCell>
             </TableRow>
           </TableHead>

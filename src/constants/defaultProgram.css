@@ -359,3 +359,18 @@
     background-color: rgb(230, 230, 230); /* Change color on hover */
     color: #646c9a;
 }
+
+.delete-button {
+    background-color: #fd397a;   /* Default background color */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 7px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.delete-button:hover {
+    background-color: #ff1b67; /* Change color on hover */
+    color: white;
+}

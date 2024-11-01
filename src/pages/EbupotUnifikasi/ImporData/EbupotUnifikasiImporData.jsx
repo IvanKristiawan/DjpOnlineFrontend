@@ -12,7 +12,10 @@ import {
   MainMenuEbupotUnifikasi,
 } from "../../../components/index";
 import "../../../constants/defaultProgram.css";
-import { ShowTableEbupotUnifikasiDaftarDokumenImporData } from "../../../components/ShowTable";
+import {
+  ShowTableEbupotUnifikasiDaftarDokumenImporData,
+  ShowTableEbupotUnifikasiDaftarDetilValidasi,
+} from "../../../components/ShowTable";
 import { getMonthIndex } from "../../../constants/helper";
 import {
   Card,
@@ -35,16 +38,22 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+import * as XLSX from "xlsx";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import EditIcon from "@mui/icons-material/Edit";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import ReplayIcon from "@mui/icons-material/Replay";
 import SaveIcon from "@mui/icons-material/Save";
+import DeleteIcon from "@mui/icons-material/Delete";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from "@mui/icons-material/Search";
+import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 
 // Petunjuk Pengisian component
 const PetunjukPengisianComponent = () => {
@@ -133,6 +142,83 @@ function EbupotUnifikasiImporData() {
     e.stopPropagation();
     fileInputSertifikatElektronikRef.current.click();
   };
+
+  const [fileName, setFileName] = useState("");
+  const [fileSize, setFileSize] = useState("");
+  const [jsonData, setJsonData] = useState({});
+  const maxFileSize = 2 * 1024 * 1024; // 2MB in bytes
+
+  const resetFileInput = () => {
+    if (fileInputSertifikatElektronikRef.current) {
+      fileInputSertifikatElektronikRef.current.value = null;
+    }
+  };
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+
+    // Check if there's a file
+    if (!file) return;
+
+    // Check file size
+    if (file && file.size > maxFileSize) {
+      alert("Ukuran file melebihi 2MB. Harap upload file yang lebih kecil.");
+      resetFileInput();
+      return;
+    }
+
+    if (!file.name.includes(user.npwp15)) {
+      setOpenFormatNamaFileSalah(true);
+      resetFileInput();
+      return;
+    }
+
+    // Store the file name in state
+    setFileName(file.name);
+
+    // Check file size and convert it to KB or MB
+    let fileSizeDisplay;
+    if (file) {
+      const fileSizeInKB = parseInt(file.size / 1024);
+      fileSizeDisplay =
+        file.size < 1024 * 1024
+          ? `${fileSizeInKB} KB`
+          : `${parseInt(file.size / (1024 * 1024))} MB`;
+    }
+    setFileSize(fileSizeDisplay);
+
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const data = new Uint8Array(event.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+
+      const sheetsData = {};
+
+      workbook.SheetNames.forEach((sheetName) => {
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonSheetData = XLSX.utils.sheet_to_json(worksheet);
+        sheetsData[sheetName] = jsonSheetData;
+      });
+
+      setJsonData(sheetsData);
+
+      resetFileInput();
+
+      // Process Data
+      console.log("File name:", file.name);
+      console.log(sheetsData["Rekap"]);
+      console.log(sheetsData["42152223"]);
+      console.log(sheetsData["NR"]);
+      console.log(sheetsData["Dasar Pemotongan"]);
+      console.log(sheetsData);
+    };
+
+    if (file) {
+      reader.readAsArrayBuffer(file);
+    }
+  };
+
   const handleFileSertifikatElektronikChange = (event) => {
     setFileSertifikatElektronik(event.target.files[0]);
   };
@@ -146,8 +232,8 @@ function EbupotUnifikasiImporData() {
   };
 
   const [
-    eBupotUnifikasiDaftarDokumenImporDataPagination,
-    setEBupotUnifikasiDaftarDokumenImporDataPagination,
+    eBupotUnifikasiImporDataPagination,
+    setEBupotUnifikasiImporDataPagination,
   ] = useState([]);
   let [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -157,6 +243,33 @@ function EbupotUnifikasiImporData() {
 
   const handleChange = (e, p) => {
     setPage(p - 1);
+  };
+
+  const [
+    eBupotUnifikasiDetilValidasiPagination,
+    setEBupotUnifikasiDetilValidasiPagination,
+  ] = useState([]);
+  let [pageEBupotUnifikasiDetilValidasi, setPageEBupotUnifikasiDetilValidasi] =
+    useState(0);
+  const [
+    limitEBupotUnifikasiDetilValidasi,
+    setLimitEBupotUnifikasiDetilValidasi,
+  ] = useState(10);
+  const [
+    pagesEBupotUnifikasiDetilValidasi,
+    setPagesEBupotUnifikasiDetilValidasi,
+  ] = useState(0);
+  const [
+    rowsEBupotUnifikasiDetilValidasi,
+    setRowsEBupotUnifikasiDetilValidasi,
+  ] = useState(0);
+  const [
+    queryEBupotUnifikasiDetilValidasi,
+    setQueryEBupotUnifikasiDetilValidasi,
+  ] = useState("");
+
+  const handleChangeEBupotUnifikasiDetilValidasi = (e, p) => {
+    setPageEBupotUnifikasiDetilValidasi(p - 1);
   };
 
   const [openSaved, setOpenSaved] = useState(false);
@@ -171,6 +284,20 @@ function EbupotUnifikasiImporData() {
   const [openSearchIdentitasWp, setOpenSearchIdentitasWp] = useState(false);
   const [openLoadingImporData, setOpenLoadingImporData] = useState(false);
   const [openFoundIdentitasWp, setOpenFoundIdentitasWp] = useState(false);
+  const [openFormatNamaFileSalah, setOpenFormatNamaFileSalah] = useState(false);
+
+  const [openDetilValidasi, setOpenDetilValidasi] = useState(false);
+
+  const [pencairanBerdasarkan, setPencairanBerdasarkan] = useState("Semua");
+
+  // Handle Pencairan Berdasarkan input change
+  const handlePencairanBerdasarkanChange = (e) => {
+    setPencairanBerdasarkan(e.target.value);
+  };
+
+  const handleCloseDetilValidasi = () => {
+    setOpenDetilValidasi(false);
+  };
 
   const handleCloseSaved = () => {
     setOpenSaved(false);
@@ -186,7 +313,57 @@ function EbupotUnifikasiImporData() {
     setOpenConfirmationSaved(false);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getEBupotUnifikasiImporData();
+  }, [page, limit]);
+
+  const getEBupotUnifikasiImporData = async () => {
+    setOpenLoadingImporData(true);
+    const response = await axios.post(
+      `${tempUrl}/eBupotUnifikasiImporDatasByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
+      {
+        userEBupotUnifikasiImporDataId: user.id,
+        _id: user.id,
+        token: user.token,
+        kodeCabang: user.cabang.id,
+      }
+    );
+    setEBupotUnifikasiImporDataPagination(
+      response.data.eBupotUnifikasiImporDatas
+    );
+    setPage(response.data.page);
+    setPages(response.data.totalPage);
+    setRows(response.data.totalRows);
+
+    setTimeout(async () => {
+      setOpenLoadingImporData(false);
+    }, 500);
+  };
+
+  const getEBupotUnifikasiDetilValidasisByUserByImporDataSearchPagination =
+    async (userEBupotUnifikasiImporDataId) => {
+      setOpenLoadingImporData(true);
+      const response = await axios.post(
+        `${tempUrl}/eBupotUnifikasiDetilValidasisByUserByImporDataSearchPagination?search_query=&page=${page}&limit=${limit}`,
+        {
+          userEBupotUnifikasiDetilValidasiId: user.id,
+          userEBupotUnifikasiImporDataId,
+          _id: user.id,
+          token: user.token,
+          kodeCabang: user.cabang.id,
+        }
+      );
+      setEBupotUnifikasiDetilValidasiPagination(
+        response.data.eBupotUnifikasiDetilValidasis
+      );
+      setPageEBupotUnifikasiDetilValidasi(response.data.page);
+      setPagesEBupotUnifikasiDetilValidasi(response.data.totalPage);
+      setRowsEBupotUnifikasiDetilValidasi(response.data.totalRows);
+
+      setTimeout(async () => {
+        setOpenLoadingImporData(false);
+      }, 500);
+    };
 
   const findMasaPajakOptions = async (tahunPajak) => {
     setOpenSearchIdentitasWp(true);
@@ -233,26 +410,36 @@ function EbupotUnifikasiImporData() {
     setOpenFoundIdentitasWp(false);
   };
 
+  const handleCloseFormatNamaFileSalah = () => {
+    setOpenFormatNamaFileSalah(false);
+  };
+
   const imporData = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     const form = e.currentTarget;
 
     let tempCondition =
-      form.checkValidity() && tahunPajak.length !== 0 && masaPajak.length !== 0;
+      form.checkValidity() &&
+      tahunPajak.length !== 0 &&
+      masaPajak.length !== 0 &&
+      fileName.length !== 0;
 
     if (tempCondition) {
       handleCloseConfirmationSaved(e);
 
       setOpenLoadingImporData(true);
-      let eBupotUnifikasiPosted = await axios.post(
-        `${tempUrl}/eBupotUnifikasiImporData`,
+      let savedEBupotUnifikasiImporData = await axios.post(
+        `${tempUrl}/saveEBupotUnifikasiImporData`,
         {
           userId: user.id,
 
           // 01.) Accordion 1
           tahunPajak,
           masaPajak,
+          fileName,
+
+          jsonData,
 
           userIdInput: user.id,
           kodeCabang: user.cabang.id,
@@ -262,7 +449,12 @@ function EbupotUnifikasiImporData() {
       );
 
       setTimeout(async () => {
+        getEBupotUnifikasiImporData();
         setOpenLoadingImporData(false);
+        setValidated(false);
+        setFileName("");
+        setFileSize("");
+        setJsonData({});
         setOpenSaved(true);
       }, 1000);
     } else {
@@ -306,6 +498,11 @@ function EbupotUnifikasiImporData() {
     width: screenSize >= 900 && "50%",
   };
 
+  const detilValidasiWrapper = {
+    display: screenSize >= 900 && "flex",
+    justifyContent: "space-between",
+  };
+
   return (
     <div>
       <Menu />
@@ -331,11 +528,7 @@ function EbupotUnifikasiImporData() {
               Impor Data Pajak Penghasilan
             </Card.Header>
             <Card.Body>
-              <Form
-                noValidate
-                validated={validated}
-                // onSubmit={handleClickOpenConfirmationSaved}
-              >
+              <Form noValidate validated={validated} onSubmit={imporData}>
                 <div style={inputImporDataContainer}>
                   <div style={inputImporDataWrapper}>
                     <div>
@@ -458,30 +651,77 @@ function EbupotUnifikasiImporData() {
                           File (*.xls)
                         </Form.Label>
                         <Col sm="8">
-                          <button
-                            className="upload-sertifikat-elektronik-button"
-                            variant="primary"
-                            onClick={handleButtonClickSertifikatElektronik}
-                          >
-                            Pilih File Bukti Pemotongan
-                          </button>
-                          <Form.Control
-                            type="file"
-                            ref={fileInputSertifikatElektronikRef}
-                            onChange={handleFileSertifikatElektronikChange}
-                            style={{ display: "none" }} // Hide the file input
-                          />
-                          <Form.Label>
-                            Ukuran file maksimal 2MB berformat .xls
-                          </Form.Label>
-                          <Form.Label style={{ color: "#fd397a" }}>
-                            Pastikan tidak melakukan impor excel dengan data
-                            yang sama apabila terdapat excel yang belum selesai
-                            diproses sebelumnya
-                          </Form.Label>
+                          {fileName.length === 0 ? (
+                            <button
+                              className="upload-sertifikat-elektronik-button"
+                              variant="primary"
+                              onClick={handleButtonClickSertifikatElektronik}
+                            >
+                              Pilih File...
+                            </button>
+                          ) : (
+                            <button
+                              className="upload-sertifikat-elektronik-button"
+                              variant="primary"
+                              onClick={handleButtonClickSertifikatElektronik}
+                            >
+                              Ubah File...
+                            </button>
+                          )}
+                          <div>
+                            <Form.Control
+                              type="file"
+                              accept=".xls"
+                              ref={fileInputSertifikatElektronikRef}
+                              onChange={handleFileUpload}
+                              style={{ display: "none" }} // Hide the file input
+                            />
+                            <Form.Label>
+                              Ukuran file maksimal 2MB berformat .xls
+                            </Form.Label>
+                            <Form.Label style={{ color: "#fd397a" }}>
+                              Pastikan tidak melakukan impor excel dengan data
+                              yang sama apabila terdapat excel yang belum
+                              selesai diproses sebelumnya
+                            </Form.Label>
+                          </div>
                         </Col>
                       </Form.Group>
                     </div>
+                    <div
+                      style={{
+                        color: "black",
+                        display: "flex",
+                        justifyContent: "space-around",
+                      }}
+                    >
+                      <p>{fileName}</p>
+                      <p>{fileSize}</p>
+                      {fileName.length !== 0 && (
+                        <button
+                          className="delete-button"
+                          onClick={() => {
+                            setFileName("");
+                            setFileSize("");
+                            setJsonData({});
+                          }}
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </button>
+                      )}
+                    </div>
+                    {/* {Object.keys(jsonData).length > 0 && (
+                        <div>
+                          {Object.keys(jsonData).map((sheetName) => (
+                            <div key={sheetName}>
+                              <h3>Sheet: {sheetName}</h3>
+                              <pre>
+                                {JSON.stringify(jsonData[sheetName], null, 2)}
+                              </pre>
+                            </div>
+                          ))}
+                        </div>
+                      )} */}
                   </div>
                 </div>
                 <div style={{ display: "flex", justifyContent: "center" }}>
@@ -517,7 +757,7 @@ function EbupotUnifikasiImporData() {
                 <div>
                   <button
                     className="ebupot-unifikasi-refresh-button"
-                    // onClick={getEBupotUnifikasiPenyiapanSptTerkirimData}
+                    onClick={getEBupotUnifikasiImporData}
                   >
                     <RefreshIcon
                       fontSize="small"
@@ -551,7 +791,11 @@ function EbupotUnifikasiImporData() {
               </div>
               <Box>
                 <ShowTableEbupotUnifikasiDaftarDokumenImporData
-                  currentPosts={eBupotUnifikasiDaftarDokumenImporDataPagination}
+                  currentPosts={eBupotUnifikasiImporDataPagination}
+                  getDetilValidasi={
+                    getEBupotUnifikasiDetilValidasisByUserByImporDataSearchPagination
+                  }
+                  setOpenDetilValidasi={setOpenDetilValidasi}
                 />
               </Box>
               <Box sx={tableContainer}>
@@ -667,7 +911,7 @@ function EbupotUnifikasiImporData() {
                 textAlign: "center",
               }}
             >
-              <b>ImporData Bukti Potong</b>
+              <b>Memuat</b>
             </div>
           </DialogTitle>
           <DialogContent>
@@ -684,6 +928,64 @@ function EbupotUnifikasiImporData() {
               </div>
             </DialogContentText>
           </DialogContent>
+        </div>
+      </Dialog>
+      <Dialog
+        open={openFormatNamaFileSalah}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        fullWidth={true}
+        maxWidth={"xs"}
+      >
+        <div style={{ padding: "30px" }}>
+          <DialogTitle id="alert-dialog-title">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <InfoOutlinedIcon color="info" sx={{ fontSize: 80 }} />
+                Format Nama file tidak sesuai
+              </div>
+            </div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText
+              id="alert-dialog-description"
+              style={{ textAlign: "center" }}
+            >
+              Mohon sesuaikan dengan format yang ada pada petunjuk panduan
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <button
+              className="hover-button-no-icon"
+              style={{
+                paddingTop: "10px",
+                paddingLeft: "20px",
+                paddingRight: "20px",
+                padding: "10px 20px 10px 20px",
+              }}
+              onClick={handleCloseFormatNamaFileSalah}
+            >
+              Ok
+            </button>
+          </DialogActions>
         </div>
       </Dialog>
       <Dialog
@@ -868,6 +1170,121 @@ function EbupotUnifikasiImporData() {
           </DialogActions>
         </div>
       </Dialog>
+      <Dialog
+        onClose={handleCloseDetilValidasi}
+        aria-labelledby="customized-dialog-title"
+        open={openDetilValidasi}
+        fullWidth={true}
+        maxWidth={"md"}
+      >
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          Detil Validasi
+        </DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={handleCloseDetilValidasi}
+          sx={(theme) => ({
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: theme.palette.grey[500],
+          })}
+        >
+          <CloseIcon />
+        </IconButton>
+        <DialogContent dividers>
+          <div style={detilValidasiWrapper}>
+            <div style={{ flex: 1 }}>
+              <div>
+                <p>Pencarian Berdasarkan</p>
+                <Row>
+                  <Col sm="4" className="mt-2">
+                    <Form.Check
+                      type="radio"
+                      label="Semua"
+                      name="Semua"
+                      value="Semua"
+                      checked={pencairanBerdasarkan === "Semua"}
+                      onChange={handlePencairanBerdasarkanChange}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Col>
+                  <Col sm="4" className="mt-2">
+                    <Form.Check
+                      type="radio"
+                      label="Baris Error"
+                      name="Baris Error"
+                      value="Baris Error"
+                      checked={pencairanBerdasarkan === "Baris Error"}
+                      onChange={handlePencairanBerdasarkanChange}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Col>
+                  <Col sm="4">
+                    <Button className="cari-pralapor-button">
+                      <SearchIcon style={{ marginRight: "5px" }} />
+                      Cari
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
+            </div>
+            <div style={{ flex: 1 }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "end",
+                  alignItems: "end",
+                  height: "100%",
+                }}
+              >
+                <button className="cari-pralapor-button">
+                  <InsertDriveFileIcon style={{ marginRight: "5px" }} />
+                  Unduh Hasil Validasi
+                </button>
+              </div>
+            </div>
+          </div>
+          <div style={{ marginTop: "20px" }}>
+            <div style={menuLaporContainer}>
+              <p style={{ paddingTop: "10px" }}>Tampilkan</p>
+              <Form.Select
+                size="sm"
+                style={{
+                  width: "auto",
+                  marginLeft: "5px",
+                  marginRight: "5px",
+                }}
+                onChange={(e) => {
+                  setLimitEBupotUnifikasiDetilValidasi(e.target.value);
+                }}
+              >
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+              </Form.Select>
+              <p style={{ paddingTop: "10px" }}>Entry</p>
+            </div>
+            <Box>
+              <ShowTableEbupotUnifikasiDaftarDetilValidasi
+                currentPosts={eBupotUnifikasiDetilValidasiPagination}
+              />
+            </Box>
+            <Box sx={tableContainer}>
+              <Pagination
+                shape="rounded"
+                color="primary"
+                count={pagesEBupotUnifikasiDetilValidasi}
+                page={pageEBupotUnifikasiDetilValidasi + 1}
+                onChange={handleChangeEBupotUnifikasiDetilValidasi}
+                size={screenSize <= 600 ? "small" : "large"}
+              />
+            </Box>
+          </div>
+        </DialogContent>
+        <DialogActions></DialogActions>
+      </Dialog>
     </div>
   );
 }
@@ -890,4 +1307,8 @@ const tableContainer = {
   pt: 4,
   display: "flex",
   justifyContent: "center",
+};
+
+const aksiButtonStyle = {
+  marginLeft: "5px",
 };

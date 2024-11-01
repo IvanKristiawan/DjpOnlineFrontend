@@ -168,27 +168,27 @@ function EbupotUnifikasiDaftarPph42152223() {
 
     if (tempCondition) {
       setOpenLoading(true);
+      const response = await axios.post(
+        `${tempUrl}/eBupotUnifikasiPph42152223sByUserSearchPagination`,
+        {
+          userEBupotUnifikasiPph42152223Id: user.id,
+          pencairanBerdasarkan,
+          masaTahunPajakSearch,
+          nomorBuktiSetor,
+          identitas,
+          _id: user.id,
+          token: user.token,
+          kodeCabang: user.cabang.id,
+        }
+      );
+      setEBupotUnifikasiPph42152223Pagination(
+        response.data.eBupotUnifikasiPph42152223s
+      );
+      setPage(response.data.page);
+      setPages(response.data.totalPage);
+      setRows(response.data.totalRows);
 
       setTimeout(async () => {
-        const response = await axios.post(
-          `${tempUrl}/eBupotUnifikasiPph42152223sByUserSearchPagination`,
-          {
-            userEBupotUnifikasiPph42152223Id: user.id,
-            pencairanBerdasarkan,
-            masaTahunPajakSearch,
-            nomorBuktiSetor,
-            identitas,
-            _id: user.id,
-            token: user.token,
-            kodeCabang: user.cabang.id,
-          }
-        );
-        setEBupotUnifikasiPph42152223Pagination(
-          response.data.eBupotUnifikasiPph42152223s
-        );
-        setPage(response.data.page);
-        setPages(response.data.totalPage);
-        setRows(response.data.totalRows);
         setOpenLoading(false);
       }, 500);
     }
