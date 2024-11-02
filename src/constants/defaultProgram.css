@@ -329,6 +329,32 @@
     color: #212c5f
 }
 
+.daftar-dokumen-button:disabled {
+    opacity: .65;
+    cursor: default;
+}
+
+.tambah-daftar-dokumen-button {
+    background-color: #1dc9b7;
+    color: white;
+    border: none;
+    border-radius: .9rem;
+    padding: 5px 5px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.tambah-daftar-dokumen-button:hover {
+    background-color: #1eb3a4;
+    color: white
+}
+
+.tambah-daftar-dokumen-button:disabled {
+    opacity: .65;
+    cursor: default;
+}
+
 .upload-sertifikat-elektronik-button {
     background-color: rgba(55,74,251,0.1);
     color: #646c9a;
@@ -373,4 +399,51 @@
 .delete-button:hover {
     background-color: #ff1b67; /* Change color on hover */
     color: white;
+}
+
+.ebupot-2126-refresh-button {
+    background-color: #ffb822;
+    color: white;
+    border: none;
+    border-radius: .9rem;
+    padding: 5px 5px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.ebupot-2126-refresh-button:hover {
+    background-color: #f8aa00;
+    color: white
+}
+
+.ekspor-bupot-button {
+    background-color: #1dc9b7;
+    color: #212c5f;
+    border: none;
+    border-radius: .25rem;
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.ekspor-bupot-button:hover {
+    background-color: #1eb3a4;
+    color: #212c5f
+}
+
+.ebupot-unifikasi-rekam-button {
+    background-color: #ffb822;
+    color: #212c5f;
+    border: none;
+    border-radius: .9rem;
+    padding: 5px 5px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+  
+.ebupot-unifikasi-rekam-button:hover {
+    background-color: #f8aa00;
+    color: #212c5f
 }

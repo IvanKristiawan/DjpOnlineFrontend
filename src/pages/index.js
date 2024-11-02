@@ -16,6 +16,18 @@ export { default as EBilling } from "./EBilling/EBilling";
 // Lapor Page
 export { default as Lapor } from "./Lapor/Lapor";
 export { default as Pralapor } from "./Lapor/Pralapor";
+// Ebupot 2126 Page
+export { default as Ebupot2126 } from "./Ebupot2126/Dashboard/Ebupot2126";
+export { default as Ebupot2126DaftarPPh21 } from "./Ebupot2126/Ebupot2126PPh21/Ebupot2126DaftarPPh21";
+export { default as Ebupot2126DaftarPPh26 } from "./Ebupot2126/Ebupot2126PPh26/Ebupot2126DaftarPPh26";
+export { default as Ebupot2126ImporData } from "./Ebupot2126/ImporData/Ebupot2126ImporData";
+export { default as Ebupot2126DownloadBupot } from "./Ebupot2126/DownloadBupot/Ebupot2126DownloadBupot";
+export { default as Ebupot2126Posting } from "./Ebupot2126/Posting/Ebupot2126Posting";
+export { default as Ebupot2126PerekamanSptMasa } from "./Ebupot2126/Ebupot2126PerekamanSptMasa/Ebupot2126PerekamanSptMasa";
+export { default as Ebupot2126DaftarPenyiapanSpt } from "./Ebupot2126/Ebupot2126PenyiapanSpt/Ebupot2126DaftarPenyiapanSpt";
+export { default as TampilEbupot2126Penandatangan } from "./Ebupot2126/Penandatangan/TampilEbupot2126Penandatangan";
+export { default as TampilEbupot2126Perekam } from "./Ebupot2126/Perekam/TampilEbupot2126Perekam";
+export { default as TampilEbupot2126BuatAuthKey } from "./Ebupot2126/BuatAuthKey/TampilEbupot2126BuatAuthKey";
 // Ebupot Unifikasi Page
 export { default as EbupotUnifikasi } from "./EbupotUnifikasi/Dashboard/EbupotUnifikasi";
 export { default as EbupotUnifikasiDaftarPphDisetorSendiri } from "./EbupotUnifikasi/EbupotUnifikasiPphDisetorSendiri/EbupotUnifikasiDaftarPphDisetorSendiri";

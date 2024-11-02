@@ -18,6 +18,17 @@ import {
   EBilling,
   Lapor,
   Pralapor,
+  Ebupot2126,
+  Ebupot2126DaftarPPh21,
+  Ebupot2126DaftarPPh26,
+  Ebupot2126ImporData,
+  Ebupot2126DownloadBupot,
+  Ebupot2126Posting,
+  Ebupot2126PerekamanSptMasa,
+  Ebupot2126DaftarPenyiapanSpt,
+  TampilEbupot2126Penandatangan,
+  TampilEbupot2126Perekam,
+  TampilEbupot2126BuatAuthKey,
   EbupotUnifikasi,
   EbupotUnifikasiDaftarPphDisetorSendiri,
   EbupotUnifikasiInputPphDisetorSendiri,
@@ -170,6 +181,95 @@ const App = () => {
             element={
               <USERRoute>
                 <Pralapor />
+              </USERRoute>
+            }
+          />
+          {/* Ebupot 2126 */}
+          <Route
+            path="/ebupot2126/dashboard"
+            element={
+              <USERRoute>
+                <Ebupot2126 />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupot2126/buktiPotongPasal21"
+            element={
+              <USERRoute>
+                <Ebupot2126DaftarPPh21 />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupot2126/buktiPotongPasal26"
+            element={
+              <USERRoute>
+                <Ebupot2126DaftarPPh26 />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupot2126/imporData"
+            element={
+              <USERRoute>
+                <Ebupot2126ImporData />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupot2126/downloadBupot"
+            element={
+              <USERRoute>
+                <Ebupot2126DownloadBupot />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupot2126/posting"
+            element={
+              <USERRoute>
+                <Ebupot2126Posting />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupot2126/sptMasa/rekamBuktiSetor"
+            element={
+              <USERRoute>
+                <Ebupot2126PerekamanSptMasa />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupot2126/sptMasa/penyiapanSpt"
+            element={
+              <USERRoute>
+                <Ebupot2126DaftarPenyiapanSpt />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupot2126/pengaturan/penandatangan"
+            element={
+              <USERRoute>
+                <TampilEbupot2126Penandatangan />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupot2126/pengaturan/perekam"
+            element={
+              <USERRoute>
+                <TampilEbupot2126Perekam />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupot2126/pengaturan/authKey"
+            element={
+              <USERRoute>
+                <TampilEbupot2126BuatAuthKey />
               </USERRoute>
             }
           />

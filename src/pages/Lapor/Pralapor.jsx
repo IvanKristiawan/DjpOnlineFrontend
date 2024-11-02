@@ -327,7 +327,7 @@ function Pralapor() {
                       alt="LogoEbupot2126"
                       style={logoMenuStyle}
                       onClick={() => {
-                        navigate("/ebupot2126");
+                        navigate("/ebupot2126/dashboard");
                       }}
                     />
                     <div style={{ textAlign: "center" }}>
