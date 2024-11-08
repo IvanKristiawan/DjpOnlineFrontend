@@ -437,7 +437,7 @@
     color: #212c5f;
     border: none;
     border-radius: .9rem;
-    padding: 5px 5px;
+    padding: 5px 10px;
     font-size: 15px;
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition on hover */

@@ -360,7 +360,7 @@ function EbupotUnifikasiPenyiapanSptKirimSpt() {
   const getEBupotUnifikasiPostingData = async (tahunPajak, masaPajak) => {
     setOpenSearchIdentitasWp(true);
     const response = await axios.post(
-      `${tempUrl}/eBupotUnifikasiPostingsDossPagination?search_query=&page=${pageEBupotUnifikasiPosting}&limit=${limitEBupotUnifikasiPosting}`,
+      `${tempUrl}/eBupotUnifikasiPostingsDoppPagination?search_query=&page=${pageEBupotUnifikasiPosting}&limit=${limitEBupotUnifikasiPosting}`,
       {
         tahunPajak,
         masaPajak,

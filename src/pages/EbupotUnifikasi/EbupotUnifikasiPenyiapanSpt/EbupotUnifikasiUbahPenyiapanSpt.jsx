@@ -262,16 +262,19 @@ function EbupotUnifikasiUbahPenyiapanSpt() {
   ];
 
   useEffect(() => {
-    getEBupotUnifikasiPostingDoss();
+    getEBupotUnifikasiPostingDopp();
     getEbupotUnifikasiUbahPenyiapanSptById();
   }, []);
 
-  const getEBupotUnifikasiPostingDoss = async () => {
+  const getEBupotUnifikasiPostingDopp = async () => {
     setOpenSearchIdentitasWp(true);
-    const response = await axios.post(`${tempUrl}/getEBupotUnifikasiPostingDoss`, {
-      _id: user.id,
-      token: user.token,
-    });
+    const response = await axios.post(
+      `${tempUrl}/getEBupotUnifikasiPostingDopp`,
+      {
+        _id: user.id,
+        token: user.token,
+      }
+    );
     setEBupotUnifikasiPostings(response.data);
     setInputValues(
       response.data.reduce((acc, item) => {

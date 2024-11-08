@@ -19,6 +19,7 @@ export { default as Pralapor } from "./Lapor/Pralapor";
 // Ebupot 2126 Page
 export { default as Ebupot2126 } from "./Ebupot2126/Dashboard/Ebupot2126";
 export { default as Ebupot2126DaftarPPh21 } from "./Ebupot2126/Ebupot2126PPh21/Ebupot2126DaftarPPh21";
+export { default as Ebupot2126InputPph21 } from "./Ebupot2126/Ebupot2126PPh21/Ebupot2126InputPph21";
 export { default as Ebupot2126DaftarPPh26 } from "./Ebupot2126/Ebupot2126PPh26/Ebupot2126DaftarPPh26";
 export { default as Ebupot2126ImporData } from "./Ebupot2126/ImporData/Ebupot2126ImporData";
 export { default as Ebupot2126DownloadBupot } from "./Ebupot2126/DownloadBupot/Ebupot2126DownloadBupot";

@@ -20,6 +20,7 @@ import {
   Pralapor,
   Ebupot2126,
   Ebupot2126DaftarPPh21,
+  Ebupot2126InputPph21,
   Ebupot2126DaftarPPh26,
   Ebupot2126ImporData,
   Ebupot2126DownloadBupot,
@@ -198,6 +199,14 @@ const App = () => {
             element={
               <USERRoute>
                 <Ebupot2126DaftarPPh21 />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupot2126/buktiPotongPasal21/rekam21"
+            element={
+              <USERRoute>
+                <Ebupot2126InputPph21 />
               </USERRoute>
             }
           />

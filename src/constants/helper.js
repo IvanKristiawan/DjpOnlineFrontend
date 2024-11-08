@@ -218,6 +218,50 @@ export const getRandomIndonesianName = function () {
   return `${randomFirstName} ${randomLastName}`;
 };
 
+export const getRandomIndonesianLocation = function () {
+  const locations = [
+    "JALAN SUDIRMAN",
+    "JALAN THAMRIN",
+    "JALAN GATOT SUBROTO",
+    "JALAN MH THAMRIN",
+    "JALAN MEDAN MERDEKA",
+    "JALAN DIPONEGORO",
+    "JALAN PAHLAWAN",
+    "JALAN AHMAD YANI",
+    "JALAN GAJAH MADA",
+    "JALAN HAYAM WURUK",
+    "JALAN IMAM BONJOL",
+    "JALAN SOEKARNO-HATTA",
+    "JALAN ASIA AFRIKA",
+    "JALAN CENDRAWASIH",
+    "JALAN ANGGREK",
+    "JALAN MERDEKA",
+    "JALAN RAYA BOGOR",
+    "JALAN KUNINGAN",
+    "JALAN KEMBANG",
+    "JALAN KEBON SIRIH",
+    "JALAN VETERAN",
+    "JALAN PEMUDA",
+    "JALAN KENANGA",
+    "JALAN MANGGA BESAR",
+    "JALAN PURI INDAH",
+    "JALAN SENTOSA",
+    "JALAN KEMANG",
+    "JALAN PANDANARAN",
+    "JALAN SETIABUDI",
+    "JALAN HOS COKROAMINOTO",
+    "JALAN SULTAN AGUNG",
+    "JALAN KRAMAT RAYA",
+    "JALAN MANGGA DUA",
+    "JALAN KEMANGGISAN",
+  ];
+
+  // Get a random index based on the length of the locations array
+  const randomIndex = Math.floor(Math.random() * locations.length);
+
+  return locations[randomIndex];
+};
+
 // Arrays of common Indonesian street names (all uppercase)
 const streetNames = [
   "JALAN SUDIRMAN",
@@ -276,4 +320,9 @@ export const getMonthIndex = function (month) {
 
 export const getLastDateOfMonth = function (year, month) {
   return new Date(year, month, 0);
+};
+
+export const formatNumberWithComma = function (number) {
+  // Convert the number to a string and replace the dot with a comma if it exists
+  return number.toString().replace(".", ",");
 };
