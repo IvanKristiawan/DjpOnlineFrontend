@@ -29,6 +29,8 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 import CachedIcon from "@mui/icons-material/Cached";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import EditIcon from "@mui/icons-material/Edit";
@@ -95,12 +97,17 @@ function Ebupot2126DaftarPPh21() {
   const navigate = useNavigate();
   const [openMenuRekam, setOpenMenuRekam] = useState(false);
   const [kataKunciSearch, setKataKunciSearch] = useState("");
+  const [nomorBuktiSetor, setNomorBuktiSetor] = useState("");
+  const [identitas, setIdentitas] = useState("");
   const [pencairanBerdasarkan, setPencairanBerdasarkan] = useState("Periode");
   const [menuBuktiPotong, setMenuBuktiPotong] = useState("Bulanan");
 
   const [openLoading, setOpenLoading] = useState(false);
   const [ebupot2126DaftarPPh21Pagination, setEbupot2126DaftarPPh21Pagination] =
     useState([]);
+  const [ebupot2126DaftarPPh21Data, setEbupot2126DaftarPPh21Data] = useState(
+    []
+  );
   let [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [pages, setPages] = useState(0);
@@ -142,22 +149,28 @@ function Ebupot2126DaftarPPh21() {
       label: "Nomor Bukti Setor",
     },
     {
+      label: "Identitas",
+    },
+    {
       label: "Periode",
     },
   ];
 
-  // useEffect(() => {
-  //   getEbupot2126DaftarPPh21Data();
-  // }, [page, limit]);
+  useEffect(() => {
+    getEbupot2126DaftarPPh21Data();
+  }, [page, limit]);
 
   const getEbupot2126DaftarPPh21Data = async () => {
     let tempCondition = pencairanBerdasarkan.length !== 0;
     if (pencairanBerdasarkan === "Periode") {
       tempCondition =
         pencairanBerdasarkan.length !== 0 && masaTahunPajakSearch.length !== 0;
+    } else if (pencairanBerdasarkan === "Nomor Bukti Setor") {
+      tempCondition =
+        pencairanBerdasarkan.length !== 0 && nomorBuktiSetor.length !== 0;
     } else {
       tempCondition =
-        pencairanBerdasarkan.length !== 0 && kataKunciSearch.length !== 0;
+        pencairanBerdasarkan.length !== 0 && identitas.length !== 0;
     }
 
     if (tempCondition) {
@@ -165,20 +178,19 @@ function Ebupot2126DaftarPPh21() {
 
       setTimeout(async () => {
         const response = await axios.post(
-          `${tempUrl}/ebupot2126DaftarPPh21sByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
+          `${tempUrl}/eBupot2126Pph21sByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
           {
-            userEbupot2126DaftarPPh21Id: user.id,
+            userEBupot2126Pph21Id: user.id,
             pencairanBerdasarkan,
             masaTahunPajakSearch,
-            kataKunciSearch,
+            nomorBuktiSetor,
+            identitas,
             _id: user.id,
             token: user.token,
             kodeCabang: user.cabang.id,
           }
         );
-        setEbupot2126DaftarPPh21Pagination(
-          response.data.ebupot2126DaftarPPh21s
-        );
+        setEbupot2126DaftarPPh21Pagination(response.data.eBupot2126Pph21s);
         setPage(response.data.page);
         setPages(response.data.totalPage);
         setRows(response.data.totalRows);
@@ -187,10 +199,10 @@ function Ebupot2126DaftarPPh21() {
     }
   };
 
-  const deleteEbupot2126DaftarPPh21 = async (id) => {
+  const statusDeleteEBupot2126Pph21 = async (id) => {
     setOpenLoading(true);
     try {
-      await axios.post(`${tempUrl}/statusDeleteEbupot2126DaftarPPh21/${id}`, {
+      await axios.post(`${tempUrl}/statusDeleteEBupot2126Pph21/${id}`, {
         _id: user.id,
         token: user.token,
       });
@@ -205,6 +217,62 @@ function Ebupot2126DaftarPPh21() {
       }
     }
     setOpenLoading(false);
+  };
+
+  const deleteEBupot2126Pph21 = async (id) => {
+    // setOpenLoading(true);
+    try {
+      await axios.post(`${tempUrl}/deleteEBupot2126Pph21/${id}`, {
+        _id: user.id,
+        token: user.token,
+      });
+
+      // setTimeout(async () => {
+      //   getEbupot2126DaftarPPh21Data();
+      //   setOpenLoading(false);
+      // }, 500);
+    } catch (error) {
+      if (error.response.data.message.includes("foreign key")) {
+        // alert(`${namaKategoriKlu} tidak bisa dihapus karena sudah ada data!`);
+      }
+    }
+    // setOpenLoading(false);
+  };
+
+  const exportToExcel = (dataExcel) => {
+    // Create a new workbook
+    const wb = XLSX.utils.book_new();
+
+    // Convert your data to a worksheet
+    // const ws = XLSX.utils.json_to_sheet(eBupotUnifikasiPph42152223Data);
+    const ws = XLSX.utils.json_to_sheet(dataExcel);
+
+    // Append the worksheet to the workbook
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    // Generate Excel file and trigger a download
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(data, "EKSPOR_BUPOT_PPH21_BULANAN.xlsx");
+  };
+
+  const getEBupot2126Pph21AllData = async () => {
+    setOpenLoading(true);
+    const response = await axios.post(
+      `${tempUrl}/eBupot2126Pph21sByUserForExcel`,
+      {
+        userEBupot2126Pph21Id: user.id,
+        _id: user.id,
+        token: user.token,
+        kodeCabang: user.cabang.id,
+      }
+    );
+    setEbupot2126DaftarPPh21Data(response.data);
+
+    setTimeout(async () => {
+      setOpenLoading(false);
+      exportToExcel(response.data);
+    }, 500);
   };
 
   const inputContainer = {
@@ -353,7 +421,7 @@ function Ebupot2126DaftarPPh21() {
                   <div style={searchWrapper2}>
                     <div style={{ marginBottom: "5px" }}>Kata Kunci</div>
                     <div>
-                      {pencairanBerdasarkan === "Periode" ? (
+                      {pencairanBerdasarkan === "Periode" && (
                         <Autocomplete
                           size="small"
                           disablePortal
@@ -371,12 +439,21 @@ function Ebupot2126DaftarPPh21() {
                           }}
                           value={masaTahunPajakSearch}
                         />
-                      ) : (
+                      )}
+                      {pencairanBerdasarkan === "Nomor Bukti Setor" && (
                         <Form.Control
                           required
                           className="mb-3"
-                          value={kataKunciSearch}
-                          onChange={(e) => setKataKunciSearch(e.target.value)}
+                          value={nomorBuktiSetor}
+                          onChange={(e) => setNomorBuktiSetor(e.target.value)}
+                        />
+                      )}
+                      {pencairanBerdasarkan === "Identitas" && (
+                        <Form.Control
+                          required
+                          className="mb-3"
+                          value={identitas}
+                          onChange={(e) => setIdentitas(e.target.value)}
                         />
                       )}
                     </div>
@@ -462,7 +539,9 @@ function Ebupot2126DaftarPPh21() {
                   <div style={{ display: "flex", justifyContent: "end" }}>
                     <button
                       className="ekspor-bupot-button"
-                      // onClick={getEbupot2126DaftarPPh21Data}
+                      onClick={() => {
+                        getEBupot2126Pph21AllData();
+                      }}
                     >
                       <InsertDriveFileIcon
                         fontSize="small"
@@ -494,7 +573,11 @@ function Ebupot2126DaftarPPh21() {
                   <Box>
                     <ShowTableEbupot21Bulanan
                       currentPosts={ebupot2126DaftarPPh21Pagination}
-                      deleteFunction={deleteEbupot2126DaftarPPh21}
+                      deleteFunction={deleteEBupot2126Pph21}
+                      setOpenLoading={setOpenLoading}
+                      getEbupot2126DaftarPPh21Data={
+                        getEbupot2126DaftarPPh21Data
+                      }
                     />
                   </Box>
                   <Box sx={tableContainer}>
@@ -546,7 +629,7 @@ function Ebupot2126DaftarPPh21() {
                   <Box>
                     <ShowTableEbupot21FinalTidakFinal
                       currentPosts={ebupot2126DaftarPPh21Pagination}
-                      deleteFunction={deleteEbupot2126DaftarPPh21}
+                      deleteFunction={statusDeleteEBupot2126Pph21}
                     />
                   </Box>
                   <Box sx={tableContainer}>
@@ -598,7 +681,7 @@ function Ebupot2126DaftarPPh21() {
                   <Box>
                     <ShowTableEbupot21Tahunan
                       currentPosts={ebupot2126DaftarPPh21Pagination}
-                      deleteFunction={deleteEbupot2126DaftarPPh21}
+                      deleteFunction={statusDeleteEBupot2126Pph21}
                     />
                   </Box>
                   <Box sx={tableContainer}>

@@ -21,6 +21,7 @@ import {
   Ebupot2126,
   Ebupot2126DaftarPPh21,
   Ebupot2126InputPph21,
+  Ebupot2126UbahPph21,
   Ebupot2126DaftarPPh26,
   Ebupot2126ImporData,
   Ebupot2126DownloadBupot,
@@ -207,6 +208,14 @@ const App = () => {
             element={
               <USERRoute>
                 <Ebupot2126InputPph21 />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupot2126/buktiPotongPasal21/ubahRekam21/:id"
+            element={
+              <USERRoute>
+                <Ebupot2126UbahPph21 />
               </USERRoute>
             }
           />

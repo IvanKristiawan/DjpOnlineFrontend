@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useStateContext, tempUrl } from "../../../contexts/ContextProvider";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -180,10 +180,11 @@ const PetunjukPengisianComponent = () => {
   );
 };
 
-function Ebupot2126InputPph21() {
+function Ebupot2126UbahPph21() {
   const { screenSize } = useStateContext();
   const { user, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { id } = useParams();
 
   // 01.) Accordion 1
   let currentDate = new Date(); // Get the current date
@@ -329,11 +330,101 @@ function Ebupot2126InputPph21() {
     parseInt(pPhYangDipotongDipungut) > parseInt(jumlahPenghasilanBruto);
 
   useEffect(() => {
+    getEbupot2126UbahPph21ById();
     getObjekPajakData();
     getJenisObjekPajakData();
     getPtkpData();
     getPenandatangan();
   }, []);
+
+  const getEbupot2126UbahPph21ById = async () => {
+    setOpenSearchIdentitasWp(true);
+    const response = await axios.post(`${tempUrl}/eBupot2126Pph21s/${id}`, {
+      _id: user.id,
+      token: user.token,
+    });
+    // 01.) IDENTITAS WAJIB PAJAK YANG DIPOTONG
+    setTahunPajak(response.data.eBupot2126Pph21.tahunPajak);
+    setMasaPajak(response.data.eBupot2126Pph21.masaPajak);
+    setIdentitas(response.data.eBupot2126Pph21.identitas);
+    setNpwpNitku(response.data.eBupot2126Pph21.npwpNitku);
+    setNik(response.data.eBupot2126Pph21.nik);
+    setNama(response.data.eBupot2126Pph21.nama);
+    setAlamat(response.data.eBupot2126Pph21.alamat);
+
+    // Kondisi
+    setIsFasilitasValid(response.data.eBupot2126Pph21.isFasilitasValid);
+    setBupot2126SkemaPenghitungan(
+      response.data.eBupot2126Pph21.bupot2126SkemaPenghitungan
+    );
+    setBupot2126PtkpTahunan(response.data.eBupot2126Pph21.bupot2126PtkpTahunan);
+    setBupot2126JenisObjekPajak(
+      response.data.eBupot2126Pph21.bupot2126JenisObjekPajak
+    );
+    setBupot2126DasarPengenaanPajak(
+      response.data.eBupot2126Pph21.bupot2126DasarPengenaanPajak
+    );
+    setBupot2126DasarPengenaanPajakBebasInput(
+      response.data.eBupot2126Pph21.bupot2126DasarPengenaanPajakBebasInput
+    );
+    setBupot2126DasarPengenaanPajakAkumulasiPenghasilanBruto(
+      response.data.eBupot2126Pph21
+        .bupot2126DasarPengenaanPajakAkumulasiPenghasilanBruto
+    );
+    setBupot2126FormulasiPenghitungan(
+      response.data.eBupot2126Pph21.bupot2126FormulasiPenghitungan
+    );
+    setBupot2126FasilitasDtpIkn(
+      response.data.eBupot2126Pph21.bupot2126FasilitasDtpIkn
+    );
+
+    // 02.) JENIS PEMOTONGAN PPH PASAL 21
+    setKodeObjekPajak(
+      `${response.data.eBupot2126Pph21.objekpajak.kodeObjekPajak} - ${response.data.eBupot2126Pph21.objekpajak.namaObjekPajak}`
+    );
+    setFormulasiPenghitungan(
+      response.data.eBupot2126Pph21.formulasiPenghitungan
+    );
+    setNomorSuketDtpIkn(response.data.eBupot2126Pph21.nomorSuketDtpIkn);
+
+    // 03.) PENANDATANGAN BUKTI PEMOTONGAN
+    if (response.data.eBupot2126Pph21.jenisobjekpajak) {
+      setJenisObjekPajak(
+        `${response.data.eBupot2126Pph21.jenisobjekpajak.kodeJenisObjekPajak} - ${response.data.eBupot2126Pph21.jenisobjekpajak.namaJenisObjekPajak}`
+      );
+    }
+    setSkemaPenghitungan(response.data.eBupot2126Pph21.skemaPenghitungan);
+    setIsAkumulasiPenghasilanBrutoValid(
+      response.data.eBupot2126Pph21.isAkumulasiPenghasilanBrutoValid
+    );
+    setAkumulasiPenghasilanBruto(
+      response.data.eBupot2126Pph21.akumulasiPenghasilanBruto
+    );
+    setJumlahPenghasilan(response.data.eBupot2126Pph21.jumlahPenghasilan);
+    if (response.data.eBupot2126Pph21.ptkp) {
+      setPtkp(
+        `${response.data.eBupot2126Pph21.ptkp.namaPtkp} - ${response.data.eBupot2126Pph21.ptkp.jumlahPtkp}`
+      );
+    }
+    setDpp(response.data.eBupot2126Pph21.dpp);
+    setTarif(response.data.eBupot2126Pph21.tarif.toString().replace(".", ","));
+    setPPhYangDipotongDipungut(
+      response.data.eBupot2126Pph21.pPhYangDipotongDipungut
+    );
+
+    // 04.) PENANDATANGAN BUKTI PEMOTONGAN
+    setBertindakSebagai(
+      response.data.eBupot2126Pph21.ebupot2126penandatangan.bertindakSebagai
+    );
+    setNamaIdentitas(
+      response.data.eBupot2126Pph21.ebupot2126penandatangan.namaIdentitas
+    );
+    setTindakanKelebihanPemotonganPph(
+      response.data.eBupot2126Pph21.tindakanKelebihanPemotonganPph
+    );
+
+    setOpenSearchIdentitasWp(false);
+  };
 
   const getObjekPajakData = async () => {
     const response = await axios.post(`${tempUrl}/objekPajaksBupot2126`, {
@@ -828,17 +919,11 @@ function Ebupot2126InputPph21() {
     setOpenFoundIdentitasWp(false);
   };
 
-  const saveEbupot2126InputPph21 = async (e) => {
+  const updateEBupot2126Pph21 = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
     const handlingInput =
-      tahunPajak.length !== 0 &&
-      masaPajak.length !== 0 &&
-      npwpNitku.length >= 15 &&
-      nama.length !== 0 &&
-      alamat.length !== 0 &&
-      kodeObjekPajak.length !== 0 &&
       jumlahPenghasilan.length !== 0 &&
       tarif.length !== 0 &&
       pPhYangDipotongDipungut.length !== 0 &&
@@ -872,19 +957,11 @@ function Ebupot2126InputPph21() {
     if (handlingInput) {
       try {
         setOpenSearchIdentitasWp(true);
-        let savedEBupot2126Pph21 = await axios.post(
-          `${tempUrl}/saveEBupot2126Pph21`,
+        console.log(tarif);
+        let updatedEBupot2126Pph21 = await axios.post(
+          `${tempUrl}/updateEBupot2126Pph21/${id}`,
           {
             userId: user.id,
-
-            // 01.) IDENTITAS WAJIB PAJAK YANG DIPOTONG
-            tahunPajak,
-            masaPajak,
-            identitas,
-            npwpNitku,
-            nik,
-            nama,
-            alamat,
 
             // Kondisi
             isFasilitasValid,
@@ -898,15 +975,12 @@ function Ebupot2126InputPph21() {
             bupot2126FasilitasDtpIkn,
 
             // 02.) JENIS PEMOTONGAN PPH PASAL 21
-            kodeObjekPajak: kodeObjekPajak.split(" -", 2)[0],
             formulasiPenghitungan,
             nomorSuketDtpIkn,
 
             // 03.) PENANDATANGAN BUKTI PEMOTONGAN
             jenisObjekPajak:
-              jenisObjekPajak.length > 0
-                ? jenisObjekPajak.split(" ", 1)[0]
-                : null,
+              jenisObjekPajak.length > 0 && jenisObjekPajak.split(" ", 1)[0],
             skemaPenghitungan,
             isAkumulasiPenghasilanBrutoValid,
             akumulasiPenghasilanBruto,
@@ -929,16 +1003,18 @@ function Ebupot2126InputPph21() {
 
         setTimeout(async () => {
           setOpenSearchIdentitasWp(false);
-          setOpenSaved(true);
+          // setOpenSaved(true);
+          navigate("/ebupot2126/buktiPotongPasal21");
         }, 1000);
       } catch (error) {
+        console.log(error);
         alert(error.response.data.message);
       }
     }
     setValidated(true);
   };
 
-  const savedEbupot2126InputPph21 = async (e) => {
+  const savedEbupot2126UbahPph21 = async (e) => {
     setOpenSaved(false);
 
     setValidated(false);
@@ -1049,7 +1125,7 @@ function Ebupot2126InputPph21() {
               <Form
                 noValidate
                 validated={validated}
-                onSubmit={saveEbupot2126InputPph21}
+                onSubmit={updateEBupot2126Pph21}
               >
                 <div>
                   <div
@@ -1106,12 +1182,9 @@ function Ebupot2126InputPph21() {
                                   {...params}
                                 />
                               )}
-                              onInputChange={(e, value) => {
-                                setTahunPajak(value);
-                                findMasaPajakOptions(value);
-                              }}
                               inputValue={tahunPajak}
                               value={tahunPajak}
+                              disabled
                             />
                           </Col>
                         </Form.Group>
@@ -1143,19 +1216,9 @@ function Ebupot2126InputPph21() {
                                   {...params}
                                 />
                               )}
-                              onInputChange={(e, value) => {
-                                setMasaPajak(value);
-
-                                const month = getMonthIndex(value);
-                                const lastDate = getLastDateOfMonth(
-                                  tahunPajak,
-                                  month
-                                );
-                                setMaxMasaPajak(lastDate);
-                                setTanggalDokumen(lastDate);
-                              }}
                               inputValue={masaPajak}
                               value={masaPajak}
+                              disabled
                             />
                           </Col>
                         </Form.Group>
@@ -1179,8 +1242,8 @@ function Ebupot2126InputPph21() {
                                 name="NPWP/NITKU"
                                 value="NPWP/NITKU"
                                 checked={identitas === "NPWP/NITKU"}
-                                onChange={handleIdentitasChange}
                                 style={{ cursor: "pointer" }}
+                                disabled
                               />
                               <Form.Check
                                 type="radio"
@@ -1188,8 +1251,8 @@ function Ebupot2126InputPph21() {
                                 name="NIK"
                                 value="NIK"
                                 checked={identitas === "NIK"}
-                                onChange={handleIdentitasChange}
                                 style={inputRadio}
+                                disabled
                               />
                             </div>
                           </Col>
@@ -1209,18 +1272,7 @@ function Ebupot2126InputPph21() {
                               <Form.Control
                                 required
                                 value={npwpNitku}
-                                isInvalid={
-                                  npwpNitku.length > 0 && npwpNitku.length < 15
-                                }
-                                onChange={(e) => {
-                                  let value = e.target.value.replace(/\D/g, "");
-
-                                  if (value.length <= 22) {
-                                    setNpwpNitku(value);
-                                  }
-
-                                  setNama("");
-                                }}
+                                disabled
                               />
                               <Form.Control.Feedback type="invalid">
                                 {npwpNitku.length === 0
@@ -1251,19 +1303,7 @@ function Ebupot2126InputPph21() {
                               NIK
                             </Form.Label>
                             <Col sm="8">
-                              <Form.Control
-                                required
-                                value={nik}
-                                isInvalid={nik.length > 0 && nik.length < 16}
-                                onChange={(e) => {
-                                  let value = e.target.value.replace(/\D/g, "");
-
-                                  if (value.length <= 16) {
-                                    setNik(value);
-                                  }
-                                  setIsNikValid(false);
-                                }}
-                              />
+                              <Form.Control required value={nik} disabled />
                               <Form.Control.Feedback type="invalid">
                                 Isian belum lengkap.
                               </Form.Control.Feedback>
@@ -1285,7 +1325,7 @@ function Ebupot2126InputPph21() {
                                 Nama
                               </Form.Label>
                               <Col sm="8">
-                                <Form.Control value={nama} readOnly />
+                                <Form.Control value={nama} disabled />
                               </Col>
                             </Form.Group>
                           </div>
@@ -1303,15 +1343,7 @@ function Ebupot2126InputPph21() {
                                 Nama
                               </Form.Label>
                               <Col sm="8">
-                                <Form.Control
-                                  required
-                                  value={nama}
-                                  readOnly={identitas === "NPWP/NITKU" && true}
-                                  onChange={(e) => {
-                                    setNama(e.target.value.toUpperCase());
-                                    setIsNikValid(false);
-                                  }}
-                                />
+                                <Form.Control required value={nama} disabled />
                                 <Form.Control.Feedback type="invalid">
                                   Kolom ini diperlukan.
                                 </Form.Control.Feedback>
@@ -1373,7 +1405,7 @@ function Ebupot2126InputPph21() {
                                 Alamat
                               </Form.Label>
                               <Col sm="8">
-                                <Form.Control value={alamat} readOnly />
+                                <Form.Control value={alamat} disabled />
                               </Col>
                             </Form.Group>
                           </div>
@@ -1394,10 +1426,7 @@ function Ebupot2126InputPph21() {
                                 <Form.Control
                                   required
                                   value={alamat}
-                                  readOnly={identitas === "NPWP/NITKU" && true}
-                                  onChange={(e) => {
-                                    setAlamat(e.target.value.toUpperCase());
-                                  }}
+                                  disabled
                                 />
                                 <Form.Control.Feedback type="invalid">
                                   Kolom ini diperlukan.
@@ -1446,12 +1475,9 @@ function Ebupot2126InputPph21() {
                                 {...params}
                               />
                             )}
-                            onInputChange={(e, value) => {
-                              setKodeObjekPajak(value.split(" ", 1)[0]);
-                              findObjekPajakData(value.split(" ", 1)[0]);
-                            }}
                             inputValue={kodeObjekPajak}
                             value={kodeObjekPajak}
+                            disabled
                           />
                         </Col>
                       </Form.Group>
@@ -1690,7 +1716,7 @@ function Ebupot2126InputPph21() {
                                   {...params}
                                 />
                               )}
-                              onInputChange={(e, value) => {
+                              onChange={(e, value) => {
                                 setJenisObjekPajak(value);
                                 findJenisObjekPajakData(
                                   value.split(" ").slice(1).join(" ")
@@ -1763,7 +1789,7 @@ function Ebupot2126InputPph21() {
                                 thousandSeparator={"."}
                                 customInput={Form.Control}
                                 style={{ textAlign: "right" }}
-                                onValueChange={(values) => {
+                                onChange={(values) => {
                                   let tempValues = values.formattedValue
                                     .split(".")
                                     .join("")
@@ -1799,7 +1825,7 @@ function Ebupot2126InputPph21() {
                             thousandSeparator={"."}
                             customInput={Form.Control}
                             style={{ textAlign: "right" }}
-                            onValueChange={(values) => {
+                            onChange={(values) => {
                               let tempValues = values.formattedValue
                                 .split(".")
                                 .join("")
@@ -1935,7 +1961,7 @@ function Ebupot2126InputPph21() {
                                 thousandSeparator={"."}
                                 customInput={Form.Control}
                                 style={{ textAlign: "right" }}
-                                onValueChange={(values) => {
+                                onChange={(values) => {
                                   let tempValues = values.formattedValue
                                     .split(".")
                                     .join("")
@@ -2343,7 +2369,7 @@ function Ebupot2126InputPph21() {
             <button
               className="hover-button-no-icon"
               style={{ paddingLeft: "15px", paddingRight: "15px" }}
-              onClick={savedEbupot2126InputPph21}
+              onClick={savedEbupot2126UbahPph21}
             >
               Ya
             </button>
@@ -2354,7 +2380,7 @@ function Ebupot2126InputPph21() {
   );
 }
 
-export default Ebupot2126InputPph21;
+export default Ebupot2126UbahPph21;
 
 const accordionBlue = {
   backgroundColor: "#a1ccf7",

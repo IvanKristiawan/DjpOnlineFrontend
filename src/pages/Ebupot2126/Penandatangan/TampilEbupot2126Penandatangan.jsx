@@ -109,10 +109,6 @@ function TampilEbupot2126Penandatangan() {
   // Handle Bertindak Sebagai input change
   const handleBertindakSebagaiChange = (e) => {
     setBertindakSebagai(e.target.value);
-
-    if (e.target.value === "Kuasa") {
-      setJenisIdentitas("NPWP");
-    }
   };
 
   // Handle Jenis Identitas input change
@@ -198,15 +194,15 @@ function TampilEbupot2126Penandatangan() {
 
     setTimeout(async () => {
       const response = await axios.post(
-        `${tempUrl}/penandatangansByUserPagination?search_query=&page=${page}&limit=${limit}`,
+        `${tempUrl}/eBupot2126PenandatangansByUserPagination?search_query=&page=${page}&limit=${limit}`,
         {
-          userPenandatanganId: user.id,
+          userEBupot2126PenandatanganId: user.id,
           _id: user.id,
           token: user.token,
           kodeCabang: user.cabang.id,
         }
       );
-      setPenandatanganPagination(response.data.penandatangans);
+      setPenandatanganPagination(response.data.eBupot2126Penandatangans);
       setPage(response.data.page);
       setPages(response.data.totalPage);
       setRows(response.data.totalRows);
@@ -220,11 +216,11 @@ function TampilEbupot2126Penandatangan() {
 
       setTimeout(async () => {
         const response = await axios.post(
-          `${tempUrl}/penandatangansByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
+          `${tempUrl}/eBupot2126PenandatangansByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
           {
             pencairanBerdasarkan,
             kataKunciSearch,
-            userPenandatanganId: user.id,
+            userEBupot2126PenandatanganId: user.id,
             _id: user.id,
             token: user.token,
             kodeCabang: user.cabang.id,
@@ -249,7 +245,7 @@ function TampilEbupot2126Penandatangan() {
   const ubahStatusPenandatangan = async (id) => {
     setOpenLoading(true);
     try {
-      await axios.post(`${tempUrl}/updatePenandatanganStatus/${id}`, {
+      await axios.post(`${tempUrl}/updateEBupot2126PenandatanganStatus/${id}`, {
         _id: user.id,
         token: user.token,
       });
@@ -269,7 +265,7 @@ function TampilEbupot2126Penandatangan() {
   const deletePenandatangan = async (id) => {
     setOpenLoading(true);
     try {
-      await axios.post(`${tempUrl}/deletePenandatangan/${id}`, {
+      await axios.post(`${tempUrl}/deleteEBupot2126Penandatangan/${id}`, {
         _id: user.id,
         token: user.token,
       });
@@ -307,7 +303,7 @@ function TampilEbupot2126Penandatangan() {
       try {
         setOpenLoading(true);
         let savedPenandatangan = await axios.post(
-          `${tempUrl}/savePenandatangan`,
+          `${tempUrl}/saveEBupot2126Penandatangan`,
           {
             userId: user.id,
             bertindakSebagai,
@@ -464,15 +460,6 @@ function TampilEbupot2126Penandatangan() {
                               onChange={handleBertindakSebagaiChange}
                               style={{ cursor: "pointer" }}
                             />
-                            <Form.Check
-                              type="radio"
-                              label="Kuasa"
-                              name="Kuasa"
-                              value="Kuasa"
-                              checked={bertindakSebagai === "Kuasa"}
-                              onChange={handleBertindakSebagaiChange}
-                              style={inputRadio}
-                            />
                           </div>
                         </Col>
                       </Form.Group>
@@ -509,7 +496,6 @@ function TampilEbupot2126Penandatangan() {
                                 handleJenisIdentitasChange
                               }
                               style={inputRadio}
-                              disabled={bertindakSebagai === "Kuasa" && true}
                             />
                           </div>
                         </Col>
