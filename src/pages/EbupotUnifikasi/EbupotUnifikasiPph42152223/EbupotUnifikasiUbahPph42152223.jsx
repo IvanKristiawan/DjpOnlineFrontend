@@ -302,6 +302,7 @@ function EbupotUnifikasiUbahPph42152223() {
   const handleIdentitasChange = (e) => {
     setIdentitas(e.target.value);
     setNpwpNitku("");
+    setNik("");
     setNama("");
   };
 

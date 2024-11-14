@@ -294,6 +294,7 @@ function Ebupot2126UbahPph21() {
   const handleIdentitasChange = (e) => {
     setIdentitas(e.target.value);
     setNpwpNitku("");
+    setNik("");
     setNama("");
     setAlamat("");
   };

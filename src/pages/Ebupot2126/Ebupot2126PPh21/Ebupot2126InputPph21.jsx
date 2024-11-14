@@ -48,6 +48,7 @@ import {
   Pagination,
 } from "@mui/material";
 import { NumericFormat } from "react-number-format";
+import CachedIcon from "@mui/icons-material/Cached";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EditIcon from "@mui/icons-material/Edit";
 import CalculateIcon from "@mui/icons-material/Calculate";
@@ -293,6 +294,7 @@ function Ebupot2126InputPph21() {
   const handleIdentitasChange = (e) => {
     setIdentitas(e.target.value);
     setNpwpNitku("");
+    setNik("");
     setNama("");
     setAlamat("");
   };
@@ -799,9 +801,26 @@ function Ebupot2126InputPph21() {
     } else {
       setOpenSearchIdentitasWp(true);
 
-      setTimeout(async () => {
+      const response = await axios.post(
+        `${tempUrl}/eBupot2126Pph21ByNpwpNitku`,
+        {
+          userEBupot2126Pph21Id: user.id,
+          npwpNitku,
+          _id: user.id,
+          token: user.token,
+          kodeCabang: user.cabang.id,
+        }
+      );
+
+      if (response.data) {
+        setNama(response.data.nama);
+        setAlamat(response.data.alamat);
+      } else {
         setNama(getRandomIndonesianName());
         setAlamat(getRandomIndonesianLocation());
+      }
+
+      setTimeout(async () => {
         setOpenSearchIdentitasWp(false);
       }, 500);
     }
@@ -844,30 +863,6 @@ function Ebupot2126InputPph21() {
       pPhYangDipotongDipungut.length !== 0 &&
       bertindakSebagai.length !== 0 &&
       namaIdentitas.length !== 0;
-
-    // console.log(`tahunPajak.length !== 0: ${tahunPajak.length !== 0}`);
-    // console.log(`masaPajak.length !== 0: ${masaPajak.length !== 0}`);
-    // console.log(`npwpNitku.length >= 15: ${npwpNitku.length >= 15}`);
-    // console.log(`nama.length !== 0: ${nama.length !== 0}`);
-    // console.log(`alamat.length !== 0: ${alamat.length !== 0}`);
-    // console.log(`kodeObjekPajak.length !== 0: ${kodeObjekPajak.length !== 0}`);
-    // console.log(
-    //   `jumlahPenghasilan.length !== 0: ${
-    //     jumlahPenghasilan.length !== 0
-    //   }`
-    // );
-    // console.log(`tarif.length !== 0: ${tarif.length !== 0}`);
-    // console.log(
-    //   `pPhYangDipotongDipungut.length !== 0: ${
-    //     pPhYangDipotongDipungut.length !== 0
-    //   }`
-    // );
-    // console.log(
-    //   `bertindakSebagai.length !== 0: ${bertindakSebagai.length !== 0}`
-    // );
-    // console.log(`namaIdentitas.length !== 0: ${namaIdentitas.length !== 0}`);
-
-    // console.log(handlingInput);
 
     if (handlingInput) {
       try {
@@ -913,7 +908,7 @@ function Ebupot2126InputPph21() {
             jumlahPenghasilan,
             ptkp: ptkp.length > 0 && ptkp.split(" ")[0],
             dpp,
-            tarif: tarif.replace(",", "."),
+            tarif: tarif.toString().replace(",", "."),
             pPhYangDipotongDipungut,
 
             // 04.) PENANDATANGAN BUKTI PEMOTONGAN
@@ -932,6 +927,7 @@ function Ebupot2126InputPph21() {
           setOpenSaved(true);
         }, 1000);
       } catch (error) {
+        console.log(error);
         alert(error.response.data.message);
       }
     }
@@ -1040,6 +1036,18 @@ function Ebupot2126InputPph21() {
         </div>
         <div style={inputContainer}>
           <MenuEbupot2126 />
+          <div style={{ display: "flex", justifyContent: "end" }}>
+            <button
+              className="hover-button"
+              style={{ marginRight: "4px" }}
+              onClick={() => {
+                navigate("/ebupot2126/posting");
+              }}
+            >
+              <CachedIcon fontSize="small" style={{ marginRight: "4px" }} />
+              Posting
+            </button>
+          </div>
           <Card style={{ marginTop: "20px" }}>
             <Card.Header style={inputTitle}>
               <EditIcon style={{ marginRight: "10px" }} />
@@ -2099,7 +2107,7 @@ function Ebupot2126InputPph21() {
                     <div>
                       <Form.Check
                         type="checkbox"
-                        label="Dengan ini saya menyatakan bahwa Bukti Pemotongan/Pemunguran Unifikasi telah saya isi dengan benar dan telah saya tandatangani secara elektronik."
+                        label="Dengan ini saya menyatakan bahwa Bukti Pemotongan PPh Pasal 21/26 telah saya isi dengan benar dan telah saya tandatangani secara elektronik."
                         checked={pernyataanBenar}
                         onChange={() => setPernyataanBenar(!pernyataanBenar)}
                       />
