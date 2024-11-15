@@ -25,6 +25,8 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 import CachedIcon from "@mui/icons-material/Cached";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import EditIcon from "@mui/icons-material/Edit";
@@ -86,7 +88,13 @@ function Ebupot2126DaftarPPh26() {
   const { user, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
   const [kataKunciSearch, setKataKunciSearch] = useState("");
+  const [nomorBuktiSetor, setNomorBuktiSetor] = useState("");
+  const [identitas, setIdentitas] = useState("");
   const [pencairanBerdasarkan, setPencairanBerdasarkan] = useState("Periode");
+
+  const [ebupot2126DaftarPPh26Data, setEbupot2126DaftarPPh26Data] = useState(
+    []
+  );
 
   const [openLoading, setOpenLoading] = useState(false);
   const [ebupot2126DaftarPPh26Pagination, setEbupot2126DaftarPPh26Pagination] =
@@ -132,22 +140,28 @@ function Ebupot2126DaftarPPh26() {
       label: "Nomor Bukti Setor",
     },
     {
+      label: "Identitas",
+    },
+    {
       label: "Periode",
     },
   ];
 
-  // useEffect(() => {
-  //   getEbupot2126DaftarPPh26Data();
-  // }, [page, limit]);
+  useEffect(() => {
+    getEbupot2126DaftarPPh26Data();
+  }, [page, limit]);
 
   const getEbupot2126DaftarPPh26Data = async () => {
     let tempCondition = pencairanBerdasarkan.length !== 0;
     if (pencairanBerdasarkan === "Periode") {
       tempCondition =
         pencairanBerdasarkan.length !== 0 && masaTahunPajakSearch.length !== 0;
+    } else if (pencairanBerdasarkan === "Nomor Bukti Setor") {
+      tempCondition =
+        pencairanBerdasarkan.length !== 0 && nomorBuktiSetor.length !== 0;
     } else {
       tempCondition =
-        pencairanBerdasarkan.length !== 0 && kataKunciSearch.length !== 0;
+        pencairanBerdasarkan.length !== 0 && identitas.length !== 0;
     }
 
     if (tempCondition) {
@@ -155,20 +169,19 @@ function Ebupot2126DaftarPPh26() {
 
       setTimeout(async () => {
         const response = await axios.post(
-          `${tempUrl}/ebupot2126DaftarPPh26sByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
+          `${tempUrl}/ebupot2126PPh26sByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
           {
-            userEbupot2126DaftarPPh26Id: user.id,
+            userEBupot2126Pph26Id: user.id,
             pencairanBerdasarkan,
             masaTahunPajakSearch,
-            kataKunciSearch,
+            nomorBuktiSetor,
+            identitas,
             _id: user.id,
             token: user.token,
             kodeCabang: user.cabang.id,
           }
         );
-        setEbupot2126DaftarPPh26Pagination(
-          response.data.ebupot2126DaftarPPh26s
-        );
+        setEbupot2126DaftarPPh26Pagination(response.data.eBupot2126Pph26s);
         setPage(response.data.page);
         setPages(response.data.totalPage);
         setRows(response.data.totalRows);
@@ -177,24 +190,60 @@ function Ebupot2126DaftarPPh26() {
     }
   };
 
-  const deleteEbupot2126DaftarPPh26 = async (id) => {
-    setOpenLoading(true);
+  const deleteEbupot2126PPh26 = async (id) => {
+    // setOpenLoading(true);
     try {
-      await axios.post(`${tempUrl}/statusDeleteEbupot2126DaftarPPh26/${id}`, {
+      await axios.post(`${tempUrl}/deleteEBupot2126Pph26/${id}`, {
         _id: user.id,
         token: user.token,
       });
 
-      setTimeout(async () => {
-        getEbupot2126DaftarPPh26Data();
-        setOpenLoading(false);
-      }, 500);
+      // setTimeout(async () => {
+      //   getEbupot2126DaftarPPh26Data();
+      //   setOpenLoading(false);
+      // }, 500);
     } catch (error) {
       if (error.response.data.message.includes("foreign key")) {
         // alert(`${namaKategoriKlu} tidak bisa dihapus karena sudah ada data!`);
       }
     }
-    setOpenLoading(false);
+    // setOpenLoading(false);
+  };
+
+  const exportToExcel = (dataExcel) => {
+    // Create a new workbook
+    const wb = XLSX.utils.book_new();
+
+    // Convert your data to a worksheet
+    // const ws = XLSX.utils.json_to_sheet(eBupotUnifikasiPph42152223Data);
+    const ws = XLSX.utils.json_to_sheet(dataExcel);
+
+    // Append the worksheet to the workbook
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    // Generate Excel file and trigger a download
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(data, "EKSPOR_BUPOT_PPH26_SPT21.xlsx");
+  };
+
+  const getEBupot2126Pph26AllData = async () => {
+    setOpenLoading(true);
+    const response = await axios.post(
+      `${tempUrl}/eBupot2126Pph26sByUserForExcel`,
+      {
+        userEBupot2126Pph26Id: user.id,
+        _id: user.id,
+        token: user.token,
+        kodeCabang: user.cabang.id,
+      }
+    );
+    setEbupot2126DaftarPPh26Data(response.data);
+
+    setTimeout(async () => {
+      setOpenLoading(false);
+      exportToExcel(response.data);
+    }, 500);
   };
 
   const inputContainer = {
@@ -318,7 +367,7 @@ function Ebupot2126DaftarPPh26() {
                   <div style={searchWrapper2}>
                     <div style={{ marginBottom: "5px" }}>Kata Kunci</div>
                     <div>
-                      {pencairanBerdasarkan === "Periode" ? (
+                      {pencairanBerdasarkan === "Periode" && (
                         <Autocomplete
                           size="small"
                           disablePortal
@@ -336,12 +385,21 @@ function Ebupot2126DaftarPPh26() {
                           }}
                           value={masaTahunPajakSearch}
                         />
-                      ) : (
+                      )}
+                      {pencairanBerdasarkan === "Nomor Bukti Setor" && (
                         <Form.Control
                           required
                           className="mb-3"
-                          value={kataKunciSearch}
-                          onChange={(e) => setKataKunciSearch(e.target.value)}
+                          value={nomorBuktiSetor}
+                          onChange={(e) => setNomorBuktiSetor(e.target.value)}
+                        />
+                      )}
+                      {pencairanBerdasarkan === "Identitas" && (
+                        <Form.Control
+                          required
+                          className="mb-3"
+                          value={identitas}
+                          onChange={(e) => setIdentitas(e.target.value)}
                         />
                       )}
                     </div>
@@ -371,7 +429,9 @@ function Ebupot2126DaftarPPh26() {
               >
                 <button
                   className="ekspor-bupot-button"
-                  // onClick={getEbupot2126DaftarPPh26Data}
+                  onClick={() => {
+                    getEBupot2126Pph26AllData();
+                  }}
                 >
                   <InsertDriveFileIcon
                     fontSize="small"
@@ -403,7 +463,9 @@ function Ebupot2126DaftarPPh26() {
               <Box>
                 <ShowTableEbupot26
                   currentPosts={ebupot2126DaftarPPh26Pagination}
-                  deleteFunction={deleteEbupot2126DaftarPPh26}
+                  deleteFunction={deleteEbupot2126PPh26}
+                  setOpenLoading={setOpenLoading}
+                  getEbupot2126DaftarPPh21Data={getEbupot2126DaftarPPh26Data}
                 />
               </Box>
               <Box sx={tableContainer}>

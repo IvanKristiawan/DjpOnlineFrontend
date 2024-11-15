@@ -6441,7 +6441,9 @@ export function ShowTableEbupot21Tahunan({
             {user.jumlahPenghasilan.toLocaleString("de-DE")}
           </TableCell>
           <TableCell style={dataStyle}>
-            {user.pph21KurangLebihBayarMasaPajakTerakhir.toLocaleString("de-DE")}
+            {user.pph21KurangLebihBayarMasaPajakTerakhir.toLocaleString(
+              "de-DE"
+            )}
           </TableCell>
           <TableCell style={dataStyle}>{user.user.npwp15}</TableCell>
           <TableCell style={dataStyle}>
@@ -6543,7 +6545,9 @@ export function ShowTableEbupot21Tahunan({
                 className="hover-button-no-icon"
                 style={{ paddingLeft: "15px", paddingRight: "15px" }}
                 onClick={() => {
-                  navigate(`/ebupot2126/buktiPotongPasal21/ubahRekam21Tahunan/${id}`);
+                  navigate(
+                    `/ebupot2126/buktiPotongPasal21/ubahRekam21Tahunan/${id}`
+                  );
                 }}
               >
                 Ya
@@ -7198,12 +7202,20 @@ export function ShowTableEbupot21Tahunan({
 //   );
 // }
 
-export function ShowTableEbupot26({ currentPosts, deleteFunction }) {
+export function ShowTableEbupot26({
+  currentPosts,
+  deleteFunction,
+  setOpenLoading,
+  getEbupot2126DaftarPPh21Data,
+}) {
   let navigate = useNavigate();
   const classes = useStyles();
+  const [selectedRows, setSelectedRows] = useState([]);
   const [id, setId] = useState("");
   const [openConfirmationEdit, setOpenConfirmationEdit] = useState(false);
   const [openConfirmationDelete, setOpenConfirmationDelete] = useState(false);
+  const [openConfirmationDeleteMany, setOpenConfirmationDeleteMany] =
+    useState(false);
 
   const handleClickOpenConfirmationEdit = (id) => {
     setOpenConfirmationEdit(true);
@@ -7223,6 +7235,15 @@ export function ShowTableEbupot26({ currentPosts, deleteFunction }) {
     setOpenConfirmationDelete(false);
   };
 
+  const handleClickOpenConfirmationDeleteMany = (id) => {
+    setOpenConfirmationDeleteMany(true);
+    setId(id);
+  };
+
+  const handleCloseConfirmationDeleteMany = () => {
+    setOpenConfirmationDeleteMany(false);
+  };
+
   const dataStyle = {
     fontWeight: 700,
   };
@@ -7235,10 +7256,42 @@ export function ShowTableEbupot26({ currentPosts, deleteFunction }) {
     marginLeft: "5px",
   };
 
+  const statusWrapper = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  };
+
+  const statusTextStyle = {
+    display: "inline",
+    margin: 0,
+    padding: 0,
+  };
+
   const textDataStyle = {
     fontWeight: "bold",
     textAlign: "center",
   };
+
+  // Handle Select All Checkbox
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelectedRows(currentPosts.map((post) => post.id)); // Select all rows
+    } else {
+      setSelectedRows([]); // Deselect all rows
+    }
+  };
+
+  // Handle Individual Row Checkbox
+  const handleRowSelect = (id) => {
+    if (selectedRows.includes(id)) {
+      setSelectedRows(selectedRows.filter((rowId) => rowId !== id)); // Deselect row
+    } else {
+      setSelectedRows([...selectedRows, id]); // Select row
+    }
+  };
+
+  const isRowSelected = (id) => selectedRows.includes(id); // Check if a row is selected
 
   const renderTooltipLihat = (props) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -7258,207 +7311,285 @@ export function ShowTableEbupot26({ currentPosts, deleteFunction }) {
     </Tooltip>
   );
 
-  const renderTooltipEmail = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-      <div>Kirim Email</div>
-    </Tooltip>
-  );
+  let dataTable = currentPosts.map((user, index) => {
+    let showStatusPosting = <></>;
+    if (user.isPost) {
+      showStatusPosting = (
+        <div
+          style={{
+            backgroundColor: "#1dc9b7",
+            color: "white",
+            borderRadius: "5px",
+            display: "inline-block",
+            padding: "2px 10px",
+            textAlign: "center",
+            whiteSpace: "nowrap", // Prevent the text from wrapping
+            overflow: "hidden", // Hide overflowed text
+            textOverflow: "ellipsis", // Add "..." if the text overflows
+          }}
+        >
+          <p style={statusTextStyle}>Sudah Posting</p>
+        </div>
+      );
+    } else {
+      showStatusPosting = (
+        <div
+          style={{
+            backgroundColor: "#ffb822",
+            color: "white",
+            borderRadius: "5px",
+            display: "inline-block",
+            padding: "2px 10px",
+            textAlign: "center",
+            whiteSpace: "nowrap", // Prevent the text from wrapping
+            overflow: "hidden", // Hide overflowed text
+            textOverflow: "ellipsis", // Add "..." if the text overflows
+          }}
+        >
+          <p style={statusTextStyle}>Belum Posting</p>
+        </div>
+      );
+    }
 
-  let dataTable = currentPosts.map((user, index) => (
-    <>
-      <TableRow
-        key={user.id}
-        sx={{
-          "&:last-child td, &:last-child th": { border: 0 },
-        }}
-      >
-        <TableCell component="th" scope="row" style={dataStyle}>
-          {user.ebilling.masaPajakDariBulan}
-        </TableCell>
-        <TableCell style={dataStyle}>
-          {user.objekpajak.kodeObjekPajak}
-        </TableCell>
-        <TableCell style={dataStyle}>{user.nomorBuktiSetor}</TableCell>
-        <TableCell style={dataStyle}>
-          {user.jumlahPenghasilanBruto.toLocaleString("de-DE")}
-        </TableCell>
-        <TableCell style={dataStyle}>
-          {user.ebilling.jumlahSetor.toLocaleString("de-DE")}
-        </TableCell>
-        <TableCell style={aksiButtonWrapper}>
-          <OverlayTrigger
-            placement="bottom"
-            delay={{ show: 250, hide: 50 }}
-            overlay={renderTooltipLihat}
-          >
-            <button className="aksi-button" disabled={user.isHapus === true}>
-              <RemoveRedEyeIcon fontSize="small" />
-            </button>
-          </OverlayTrigger>
-          <OverlayTrigger
-            placement="bottom"
-            delay={{ show: 250, hide: 50 }}
-            overlay={renderTooltipEdit}
-          >
-            <button
-              className="aksi-button"
-              disabled={user.isHapus === true}
-              style={aksiButtonStyle}
-              onClick={() => {
-                handleClickOpenConfirmationEdit(user.id);
-              }}
+    let showStatusHapus = <></>;
+    if (user.isHapus) {
+      showStatusHapus = (
+        <div
+          style={{
+            backgroundColor: "#282a3c",
+            color: "white",
+            borderRadius: "5px",
+            display: "inline-block",
+            padding: "2px 10px",
+            textAlign: "center",
+          }}
+        >
+          <p style={statusTextStyle}>Dihapus</p>
+        </div>
+      );
+    } else {
+      showStatusHapus = (
+        <div
+          style={{
+            backgroundColor: "#ccc",
+            borderRadius: "5px",
+            display: "inline-block",
+            padding: "2px 10px",
+            textAlign: "center",
+          }}
+        >
+          <p style={statusTextStyle}>Normal</p>
+        </div>
+      );
+    }
+
+    return (
+      <>
+        <TableRow
+          key={user.id}
+          sx={{
+            "&:last-child td, &:last-child th": { border: 0 },
+          }}
+        >
+          <TableCell component="th" scope="row" style={dataStyle}>
+            <Form.Check
+              type="checkbox"
+              checked={isRowSelected(user.id)}
+              onChange={() => handleRowSelect(user.id)}
+            />
+          </TableCell>
+          <TableCell style={dataStyle}>
+            {user.bulanPajak} - {user.tahunPajak}
+          </TableCell>
+          <TableCell style={dataStyle}>
+            {user.objekpajak.kodeObjekPajak}
+          </TableCell>
+          <TableCell style={dataStyle}>{user.nomorBuktiSetor}</TableCell>
+          <TableCell style={dataStyle}>{user.tinPasporKitasKitap}</TableCell>
+          <TableCell style={dataStyle}>{user.nama}</TableCell>
+          <TableCell style={dataStyle}>
+            {user.jumlahPenghasilanBruto.toLocaleString("de-DE")}
+          </TableCell>
+          <TableCell style={dataStyle}>
+            {user.pPhYangDipotongDipungut.toLocaleString("de-DE")}
+          </TableCell>
+          <TableCell style={dataStyle}>{user.user.npwp15}</TableCell>
+          <TableCell style={dataStyle}>
+            <div style={statusWrapper}>
+              <div>{showStatusPosting}</div>
+              <div>{showStatusHapus}</div>
+            </div>
+          </TableCell>
+          <TableCell style={aksiButtonWrapper}>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipLihat}
             >
-              <EditIcon fontSize="small" />
-            </button>
-          </OverlayTrigger>
-          <OverlayTrigger
-            placement="bottom"
-            delay={{ show: 250, hide: 50 }}
-            overlay={renderTooltipDelete}
-          >
-            <button
-              className="aksi-button"
-              disabled={user.isHapus === true}
-              style={aksiButtonStyle}
-              onClick={() => {
-                handleClickOpenConfirmationDelete(user.id);
-              }}
+              <button className="aksi-button" disabled={user.isHapus === true}>
+                <RemoveRedEyeIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipEdit}
             >
-              <DeleteIcon fontSize="small" />
-            </button>
-          </OverlayTrigger>
-          <OverlayTrigger
-            placement="bottom"
-            delay={{ show: 250, hide: 50 }}
-            overlay={renderTooltipEmail}
-          >
-            <button
-              className="aksi-button"
-              disabled={user.isHapus === true}
-              style={aksiButtonStyle}
+              <button
+                className="aksi-button"
+                disabled={user.isHapus === true}
+                style={aksiButtonStyle}
+                onClick={() => {
+                  handleClickOpenConfirmationEdit(user.id);
+                }}
+              >
+                <EditIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipDelete}
             >
-              <EmailIcon fontSize="small" />
-            </button>
-          </OverlayTrigger>
-        </TableCell>
-      </TableRow>
-      <Dialog
-        open={openConfirmationEdit}
-        onClose={handleCloseConfirmationEdit}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        maxWidth={"xs"}
-      >
-        <div style={{ padding: "30px" }}>
-          <DialogTitle id="alert-dialog-title">
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                textAlign: "center",
-              }}
-            >
+              <button
+                className="aksi-button"
+                disabled={user.isHapus === true}
+                style={aksiButtonStyle}
+                onClick={() => {
+                  handleClickOpenConfirmationDelete(user.id);
+                }}
+              >
+                <DeleteIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+          </TableCell>
+        </TableRow>
+        <Dialog
+          open={openConfirmationEdit}
+          onClose={handleCloseConfirmationEdit}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          maxWidth={"xs"}
+        >
+          <div style={{ padding: "30px" }}>
+            <DialogTitle id="alert-dialog-title">
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "center",
+                  flexDirection: "column",
+                  textAlign: "center",
                 }}
               >
-                <HelpOutlineIcon color="primary" sx={{ fontSize: 80 }} />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <HelpOutlineIcon color="primary" sx={{ fontSize: 80 }} />
+                </div>
+                <b>Ubah Bukti Potong</b>
               </div>
-              <b>Ubah Bukti Potong</b>
-            </div>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Apakah Anda yakin akan mengubah Bukti Potong?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <Button
-              variant="warning"
-              style={{ paddingTop: "10px" }}
-              onClick={handleCloseConfirmationEdit}
-            >
-              Tidak
-            </Button>
-            <button
-              className="hover-button-no-icon"
-              style={{ paddingLeft: "15px", paddingRight: "15px" }}
-              onClick={() => {
-                navigate(`/ebupotUnifikasi/ubahDisetorSendiri/${id}`);
-              }}
-            >
-              Ya
-            </button>
-          </DialogActions>
-        </div>
-      </Dialog>
-      <Dialog
-        open={openConfirmationDelete}
-        onClose={handleCloseConfirmationDelete}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        maxWidth={"xs"}
-      >
-        <div style={{ padding: "30px" }}>
-          <DialogTitle id="alert-dialog-title">
-            <div
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Apakah Anda yakin akan mengubah Bukti Potong?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions
               style={{
                 display: "flex",
-                flexDirection: "column",
-                textAlign: "center",
+                justifyContent: "center",
               }}
             >
+              <Button
+                variant="warning"
+                style={{ paddingTop: "10px" }}
+                onClick={handleCloseConfirmationEdit}
+              >
+                Tidak
+              </Button>
+              <button
+                className="hover-button-no-icon"
+                style={{ paddingLeft: "15px", paddingRight: "15px" }}
+                onClick={() => {
+                  navigate(`/ebupot2126/buktiPotongPasal26/ubahRekam26/${id}`);
+                }}
+              >
+                Ya
+              </button>
+            </DialogActions>
+          </div>
+        </Dialog>
+        <Dialog
+          open={openConfirmationDelete}
+          onClose={handleCloseConfirmationDelete}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          maxWidth={"xs"}
+        >
+          <div style={{ padding: "30px" }}>
+            <DialogTitle id="alert-dialog-title">
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "center",
+                  flexDirection: "column",
+                  textAlign: "center",
                 }}
               >
-                <HelpOutlineIcon color="primary" sx={{ fontSize: 80 }} />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <HelpOutlineIcon color="primary" sx={{ fontSize: 80 }} />
+                </div>
+                <b>Hapus Bukti Potong</b>
               </div>
-              <b>Hapus Bukti Potong</b>
-            </div>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Apakah Anda yakin akan menghapus Bukti Potong?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <Button
-              variant="warning"
-              style={{ paddingTop: "10px" }}
-              onClick={handleCloseConfirmationDelete}
-            >
-              Tidak
-            </Button>
-            <button
-              className="hover-button-no-icon"
-              style={{ paddingLeft: "15px", paddingRight: "15px" }}
-              onClick={() => {
-                deleteFunction(id);
-                setOpenConfirmationDelete(false);
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Apakah Anda yakin akan menghapus Bukti Potong?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions
+              style={{
+                display: "flex",
+                justifyContent: "center",
               }}
             >
-              Ya
-            </button>
-          </DialogActions>
-        </div>
-      </Dialog>
-    </>
-  ));
+              <Button
+                variant="warning"
+                style={{ paddingTop: "10px" }}
+                onClick={handleCloseConfirmationDelete}
+              >
+                Tidak
+              </Button>
+              <button
+                className="hover-button-no-icon"
+                style={{ paddingLeft: "15px", paddingRight: "15px" }}
+                onClick={() => {
+                  setOpenLoading(true);
+
+                  deleteFunction(id);
+                  setOpenConfirmationDelete(false);
+
+                  setSelectedRows([]);
+                  setTimeout(async () => {
+                    getEbupot2126DaftarPPh21Data();
+                    setOpenLoading(false);
+                  }, 500);
+                }}
+              >
+                Ya
+              </button>
+            </DialogActions>
+          </div>
+        </Dialog>
+      </>
+    );
+  });
 
   if (currentPosts.length === 0) {
     dataTable = (
@@ -7472,6 +7603,25 @@ export function ShowTableEbupot26({ currentPosts, deleteFunction }) {
 
   return (
     <>
+      {selectedRows.length > 0 && (
+        <div
+          style={{ color: "#fd397a", display: "flex", marginBottom: "20px" }}
+        >
+          <p style={{ paddingTop: "10px" }}>
+            <b>Item Terpilih {selectedRows.length} item:</b>
+          </p>
+          <button
+            style={{ marginLeft: "10px" }}
+            className="delete-all-button"
+            onClick={() => {
+              handleClickOpenConfirmationDeleteMany();
+            }}
+          >
+            <DeleteIcon fontSize="small" style={{ marginRight: "5px" }} />
+            <b>Hapus Item Terpilih</b>
+          </button>
+        </div>
+      )}
       <TableContainer component={Paper} sx={{ width: "100%" }}>
         <Table aria-label="simple table">
           <TableHead className={classes.root}>
@@ -7482,9 +7632,8 @@ export function ShowTableEbupot26({ currentPosts, deleteFunction }) {
               >
                 <Form.Check
                   type="checkbox"
-                  label=""
-                  // checked={pbb}
-                  // onChange={() => setPbb(!pbb)}
+                  checked={selectedRows.length === currentPosts.length}
+                  onChange={handleSelectAll}
                 />
               </TableCell>
               <TableCell
@@ -7552,6 +7701,99 @@ export function ShowTableEbupot26({ currentPosts, deleteFunction }) {
           <TableBody>{dataTable}</TableBody>
         </Table>
       </TableContainer>
+      <Dialog
+        open={openConfirmationDeleteMany}
+        onClose={handleCloseConfirmationDeleteMany}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        maxWidth={"xs"}
+      >
+        <div style={{ padding: "30px" }}>
+          <DialogTitle id="alert-dialog-title">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <ErrorOutlineIcon color="warning" sx={{ fontSize: 80 }} />
+              </div>
+              <b>Perhatian!</b>
+            </div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <div style={{ textAlign: "center" }}>
+                <p>
+                  Penghapusan Bukti Potong dalam jumlah banyak dilakukan secara
+                  batch dengan memperhatikan :
+                </p>
+                <ol>
+                  <li>
+                    bukti potong yang sudah masuk pada SPT dan sudah dilaporkan
+                    tidak dapat dihapus, melainkan dibatalkan satu per satu
+                  </li>
+                  <li>
+                    penghapusan bukti potong secara batch dilakukan secara
+                    antrian layaknya impor bupot
+                  </li>
+                  <li>
+                    bukti potong yang sudah terhapus maka tidak ditampilkan,
+                    sedangkan bukti potong yang gagal terhapus akan tetap
+                    ditampilkan
+                  </li>
+                  <li>
+                    Request hapus bupot yang sudah diajukan tidak dapat
+                    dibatalkan
+                  </li>
+                </ol>
+              </div>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              variant="warning"
+              style={{ paddingTop: "10px" }}
+              onClick={handleCloseConfirmationDeleteMany}
+            >
+              Batal
+            </Button>
+            <button
+              className="hover-button-no-icon"
+              style={{ paddingLeft: "15px", paddingRight: "15px" }}
+              onClick={() => {
+                setOpenLoading(true);
+                // console.log(selectedRows);
+                for (let id of selectedRows) {
+                  // console.log(id);
+                  deleteFunction(id);
+                }
+                setOpenConfirmationDeleteMany(false);
+
+                setSelectedRows([]);
+                setTimeout(async () => {
+                  getEbupot2126DaftarPPh21Data();
+                  setOpenLoading(false);
+                }, 500);
+              }}
+            >
+              Ok
+            </button>
+          </DialogActions>
+        </div>
+      </Dialog>
     </>
   );
 }
