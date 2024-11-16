@@ -240,9 +240,9 @@ function Ebupot2126ImporData() {
       // Process Data
       console.log("File name:", file.name);
       console.log(sheetsData["Rekap"]);
-      console.log(sheetsData["42152223"]);
-      console.log(sheetsData["NR"]);
-      console.log(sheetsData["Dasar Pemotongan"]);
+      console.log(sheetsData["21"]);
+      console.log(sheetsData["26"]);
+      console.log(sheetsData["A1"]);
       console.log(sheetsData);
     };
 
@@ -264,8 +264,8 @@ function Ebupot2126ImporData() {
   };
 
   const [
-    eBupotUnifikasiImporDataPagination,
-    setEBupotUnifikasiImporDataPagination,
+    eBupot2126ImporDataBulananPagination,
+    setEBupot2126ImporDataBulananPagination,
   ] = useState([]);
   let [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -278,30 +278,36 @@ function Ebupot2126ImporData() {
   };
 
   const [
-    eBupotUnifikasiDetilValidasiPagination,
-    setEBupotUnifikasiDetilValidasiPagination,
+    eBupot2126ImporDataTahunanPagination,
+    setEBupot2126ImporDataTahunanPagination,
   ] = useState([]);
-  let [pageEBupotUnifikasiDetilValidasi, setPageEBupotUnifikasiDetilValidasi] =
-    useState(0);
-  const [
-    limitEBupotUnifikasiDetilValidasi,
-    setLimitEBupotUnifikasiDetilValidasi,
-  ] = useState(10);
-  const [
-    pagesEBupotUnifikasiDetilValidasi,
-    setPagesEBupotUnifikasiDetilValidasi,
-  ] = useState(0);
-  const [
-    rowsEBupotUnifikasiDetilValidasi,
-    setRowsEBupotUnifikasiDetilValidasi,
-  ] = useState(0);
-  const [
-    queryEBupotUnifikasiDetilValidasi,
-    setQueryEBupotUnifikasiDetilValidasi,
-  ] = useState("");
+  let [pageTahunan, setPageTahunan] = useState(0);
+  const [limitTahunan, setLimitTahunan] = useState(10);
+  const [pagesTahunan, setPagesTahunan] = useState(0);
+  const [rowsTahunan, setRowsTahunan] = useState(0);
+  const [queryTahunan, setQueryTahunan] = useState("");
 
-  const handleChangeEBupotUnifikasiDetilValidasi = (e, p) => {
-    setPageEBupotUnifikasiDetilValidasi(p - 1);
+  const handleChangeTahunan = (e, p) => {
+    setPageTahunan(p - 1);
+  };
+
+  const [
+    eBupot2126DetilValidasiPagination,
+    setEBupot2126DetilValidasiPagination,
+  ] = useState([]);
+  let [pageEBupot2126DetilValidasi, setPageEBupot2126DetilValidasi] =
+    useState(0);
+  const [limitEBupot2126DetilValidasi, setLimitEBupot2126DetilValidasi] =
+    useState(10);
+  const [pagesEBupot2126DetilValidasi, setPagesEBupot2126DetilValidasi] =
+    useState(0);
+  const [rowsEBupot2126DetilValidasi, setRowsEBupot2126DetilValidasi] =
+    useState(0);
+  const [queryEBupot2126DetilValidasi, setQueryEBupot2126DetilValidasi] =
+    useState("");
+
+  const handleChangeEBupot2126DetilValidasi = (e, p) => {
+    setPageEBupot2126DetilValidasi(p - 1);
   };
 
   const [openSaved, setOpenSaved] = useState(false);
@@ -345,24 +351,26 @@ function Ebupot2126ImporData() {
     setOpenConfirmationSaved(false);
   };
 
-  // useEffect(() => {
-  //   getEBupotUnifikasiImporData();
-  // }, [page, limit]);
+  useEffect(() => {
+    getEBupot2126ImporDataBulanan();
+  }, [page, limit]);
 
-  const getEBupotUnifikasiImporData = async () => {
+  useEffect(() => {
+    getEBupot2126ImporDataTahunan();
+  }, [pageTahunan, limitTahunan]);
+
+  const getEBupot2126ImporDataBulanan = async () => {
     setOpenLoadingImporData(true);
     const response = await axios.post(
-      `${tempUrl}/eBupotUnifikasiImporDatasByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
+      `${tempUrl}/eBupot2126ImporDatasBulananByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
       {
-        userEBupotUnifikasiImporDataId: user.id,
+        userEBupot2126ImporDataId: user.id,
         _id: user.id,
         token: user.token,
         kodeCabang: user.cabang.id,
       }
     );
-    setEBupotUnifikasiImporDataPagination(
-      response.data.eBupotUnifikasiImporDatas
-    );
+    setEBupot2126ImporDataBulananPagination(response.data.eBupot2126ImporDatas);
     setPage(response.data.page);
     setPages(response.data.totalPage);
     setRows(response.data.totalRows);
@@ -372,30 +380,52 @@ function Ebupot2126ImporData() {
     }, 500);
   };
 
-  const getEBupotUnifikasiDetilValidasisByUserByImporDataSearchPagination =
-    async (userEBupotUnifikasiImporDataId) => {
-      setOpenLoadingImporData(true);
-      const response = await axios.post(
-        `${tempUrl}/eBupotUnifikasiDetilValidasisByUserByImporDataSearchPagination?search_query=&page=${page}&limit=${limit}`,
-        {
-          userEBupotUnifikasiDetilValidasiId: user.id,
-          userEBupotUnifikasiImporDataId,
-          _id: user.id,
-          token: user.token,
-          kodeCabang: user.cabang.id,
-        }
-      );
-      setEBupotUnifikasiDetilValidasiPagination(
-        response.data.eBupotUnifikasiDetilValidasis
-      );
-      setPageEBupotUnifikasiDetilValidasi(response.data.page);
-      setPagesEBupotUnifikasiDetilValidasi(response.data.totalPage);
-      setRowsEBupotUnifikasiDetilValidasi(response.data.totalRows);
+  const getEBupot2126ImporDataTahunan = async () => {
+    setOpenLoadingImporData(true);
+    const response = await axios.post(
+      `${tempUrl}/eBupot2126ImporDatasTahunanByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
+      {
+        userEBupot2126ImporDataId: user.id,
+        _id: user.id,
+        token: user.token,
+        kodeCabang: user.cabang.id,
+      }
+    );
+    setEBupot2126ImporDataTahunanPagination(response.data.eBupot2126ImporDatas);
+    setPageTahunan(response.data.page);
+    setPagesTahunan(response.data.totalPage);
+    setRowsTahunan(response.data.totalRows);
 
-      setTimeout(async () => {
-        setOpenLoadingImporData(false);
-      }, 500);
-    };
+    setTimeout(async () => {
+      setOpenLoadingImporData(false);
+    }, 500);
+  };
+
+  const getEBupot2126DetilValidasisByUserByImporDataSearchPagination = async (
+    userEBupot2126ImporDataId
+  ) => {
+    setOpenLoadingImporData(true);
+    const response = await axios.post(
+      `${tempUrl}/eBupot2126DetilValidasisByUserByImporDataSearchPagination?search_query=&page=${page}&limit=${limit}`,
+      {
+        userEBupot2126DetilValidasiId: user.id,
+        userEBupot2126ImporDataId,
+        _id: user.id,
+        token: user.token,
+        kodeCabang: user.cabang.id,
+      }
+    );
+    setEBupot2126DetilValidasiPagination(
+      response.data.eBupot2126DetilValidasis
+    );
+    setPageEBupot2126DetilValidasi(response.data.page);
+    setPagesEBupot2126DetilValidasi(response.data.totalPage);
+    setRowsEBupot2126DetilValidasi(response.data.totalRows);
+
+    setTimeout(async () => {
+      setOpenLoadingImporData(false);
+    }, 500);
+  };
 
   const findMasaPajakOptions = async (tahunPajak) => {
     setOpenSearchIdentitasWp(true);
@@ -461,27 +491,50 @@ function Ebupot2126ImporData() {
       handleCloseConfirmationSaved(e);
 
       setOpenLoadingImporData(true);
-      let savedEBupotUnifikasiImporData = await axios.post(
-        `${tempUrl}/saveEBupotUnifikasiImporData`,
-        {
-          userId: user.id,
 
-          // 01.) Accordion 1
-          tahunPajak,
-          masaPajak,
-          fileName,
+      if (jenisBuktiPotong === "Bulanan dan Final/Tidak Final") {
+        let savedEBupot2126BulananImporData = await axios.post(
+          `${tempUrl}/saveEBupot2126BulananImporData`,
+          {
+            userId: user.id,
 
-          jsonData,
+            // 01.) Accordion 1
+            tahunPajak,
+            masaPajak,
+            fileName,
 
-          userIdInput: user.id,
-          kodeCabang: user.cabang.id,
-          _id: user.id,
-          token: user.token,
-        }
-      );
+            jsonData,
+
+            userIdInput: user.id,
+            kodeCabang: user.cabang.id,
+            _id: user.id,
+            token: user.token,
+          }
+        );
+      } else {
+        let savedEBupot2126TahunanImporData = await axios.post(
+          `${tempUrl}/saveEBupot2126TahunanImporData`,
+          {
+            userId: user.id,
+
+            // 01.) Accordion 1
+            tahunPajak,
+            masaPajak,
+            fileName,
+
+            jsonData,
+
+            userIdInput: user.id,
+            kodeCabang: user.cabang.id,
+            _id: user.id,
+            token: user.token,
+          }
+        );
+      }
 
       setTimeout(async () => {
-        getEBupotUnifikasiImporData();
+        getEBupot2126ImporDataBulanan();
+        getEBupot2126ImporDataTahunan();
         setOpenLoadingImporData(false);
         setValidated(false);
         setFileName("");
@@ -498,6 +551,7 @@ function Ebupot2126ImporData() {
     setOpenSaved(false);
 
     // 01.) Accordion 1
+    setJenisBuktiPotong("");
     setTahunPajak("");
     setMasaPajak("");
 
@@ -711,7 +765,7 @@ function Ebupot2126ImporData() {
                         controlId="formPlaintextPassword"
                       >
                         <Form.Label column sm="4">
-                          File (*.xls)
+                          File (*.xlsx)
                         </Form.Label>
                         <Col sm="8">
                           {fileName.length === 0 ? (
@@ -734,13 +788,13 @@ function Ebupot2126ImporData() {
                           <div>
                             <Form.Control
                               type="file"
-                              accept=".xls"
+                              accept=".xlsx"
                               ref={fileInputSertifikatElektronikRef}
                               onChange={handleFileUpload}
                               style={{ display: "none" }} // Hide the file input
                             />
                             <Form.Label>
-                              Ukuran file maksimal 2MB berformat .xls
+                              Ukuran file maksimal 2MB berformat .xlsx
                             </Form.Label>
                             <Form.Label style={{ color: "#fd397a" }}>
                               Pastikan tidak melakukan impor excel dengan data
@@ -773,18 +827,18 @@ function Ebupot2126ImporData() {
                         </button>
                       )}
                     </div>
-                    {/* {Object.keys(jsonData).length > 0 && (
-                        <div>
-                          {Object.keys(jsonData).map((sheetName) => (
-                            <div key={sheetName}>
-                              <h3>Sheet: {sheetName}</h3>
-                              <pre>
-                                {JSON.stringify(jsonData[sheetName], null, 2)}
-                              </pre>
-                            </div>
-                          ))}
-                        </div>
-                      )} */}
+                    {Object.keys(jsonData).length > 0 && (
+                      <div>
+                        {Object.keys(jsonData).map((sheetName) => (
+                          <div key={sheetName}>
+                            <h3>Sheet: {sheetName}</h3>
+                            <pre>
+                              {JSON.stringify(jsonData[sheetName], null, 2)}
+                            </pre>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div style={{ display: "flex", justifyContent: "center" }}>
@@ -819,8 +873,8 @@ function Ebupot2126ImporData() {
                 </div>
                 <div>
                   <button
-                    className="ebupot-unifikasi-refresh-button"
-                    onClick={getEBupotUnifikasiImporData}
+                    className="ebupot-2126-refresh-button"
+                    onClick={getEBupot2126ImporDataBulanan}
                   >
                     <RefreshIcon
                       fontSize="small"
@@ -904,9 +958,9 @@ function Ebupot2126ImporData() {
                   </div>
                   <Box>
                     <ShowTableEbupot2126DaftarDokumenImporData
-                      currentPosts={eBupotUnifikasiImporDataPagination}
+                      currentPosts={eBupot2126ImporDataBulananPagination}
                       getDetilValidasi={
-                        getEBupotUnifikasiDetilValidasisByUserByImporDataSearchPagination
+                        getEBupot2126DetilValidasisByUserByImporDataSearchPagination
                       }
                       setOpenDetilValidasi={setOpenDetilValidasi}
                     />
@@ -935,7 +989,7 @@ function Ebupot2126ImporData() {
                         marginRight: "5px",
                       }}
                       onChange={(e) => {
-                        setLimit(e.target.value);
+                        setLimitTahunan(e.target.value);
                       }}
                     >
                       <option value="5">5</option>
@@ -947,9 +1001,9 @@ function Ebupot2126ImporData() {
                   </div>
                   <Box>
                     <ShowTableEbupot2126DaftarDokumenImporData
-                      currentPosts={eBupotUnifikasiImporDataPagination}
+                      currentPosts={eBupot2126ImporDataTahunanPagination}
                       getDetilValidasi={
-                        getEBupotUnifikasiDetilValidasisByUserByImporDataSearchPagination
+                        getEBupot2126DetilValidasisByUserByImporDataSearchPagination
                       }
                       setOpenDetilValidasi={setOpenDetilValidasi}
                     />
@@ -958,9 +1012,9 @@ function Ebupot2126ImporData() {
                     <Pagination
                       shape="rounded"
                       color="primary"
-                      count={pages}
-                      page={page + 1}
-                      onChange={handleChange}
+                      count={pagesTahunan}
+                      page={pageTahunan + 1}
+                      onChange={handleChangeTahunan}
                       size={screenSize <= 600 ? "small" : "large"}
                     />
                   </Box>
@@ -1414,7 +1468,7 @@ function Ebupot2126ImporData() {
                   marginRight: "5px",
                 }}
                 onChange={(e) => {
-                  setLimitEBupotUnifikasiDetilValidasi(e.target.value);
+                  setLimitEBupot2126DetilValidasi(e.target.value);
                 }}
               >
                 <option value="5">5</option>
@@ -1426,16 +1480,16 @@ function Ebupot2126ImporData() {
             </div>
             <Box>
               <ShowTableEbupot2126DaftarDetilValidasi
-                currentPosts={eBupotUnifikasiDetilValidasiPagination}
+                currentPosts={eBupot2126DetilValidasiPagination}
               />
             </Box>
             <Box sx={tableContainer}>
               <Pagination
                 shape="rounded"
                 color="primary"
-                count={pagesEBupotUnifikasiDetilValidasi}
-                page={pageEBupotUnifikasiDetilValidasi + 1}
-                onChange={handleChangeEBupotUnifikasiDetilValidasi}
+                count={pagesEBupot2126DetilValidasi}
+                page={pageEBupot2126DetilValidasi + 1}
+                onChange={handleChangeEBupot2126DetilValidasi}
                 size={screenSize <= 600 ? "small" : "large"}
               />
             </Box>
