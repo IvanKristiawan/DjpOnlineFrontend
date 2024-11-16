@@ -13,7 +13,7 @@ import {
 } from "../../../components/index";
 import { formatDate } from "../../../constants/helper";
 import {
-  ShowTableEbupotUnifikasiBuktiSetor,
+  ShowTableEbupot2126BuktiSetor,
   ShowTableEbupot2126DaftarTagihanPerekamPerKop,
   ShowTableEbupot2126DaftarTagihanPerekamPerKapKjs,
   ShowTableEbupot2126RingkasanPembayaran,
@@ -36,6 +36,7 @@ import {
   AccordionDetails,
   DialogActions,
 } from "@mui/material";
+import angkaTerbilang from "@develoka/angka-terbilang-js";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { NumericFormat } from "react-number-format";
@@ -149,6 +150,14 @@ function Ebupot2126PerekamanSptMasa() {
   const [masaPajakOptions, setMasaPajakOptions] = useState([]);
   const [validated, setValidated] = useState(false);
 
+  const [subjekPajakNpwp, setSubjekPajakNpwp] = useState(user.npwp15);
+  const [subjekPajakNitku, setSubjekPajakNitku] = useState(user.nitku);
+  const [subjekPajakNikNpwp16, setSubjekPajakNikNpwp16] = useState(
+    user.nikNpwp16
+  );
+  const [subjekPajakNama, setSubjekPajakNama] = useState(user.nama);
+  const [subjekPajakAlamat, setSubjekPajakAlamat] = useState(user.alamat);
+
   let perekamOptions = [];
   const [perekam, setPerekam] = useState("");
 
@@ -180,6 +189,25 @@ function Ebupot2126PerekamanSptMasa() {
   const [openLoading, setOpenLoading] = useState(false);
   const [openSuccessGenerateIdBilling, setOpenSuccessGenerateIdBilling] =
     useState(false);
+  const [
+    eBupot2126TagihanPemotonganPerKopPagination,
+    setEBupot2126TagihanPemotonganPerKopPagination,
+  ] = useState([]);
+  let [pageTagihanPemotonganPerKop, setPageTagihanPemotonganPerKop] =
+    useState(0);
+  const [limitTagihanPemotonganPerKop, setLimitTagihanPemotonganPerKop] =
+    useState(10);
+  const [pagesTagihanPemotonganPerKop, setPagesTagihanPemotonganPerKop] =
+    useState(0);
+  const [rowsTagihanPemotonganPerKop, setRowsTagihanPemotonganPerKop] =
+    useState(0);
+  const [queryTagihanPemotonganPerKop, setQueryTagihanPemotonganPerKop] =
+    useState("");
+
+  const handleChangeTagihanPemotonganPerKop = (e, p) => {
+    setPageTagihanPemotonganPerKop(p - 1);
+  };
+
   const [
     eBupot2126TagihanPemotonganPagination,
     setEBupot2126TagihanPemotonganPagination,
@@ -304,12 +332,11 @@ function Ebupot2126PerekamanSptMasa() {
           );
           setMasaPajakEBilling(findEBupot2126TagihanPemotongan.data.masaPajak);
           setJenisPajak(
-            findEBupot2126TagihanPemotongan.data.objekpajak.jenissetoran
-              .jenispajak.kodeJenisPajak
+            findEBupot2126TagihanPemotongan.data.jenissetoran.jenispajak
+              .kodeJenisPajak
           );
           setJenisSetoran(
-            findEBupot2126TagihanPemotongan.data.objekpajak.jenissetoran
-              .kodeJenisSetoran
+            findEBupot2126TagihanPemotongan.data.jenissetoran.kodeJenisSetoran
           );
           setJumlahSetor(
             findEBupot2126TagihanPemotongan.data.pphYangDipotong -
@@ -380,6 +407,31 @@ function Ebupot2126PerekamanSptMasa() {
     setOpenLoading(false);
   };
 
+  const getEBupot2126TagihanPemotonganPerKopData = async () => {
+    setOpenLoading(true);
+    const response = await axios.post(
+      `${tempUrl}/eBupot2126PostingsByUserSearchPagination?search_query=&page=${page}&limit=${limit}`,
+      {
+        userEBupot2126PostingId: user.id,
+        tahunPajak,
+        masaPajak,
+        _id: user.id,
+        token: user.token,
+        kodeCabang: user.cabang.id,
+      }
+    );
+    setEBupot2126TagihanPemotonganPerKopPagination(
+      response.data.eBupot2126Postings
+    );
+    setPageTagihanPemotonganPerKop(response.data.page);
+    setPagesTagihanPemotonganPerKop(response.data.totalPage);
+    setRowsTagihanPemotonganPerKop(response.data.totalRows);
+
+    setTimeout(async () => {
+      setOpenLoading(false);
+    }, 500);
+  };
+
   const getEBupot2126TagihanPemotonganData = async () => {
     setOpenLoading(true);
     const response = await axios.post(
@@ -399,6 +451,7 @@ function Ebupot2126PerekamanSptMasa() {
     setPage(response.data.page);
     setPages(response.data.totalPage);
     setRows(response.data.totalRows);
+    getEBupot2126TagihanPemotonganPerKopData();
     getEBupot2126RingkasanPembayaranData();
     getEBupot2126BuktiSetorData();
 
@@ -455,6 +508,31 @@ function Ebupot2126PerekamanSptMasa() {
     }, 500);
   };
 
+  const generateIdBillingEBupot2126TagihanPemotongan = async (id) => {
+    setOpenLoading(true);
+    try {
+      await axios.post(
+        `${tempUrl}/generateIdBillingEBupot2126TagihanPemotongan/${id}`,
+        {
+          _id: user.id,
+          token: user.token,
+        }
+      );
+      getEBupot2126TagihanPemotonganData();
+
+      setTimeout(async () => {
+        setOpenLoading(false);
+        setOpenSuccessGenerateIdBilling(true);
+        downloadPdf(id);
+      }, 500);
+    } catch (error) {
+      if (error.response.data.message.includes("foreign key")) {
+        // alert(`${namaKategoriKlu} tidak bisa dihapus karena sudah ada data!`);
+      }
+    }
+    setOpenLoading(false);
+  };
+
   const deleteEBupot2126PphDisetorSendiri = async (id) => {
     setOpenLoading(true);
     try {
@@ -473,6 +551,22 @@ function Ebupot2126PerekamanSptMasa() {
       }
     }
     setOpenLoading(false);
+  };
+
+  const deleteInputEBupot2126TagihanPemotongan = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setJenisBuktiPenyetoran("Surat Setoran Pajak");
+    setEBupot2126TagihanPemotonganId("");
+    setNtpnBilling("");
+    setTahunPajakEBilling("");
+    setNomorPemindahbukuan("");
+    setMasaPajakEBilling("");
+    setJenisPajak("");
+    setJenisSetoran("");
+    setJumlahSetor("");
+    setTanggalSetor("");
   };
 
   const saveEBupot2126TagihanPemotongan = async (e) => {
@@ -542,6 +636,7 @@ function Ebupot2126PerekamanSptMasa() {
         setTimeout(async () => {
           setOpenLoading(false);
           setOpenPerekamanDataBuktiSetor(false);
+          deleteInputEBupot2126TagihanPemotongan(e);
         }, 1000);
       } catch (error) {
         alert(error.response.data.message);
@@ -562,19 +657,182 @@ function Ebupot2126PerekamanSptMasa() {
     setValidated(true);
   };
 
-  const deleteInputEBupot2126TagihanPemotongan = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const downloadPdf = async (id) => {
+    let findEBupot2126TagihanPemotongan = await axios.post(
+      `${tempUrl}/eBupot2126TagihanPemotongans/${id}`,
+      {
+        _id: user.id,
+        token: user.token,
+      }
+    );
+    setOpenLoading(true);
 
-    setJenisBuktiPenyetoran("Surat Setoran Pajak");
-    setEBupot2126TagihanPemotonganId("");
-    setNtpnBilling("");
-    setNomorPemindahbukuan("");
-    setMasaPajakEBilling("");
-    setJenisPajak("");
-    setJenisSetoran("");
-    setJumlahSetor("");
-    setTanggalSetor("");
+    let tempY = 15;
+
+    const doc = new jsPDF();
+    doc.setFontSize(12);
+    doc.text("CETAKAN KODE", 140, tempY);
+    tempY += 5;
+    doc.text("BILLING", 150, tempY);
+    doc.setFontSize(10);
+
+    tempY += 15;
+    doc.text("NPWP", 30, tempY);
+    doc.text(`: ${subjekPajakNpwp} / ${subjekPajakNikNpwp16}`, 70, tempY);
+    tempY += 8;
+    doc.text("NITKU", 30, tempY);
+    doc.text(`: ${subjekPajakNitku}`, 70, tempY);
+    tempY += 8;
+    doc.text("NAMA", 30, tempY);
+    doc.text(`: ${subjekPajakNama}`, 70, tempY);
+    tempY += 8;
+    doc.text("ALAMAT", 30, tempY);
+    doc.text(
+      `: ${subjekPajakNitku}-${subjekPajakAlamat.substring(0, 23)}`,
+      70,
+      tempY
+    );
+    tempY += 14;
+    doc.text("NOP", 30, tempY);
+    doc.text(
+      `: ${
+        findEBupot2126TagihanPemotongan.data.nop.length === 0
+          ? "-"
+          : findEBupot2126TagihanPemotongan.data.nop
+      }`,
+      70,
+      tempY
+    );
+
+    tempY += 8;
+    doc.text("JENIS PAJAK", 30, tempY);
+    doc.text(
+      `: ${findEBupot2126TagihanPemotongan.data.jenissetoran.jenispajak.kodeJenisPajak}`,
+      70,
+      tempY
+    );
+
+    tempY += 8;
+    doc.text("JENIS SETORAN", 30, tempY);
+    doc.text(
+      `: ${findEBupot2126TagihanPemotongan.data.jenissetoran.kodeJenisSetoran}`,
+      70,
+      tempY
+    );
+    tempY += 8;
+    doc.text("MASA PAJAK", 30, tempY);
+    doc.text(
+      `: ${findEBupot2126TagihanPemotongan.data.masaPajak}${findEBupot2126TagihanPemotongan.data.masaPajak}`,
+      70,
+      tempY
+    );
+
+    tempY += 8;
+    doc.text("TAHUN PAJAK", 30, tempY);
+    doc.text(`: ${findEBupot2126TagihanPemotongan.data.tahunPajak}`, 70, tempY);
+    tempY += 8;
+    doc.text("NOMOR KETETAPAN", 30, tempY);
+    doc.text(
+      `: ${
+        findEBupot2126TagihanPemotongan.data.nomorKetetapan.length === 0
+          ? "-"
+          : findEBupot2126TagihanPemotongan.data.nomorKetetapan
+      }`,
+      70,
+      tempY
+    );
+    tempY += 8;
+    doc.text("JUMLAH SETOR", 30, tempY);
+    doc.text(
+      `: Rp. ${parseInt(
+        findEBupot2126TagihanPemotongan.data.pphYangDipotong
+      ).toLocaleString("de-DE")}`,
+      70,
+      tempY
+    );
+    tempY += 8;
+    doc.text("TERBILANG", 30, tempY);
+    doc.text(
+      `: ${angkaTerbilang(
+        findEBupot2126TagihanPemotongan.data.jumlahSetor
+      )} Rupiah`,
+      70,
+      tempY
+    );
+
+    tempY += 14;
+    doc.text("URAIAN", 30, tempY);
+    doc.text(
+      `: ${
+        findEBupot2126TagihanPemotongan.data.uraian === 0
+          ? "-"
+          : findEBupot2126TagihanPemotongan.data.uraian
+      }`,
+      70,
+      tempY
+    );
+
+    tempY += 14;
+    doc.text("NPWP PENYETOR", 30, tempY);
+    doc.text(`: ${user.npwp15} / ${user.nikNpwp16}`, 70, tempY);
+    tempY += 8;
+    doc.text("NITKU PENYETOR", 30, tempY);
+    doc.text(`: ${user.nitku}`, 70, tempY);
+    tempY += 8;
+    doc.text("NAMA PENYETOR", 30, tempY);
+    doc.text(`: ${user.nama}`, 70, tempY);
+
+    tempY += 14;
+    doc.text(
+      "GUNAKAN KODE BILLING DI BAWAH INI UNTUK MELAKUKAN PEMBAYARAN.",
+      30,
+      tempY
+    );
+    tempY += 8;
+    doc.text("ID BILLING", 30, tempY);
+    doc.text(`: ${findEBupot2126TagihanPemotongan.data.idBilling}`, 70, tempY);
+    tempY += 8;
+    doc.text("MASA AKTIF", 30, tempY);
+    doc.text(
+      `: ${new Date(
+        findEBupot2126TagihanPemotongan.data.masaAktifKodeBilling
+      ).toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false, // Use 24-hour format
+        timeZone: "Asia/Jakarta", // Set time zone to Asia/Jakarta
+      })}`,
+      70,
+      tempY
+    );
+    tempY += 8;
+    doc.text("NTPN (Hanya Simulasi)", 30, tempY);
+    doc.text(
+      `: ${findEBupot2126TagihanPemotongan.data.ntpnBilling}`,
+      70,
+      tempY
+    );
+
+    tempY += 14;
+    doc.text(
+      "Catatan : Apabila ada kesalahan dalam isian Kode Billing atau masa berlakunya berakhir, Kode Billing",
+      30,
+      tempY
+    );
+    tempY += 4;
+    doc.text(
+      "dapat dibuat kembali. Tanggung jawab isian Kode Billing ada pada Wajib Pajak yang namanya",
+      40,
+      tempY
+    );
+    tempY += 4;
+    doc.text("tercantum di dalamnya.", 40, tempY);
+    doc.save("Cetakan Kode Billing.pdf");
+    setOpenLoading(false);
   };
 
   const inputContainer = {
@@ -829,7 +1087,7 @@ function Ebupot2126PerekamanSptMasa() {
                         <p style={{ paddingTop: "10px" }}>Entry</p>
                       </div>
                       <Box>
-                        <ShowTableEbupotUnifikasiBuktiSetor
+                        <ShowTableEbupot2126BuktiSetor
                           currentPosts={eBupot2126BuktiSetorPagination}
                           deleteEBupot2126PphDisetorSendiri={
                             deleteEBupot2126PphDisetorSendiri
@@ -892,7 +1150,7 @@ function Ebupot2126PerekamanSptMasa() {
                         <div>
                           <button
                             className="cari-pralapor-button"
-                            // onClick={getEBupotUnifikasiPphDisetorSendiriData}
+                            // onClick={getEBupot2126PphDisetorSendiriData}
                           >
                             <SearchIcon style={{ marginRight: "5px" }} />
                             Cari
@@ -935,7 +1193,7 @@ function Ebupot2126PerekamanSptMasa() {
                             marginRight: "5px",
                           }}
                           onChange={(e) => {
-                            setLimit(e.target.value);
+                            setLimitTagihanPemotonganPerKop(e.target.value);
                           }}
                         >
                           <option value="5">5</option>
@@ -947,16 +1205,18 @@ function Ebupot2126PerekamanSptMasa() {
                       </div>
                       <Box>
                         <ShowTableEbupot2126DaftarTagihanPerekamPerKop
-                          currentPosts={eBupot2126TagihanPemotonganPagination}
+                          currentPosts={
+                            eBupot2126TagihanPemotonganPerKopPagination
+                          }
                         />
                       </Box>
                       <Box sx={tableContainer}>
                         <Pagination
                           shape="rounded"
                           color="primary"
-                          count={pages}
-                          page={page + 1}
-                          onChange={handleChange}
+                          count={pagesTagihanPemotonganPerKop}
+                          page={pageTagihanPemotonganPerKop + 1}
+                          onChange={handleChangeTagihanPemotonganPerKop}
                           size={screenSize <= 600 ? "small" : "large"}
                         />
                       </Box>
@@ -1084,6 +1344,9 @@ function Ebupot2126PerekamanSptMasa() {
                       <Box>
                         <ShowTableEbupot2126RingkasanPembayaran
                           currentPosts={eBupot2126TagihanPemotonganPagination}
+                          generateIdBillingFunction={
+                            generateIdBillingEBupot2126TagihanPemotongan
+                          }
                         />
                       </Box>
                       <Box sx={tableContainer}>

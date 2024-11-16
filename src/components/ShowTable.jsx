@@ -8417,13 +8417,13 @@ export function ShowTableEbupot2126DaftarTagihanPerekamPerKop({
         }}
       >
         <TableCell component="th" scope="row" style={dataStyle}>
-          {user.objekpajak.jenissetoran.jenispajak.kodeJenisPajak}
-        </TableCell>
-        <TableCell style={dataStyle}>
-          {user.objekpajak.jenissetoran.kodeJenisSetoran}
+          {user.objekpajak.kodeObjekPajak}
         </TableCell>
         <TableCell style={dataStyleRight}>
-          {user.pphYangDipotong.toLocaleString("de-DE")}
+          {user.jumlahDpp.toLocaleString("de-DE")}
+        </TableCell>
+        <TableCell style={dataStyleRight}>
+          {user.jumlahPph.toLocaleString("de-DE")}
         </TableCell>
       </TableRow>
     </>
@@ -8501,19 +8501,19 @@ export function ShowTableEbupot2126DaftarTagihanPerekamPerKapKjs({
         }}
       >
         <TableCell component="th" scope="row" style={dataStyle}>
-          {user.objekpajak.jenissetoran.jenispajak.kodeJenisPajak}
+          {user.jenissetoran.jenispajak.kodeJenisPajak}
         </TableCell>
         <TableCell style={dataStyle}>
-          {user.objekpajak.jenissetoran.kodeJenisSetoran}
+          {user.jenissetoran.kodeJenisSetoran}
         </TableCell>
         <TableCell style={dataStyleRight}>
           {user.pphYangDipotong.toLocaleString("de-DE")}
         </TableCell>
         <TableCell style={dataStyleRight}>
-          {user.pphYangDipotong.toLocaleString("de-DE")}
+          {user.pphYangDisetor.toLocaleString("de-DE")}
         </TableCell>
         <TableCell style={dataStyleRight}>
-          {user.pphYangDipotong.toLocaleString("de-DE")}
+          {(user.pphYangDipotong - user.pphYangDisetor).toLocaleString("de-DE")}
         </TableCell>
       </TableRow>
     </>
@@ -8574,7 +8574,127 @@ export function ShowTableEbupot2126DaftarTagihanPerekamPerKapKjs({
   );
 }
 
-export function ShowTableEbupot2126RingkasanPembayaran({ currentPosts }) {
+export function ShowTableEbupot2126BuktiSetor({
+  currentPosts,
+  deleteEBupot2126PphDisetorSendiri,
+}) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>
+        <p>Hapus Dokumen</p>
+      </div>
+    </Tooltip>
+  );
+
+  let dataTable = currentPosts.map((user, index) => (
+    <TableRow
+      key={user.id}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell component="th" scope="row" sx={textDataStyle}>
+        {index + 1}
+      </TableCell>
+      <TableCell sx={textDataStyle}>{user.nomorBuktiSetor}</TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.jenissetoran.jenispajak.kodeJenisPajak}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.jenissetoran.kodeJenisSetoran}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.ebupot2126tagihanpemotongan.tahunPajak}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {formatDate(user.tanggalBuktiSetor)}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.pphYangDisetor.toLocaleString("de-DE")}
+      </TableCell>
+      <TableCell>
+        <OverlayTrigger
+          placement="bottom"
+          delay={{ show: 250, hide: 50 }}
+          overlay={renderTooltipDelete}
+        >
+          <button
+            className="aksi-button"
+            style={aksiButtonStyle}
+            onClick={() => {
+              deleteEBupot2126PphDisetorSendiri(user.id);
+            }}
+          >
+            <DeleteIcon fontSize="small" />
+          </button>
+        </OverlayTrigger>
+      </TableCell>
+    </TableRow>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={8} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NO
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NOMOR BUKTI
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JENIS PAJAK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JENIS SETORAN
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              MASA TAHUN PAJAK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              TANGGAL SETOR
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH SETOR
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              AKSI
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{dataTable}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableEbupot2126RingkasanPembayaran({
+  currentPosts,
+  generateIdBillingFunction,
+}) {
   let navigate = useNavigate();
   const classes = useStyles();
   const [id, setId] = useState("");
@@ -8601,6 +8721,12 @@ export function ShowTableEbupot2126RingkasanPembayaran({ currentPosts }) {
     textAlign: "center",
   };
 
+  const renderTooltipCetakBilling = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <div>Cetak Billing</div>
+    </Tooltip>
+  );
+
   let dataTable = currentPosts.map((user, index) => (
     <>
       <TableRow
@@ -8610,10 +8736,10 @@ export function ShowTableEbupot2126RingkasanPembayaran({ currentPosts }) {
         }}
       >
         <TableCell component="th" scope="row" style={dataStyle}>
-          {user.objekpajak.jenissetoran.jenispajak.kodeJenisPajak}
+          {user.jenissetoran.jenispajak.kodeJenisPajak}
         </TableCell>
         <TableCell style={dataStyle}>
-          {user.objekpajak.jenissetoran.kodeJenisSetoran}
+          {user.jenissetoran.kodeJenisSetoran}
         </TableCell>
         <TableCell style={dataStyleRight}>
           {user.pphYangDipotong.toLocaleString("de-DE")}
@@ -8621,11 +8747,26 @@ export function ShowTableEbupot2126RingkasanPembayaran({ currentPosts }) {
         <TableCell style={dataStyleRight}>
           {user.pphYangDisetor.toLocaleString("de-DE")}
         </TableCell>
-        <TableCell style={dataStyle}>
+        <TableCell style={dataStyleRight}>
           {(user.pphYangDipotong - user.pphYangDisetor).toLocaleString("de-DE")}
         </TableCell>
         <TableCell style={dataStyle}>
-          {(user.pphYangDipotong - user.pphYangDisetor).toLocaleString("de-DE")}
+          <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 250, hide: 50 }}
+            overlay={renderTooltipCetakBilling}
+          >
+            <button
+              className="aksi-button"
+              disabled={user.pphYangDipotong - user.pphYangDisetor === 0}
+              style={aksiButtonStyle}
+              onClick={() => {
+                generateIdBillingFunction(user.id);
+              }}
+            >
+              <PrintIcon fontSize="small" />
+            </button>
+          </OverlayTrigger>
         </TableCell>
       </TableRow>
     </>

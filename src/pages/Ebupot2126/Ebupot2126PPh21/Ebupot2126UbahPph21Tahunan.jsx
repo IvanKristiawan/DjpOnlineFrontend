@@ -4562,7 +4562,7 @@ function Ebupot2126UbahPph21Tahunan() {
                 }}
               >
                 Data berhasil disimpan. Apakah Anda ingin merekam Bukti Potong
-                Pasal 4(2), 15, 22, 23 lagi?
+                Pasal 21 Tahunan lagi?
               </div>
             </DialogContentText>
           </DialogContent>

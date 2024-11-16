@@ -1354,7 +1354,7 @@ function Ebupot2126InputPph26() {
                 }}
               >
                 Data berhasil disimpan. Apakah Anda ingin merekam Bukti Potong
-                Pasal 4(2), 15, 22, 23 lagi?
+                Pasal 26 lagi?
               </div>
             </DialogContentText>
           </DialogContent>

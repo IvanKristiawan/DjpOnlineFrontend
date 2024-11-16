@@ -485,6 +485,22 @@ function EbupotUnifikasiPerekamanSptMasa() {
     setOpenLoading(false);
   };
 
+  const deleteInputEBupotUnifikasiTagihanPemotongan = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setJenisBuktiPenyetoran("Surat Setoran Pajak");
+    setEBupotUnifikasiTagihanPemotonganId("");
+    setNtpnBilling("");
+    setTahunPajakEBilling("");
+    setNomorPemindahbukuan("");
+    setMasaPajakEBilling("");
+    setJenisPajak("");
+    setJenisSetoran("");
+    setJumlahSetor("");
+    setTanggalSetor("");
+  };
+
   const saveEBupotUnifikasiTagihanPemotongan = async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -584,6 +600,7 @@ function EbupotUnifikasiPerekamanSptMasa() {
         setTimeout(async () => {
           setOpenLoading(false);
           setOpenPerekamanDataBuktiSetor(false);
+          deleteInputEBupotUnifikasiTagihanPemotongan(e);
         }, 1000);
       } catch (error) {
         alert(error.response.data.message);
@@ -602,21 +619,6 @@ function EbupotUnifikasiPerekamanSptMasa() {
       setOpenConfirmationSearchSuratSetoranPajak(true);
     }
     setValidated(true);
-  };
-
-  const deleteInputEBupotUnifikasiTagihanPemotongan = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    setJenisBuktiPenyetoran("Surat Setoran Pajak");
-    setEBupotUnifikasiTagihanPemotonganId("");
-    setNtpnBilling("");
-    setNomorPemindahbukuan("");
-    setMasaPajakEBilling("");
-    setJenisPajak("");
-    setJenisSetoran("");
-    setJumlahSetor("");
-    setTanggalSetor("");
   };
 
   const downloadPdf = async (id) => {
