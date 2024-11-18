@@ -8934,30 +8934,33 @@ export function ShowTableEbupot2126PenyiapanSpt({
               <EditIcon fontSize="small" />
             </button>
           </OverlayTrigger>
-          <OverlayTrigger
-            placement="bottom"
-            delay={{ show: 250, hide: 50 }}
-            overlay={renderTooltipKirimSpt}
-          >
-            <button
-              className="aksi-button"
-              disabled={user.isHapus === true}
-              style={aksiButtonStyle}
-              onClick={() => {
-                if (user.penandatanganId === null) {
-                  navigate(
-                    `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
-                  );
-                } else {
-                  navigate(
-                    `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}/kirimSpt`
-                  );
-                }
-              }}
-            >
-              <SendIcon fontSize="small" />
-            </button>
-          </OverlayTrigger>
+          {user.keteranganSpt === "SPT Anda siap kirim" &&
+            user.eBupot2126PenandatanganId !== null && (
+              <OverlayTrigger
+                placement="bottom"
+                delay={{ show: 250, hide: 50 }}
+                overlay={renderTooltipKirimSpt}
+              >
+                <button
+                  className="aksi-button"
+                  disabled={user.isHapus === true}
+                  style={aksiButtonStyle}
+                  onClick={() => {
+                    if (user.penandatanganId === null) {
+                      navigate(
+                        `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
+                      );
+                    } else {
+                      navigate(
+                        `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}/kirimSpt`
+                      );
+                    }
+                  }}
+                >
+                  <SendIcon fontSize="small" />
+                </button>
+              </OverlayTrigger>
+            )}
         </TableCell>
       </TableRow>
       <Dialog
