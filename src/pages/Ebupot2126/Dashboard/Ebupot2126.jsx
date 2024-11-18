@@ -10,12 +10,9 @@ import {
   HeaderMainProfil,
   MainMenuEbupot2126,
 } from "../../../components/index";
-import {
-  ShowTableSptPph2126TelahDikirim,
-  ShowTableBuktiPotongSptPph2126,
-} from "../../../components/ShowTable";
+import { ShowTableSptPph2126TelahDikirim } from "../../../components/ShowTable";
 import "../../../constants/defaultProgram.css";
-import { Card, Tooltip, Form, Spinner } from "react-bootstrap";
+import { Card, Form, Spinner } from "react-bootstrap";
 import {
   Paper,
   Box,
@@ -68,9 +65,6 @@ function Ebupot2126() {
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
 
-  const [tahunPajak, setTahunPajak] = useState("");
-  const [masaPajak, setMasaPajak] = useState("");
-
   const [openLoading, setOpenLoading] = useState(false);
   const [
     ebupot2126DaftarPenyiapanSptPagination,
@@ -85,24 +79,9 @@ function Ebupot2126() {
     setPage(p - 1);
   };
 
-  const [eBupot2126CombinedPagination, setEBupot2126CombinedPagination] =
-    useState([]);
-  let [pageEBupot2126Combined, setPageEBupot2126Combined] = useState(0);
-  const [limitEBupot2126Combined, setLimitEBupot2126Combined] = useState(10);
-  const [pagesEBupot2126Combined, setPagesEBupot2126Combined] = useState(0);
-  const [rowsEBupot2126Combined, setRowsEBupot2126Combined] = useState(0);
-  const [queryEBupot2126Combined, setQueryEBupot2126Combined] = useState("");
-  const handleChangeEBupot2126Combined = (e, p) => {
-    setPageEBupot2126Combined(p - 1);
-  };
-
-  // useEffect(() => {
-  //   getEBupot2126PenyiapanSptTerkirimData();
-  // }, []);
-
-  // useEffect(() => {
-  //   getEBupot2126CombinedData();
-  // }, [page, limit, tahunPajak, masaPajak]);
+  useEffect(() => {
+    getEBupot2126PenyiapanSptTerkirimData();
+  }, [page, limit]);
 
   const getEBupot2126PenyiapanSptTerkirimData = async () => {
     setOpenLoading(true);
@@ -122,63 +101,9 @@ function Ebupot2126() {
     setPages(response.data.totalPage);
     setRows(response.data.totalRows);
 
-    setTahunPajak(response.data.eBupot2126PenyiapanSpts[0].tahunPajak);
-    setMasaPajak(response.data.eBupot2126PenyiapanSpts[0].masaPajak);
-
     setTimeout(async () => {
       setOpenLoading(false);
     }, 500);
-  };
-
-  const getEBupot2126CombinedData = async () => {
-    setOpenLoading(true);
-    const response = await axios.post(
-      `${tempUrl}/eBupot2126CombinedPagination?search_query=&page=${pageEBupot2126Combined}&limit=${limitEBupot2126Combined}`,
-      {
-        userIdInput: user.id,
-        tahunPajak,
-        masaPajak,
-        _id: user.id,
-        token: user.token,
-        kodeCabang: user.cabang.id,
-      }
-    );
-    setEBupot2126CombinedPagination(response.data.data);
-    setPageEBupot2126Combined(response.data.page);
-    setPagesEBupot2126Combined(response.data.totalPage);
-    setRowsEBupot2126Combined(response.data.totalRows);
-
-    setTimeout(async () => {
-      setOpenLoading(false);
-    }, 500);
-  };
-
-  const lihatBuktiPotongPadaSpt = async (tahunPajak, masaPajak) => {
-    setTahunPajak(tahunPajak);
-    setMasaPajak(masaPajak);
-  };
-
-  const mengajukanUnduhBuktiPotongEBupot2126PenyiapanSpt = async (id) => {
-    setOpenLoading(true);
-    try {
-      await axios.post(
-        `${tempUrl}/ajukanUnduhBuktiPotongEBupot2126PenyiapanSpt/${id}`,
-        {
-          _id: user.id,
-          token: user.token,
-        }
-      );
-
-      setTimeout(async () => {
-        getEBupot2126PenyiapanSptTerkirimData();
-        setOpenLoading(false);
-      }, 500);
-    } catch (error) {
-      if (error.response.data.message.includes("foreign key")) {
-        // alert(`${namaKategoriKlu} tidak bisa dihapus karena sudah ada data!`);
-      }
-    }
-    setOpenLoading(false);
   };
 
   const inputContainer = {
@@ -264,10 +189,6 @@ function Ebupot2126() {
               <Box>
                 <ShowTableSptPph2126TelahDikirim
                   currentPosts={ebupot2126DaftarPenyiapanSptPagination}
-                  lihatBuktiPotongPadaSpt={lihatBuktiPotongPadaSpt}
-                  mengajukanUnduhBuktiPotong={
-                    mengajukanUnduhBuktiPotongEBupot2126PenyiapanSpt
-                  }
                 />
               </Box>
               <Box sx={tableContainer}>

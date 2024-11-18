@@ -4329,11 +4329,7 @@ export function ShowTableEbupotUnifikasiDaftarDetilValidasi({ currentPosts }) {
   );
 }
 
-export function ShowTableSptPph2126TelahDikirim({
-  currentPosts,
-  lihatBuktiPotongPadaSpt,
-  mengajukanUnduhBuktiPotong,
-}) {
+export function ShowTableSptPph2126TelahDikirim({ currentPosts }) {
   let navigate = useNavigate();
   const classes = useStyles();
 
@@ -4352,27 +4348,9 @@ export function ShowTableSptPph2126TelahDikirim({
     </Tooltip>
   );
 
-  const renderTooltipLihatBuktiPotongPadaSpt = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-      <div>Lihat Bukti Potong pada SPT</div>
-    </Tooltip>
-  );
-
   const renderTooltipCetakSpt = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       <div>Cetak SPT</div>
-    </Tooltip>
-  );
-
-  const renderTooltipAjukanUnduhBuktiPotong = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-      <div>Ajukan unduh Bukti Potong</div>
-    </Tooltip>
-  );
-
-  const renderTooltipUnduhBuktiPotongPadaSpt = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-      <div>Unduh Bukti Potong Pada SPT</div>
     </Tooltip>
   );
 
@@ -4405,54 +4383,12 @@ export function ShowTableSptPph2126TelahDikirim({
         <OverlayTrigger
           placement="bottom"
           delay={{ show: 250, hide: 50 }}
-          overlay={renderTooltipLihatBuktiPotongPadaSpt}
-        >
-          <button
-            className="aksi-button"
-            style={aksiButtonStyle}
-            onClick={() => {
-              lihatBuktiPotongPadaSpt(user.tahunPajak, user.masaPajak);
-            }}
-          >
-            <MenuIcon fontSize="small" />
-          </button>
-        </OverlayTrigger>
-        <OverlayTrigger
-          placement="bottom"
-          delay={{ show: 250, hide: 50 }}
           overlay={renderTooltipCetakSpt}
         >
           <button className="aksi-button" style={aksiButtonStyle}>
             <PrintIcon fontSize="small" />
           </button>
         </OverlayTrigger>
-        {user.ajukanUnduhBuktiPotong === false ? (
-          <OverlayTrigger
-            placement="bottom"
-            delay={{ show: 250, hide: 50 }}
-            overlay={renderTooltipAjukanUnduhBuktiPotong}
-          >
-            <button
-              className="aksi-button"
-              style={aksiButtonStyle}
-              onClick={() => {
-                mengajukanUnduhBuktiPotong(user.id);
-              }}
-            >
-              <SendIcon fontSize="small" />
-            </button>
-          </OverlayTrigger>
-        ) : (
-          <OverlayTrigger
-            placement="bottom"
-            delay={{ show: 250, hide: 50 }}
-            overlay={renderTooltipUnduhBuktiPotongPadaSpt}
-          >
-            <button className="aksi-button" style={aksiButtonStyle}>
-              <DownloadIcon fontSize="small" />
-            </button>
-          </OverlayTrigger>
-        )}
       </TableCell>
     </TableRow>
   ));

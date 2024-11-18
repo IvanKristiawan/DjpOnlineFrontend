@@ -99,11 +99,18 @@ function EbupotUnifikasi() {
 
   useEffect(() => {
     getEBupotUnifikasiPenyiapanSptTerkirimData();
-  }, []);
+  }, [page, limit]);
 
   useEffect(() => {
     getEBupotUnifikasiCombinedData();
-  }, [page, limit, tahunPajak, masaPajak]);
+  }, [
+    page,
+    limit,
+    tahunPajak,
+    masaPajak,
+    pageEBupotUnifikasiCombined,
+    limitEBupotUnifikasiCombined,
+  ]);
 
   const getEBupotUnifikasiPenyiapanSptTerkirimData = async () => {
     setOpenLoading(true);
