@@ -19,6 +19,7 @@ import { Form } from "react-bootstrap";
 import { makeStyles } from "@mui/styles";
 import { Colors } from "../constants/styles";
 import "../constants/defaultProgram.css";
+import { NumericFormat } from "react-number-format";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -8926,7 +8927,7 @@ export function ShowTableEbupot2126PenyiapanSpt({
               style={aksiButtonStyle}
               onClick={() => {
                 navigate(
-                  `/ebupotUnifikasi/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
+                  `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
                 );
               }}
             >
@@ -8945,11 +8946,11 @@ export function ShowTableEbupot2126PenyiapanSpt({
               onClick={() => {
                 if (user.penandatanganId === null) {
                   navigate(
-                    `/ebupotUnifikasi/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
+                    `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
                   );
                 } else {
                   navigate(
-                    `/ebupotUnifikasi/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}/kirimSpt`
+                    `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}/kirimSpt`
                   );
                 }
               }}
@@ -9283,5 +9284,806 @@ export function ShowTablePerekam({ currentPosts, ubahStatusPenandatangan }) {
         </Table>
       </TableContainer>
     </>
+  );
+}
+
+export function ShowTableEbupot2126BuktiSetorPenyiapanSpt({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  let dataTable = currentPosts.map((user, index) => (
+    <TableRow
+      key={user.id}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell component="th" scope="row" sx={textDataStyle}>
+        {index + 1}
+      </TableCell>
+      <TableCell sx={textDataStyle}>{user.nomorBuktiSetor}</TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.jenissetoran.jenispajak.kodeJenisPajak}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.jenissetoran.kodeJenisSetoran}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.ebupot2126tagihanpemotongan.tahunPajak}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {formatDate(user.tanggalBuktiSetor)}
+      </TableCell>
+      <TableCell sx={textDataStyle}>
+        {user.pphYangDisetor.toLocaleString("de-DE")}
+      </TableCell>
+    </TableRow>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={8} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NO
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NOMOR BUKTI
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JENIS PAJAK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JENIS SETORAN
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              MASA TAHUN PAJAK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              TANGGAL SETOR
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH SETOR
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{dataTable}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableEbupot2126PenyiapanSptObjekPajak({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+  let tempNo = 0;
+  let isSubMenu = true;
+  let totalJumlahPenerimaPenghasilan = 0;
+  let totalJumlahDpp = 0;
+  let totalJumlahPph = 0;
+
+  let dataTable = currentPosts.map((user, index) => {
+    let ifNotSubMenu =
+      user.objekpajak.kodeObjekPajak !== "21-100-04" &&
+      user.objekpajak.kodeObjekPajak !== "21-100-05" &&
+      user.objekpajak.kodeObjekPajak !== "21-100-06" &&
+      user.objekpajak.kodeObjekPajak !== "21-100-07" &&
+      user.objekpajak.kodeObjekPajak !== "21-100-09" &&
+      user.objekpajak.kodeObjekPajak !== "21-401-01" &&
+      user.objekpajak.kodeObjekPajak !== "21-401-02" &&
+      user.objekpajak.kodeObjekPajak !== "21-402-01" &&
+      user.objekpajak.kodeObjekPajak !== "21-499-99";
+
+    if (ifNotSubMenu) {
+      tempNo++;
+      totalJumlahPenerimaPenghasilan += parseInt(
+        user.jumlahPenerimaPenghasilan
+      );
+      totalJumlahDpp += parseInt(user.jumlahDpp);
+      totalJumlahPph += parseInt(user.jumlahPph);
+
+      return (
+        <TableRow
+          key={user.id}
+          sx={{
+            "&:last-child td, &:last-child th": { border: 0 },
+          }}
+        >
+          <TableCell component="th" scope="row" sx={textDataStyle}>
+            {tempNo}
+          </TableCell>
+          <TableCell sx={{ fontWeight: "bold" }}>
+            {user.objekpajak.namaObjekPajak.toUpperCase()}
+          </TableCell>
+          <TableCell sx={textDataStyle}>
+            {user.objekpajak.kodeObjekPajak}
+          </TableCell>
+          <TableCell sx={textDataStyle}>
+            <NumericFormat
+              required
+              value={user.jumlahPenerimaPenghasilan}
+              decimalSeparator={","}
+              thousandSeparator={"."}
+              customInput={Form.Control}
+              style={{ textAlign: "right" }}
+              disabled
+            />
+          </TableCell>
+          <TableCell sx={textDataStyle}>
+            <NumericFormat
+              required
+              value={user.jumlahDpp}
+              decimalSeparator={","}
+              thousandSeparator={"."}
+              customInput={Form.Control}
+              style={{ textAlign: "right" }}
+              disabled
+            />
+          </TableCell>
+          <TableCell sx={textDataStyle}>
+            <NumericFormat
+              required
+              value={user.jumlahPph}
+              decimalSeparator={","}
+              thousandSeparator={"."}
+              customInput={Form.Control}
+              style={{ textAlign: "right" }}
+              disabled
+            />
+          </TableCell>
+        </TableRow>
+      );
+    } else {
+      if (isSubMenu) {
+        isSubMenu = false;
+        tempNo++;
+        let find2110004 = currentPosts.find(
+          (input) => input.objekpajak.kodeObjekPajak === "21-100-04"
+        );
+        totalJumlahPenerimaPenghasilan += parseInt(
+          find2110004.jumlahPenerimaPenghasilan
+        );
+        totalJumlahDpp += parseInt(find2110004.jumlahDpp);
+        totalJumlahPph += parseInt(find2110004.jumlahPph);
+
+        let find2110005 = currentPosts.find(
+          (input) => input.objekpajak.kodeObjekPajak === "21-100-05"
+        );
+        totalJumlahPenerimaPenghasilan += parseInt(
+          find2110005.jumlahPenerimaPenghasilan
+        );
+        totalJumlahDpp += parseInt(find2110005.jumlahDpp);
+        totalJumlahPph += parseInt(find2110005.jumlahPph);
+
+        let find2110006 = currentPosts.find(
+          (input) => input.objekpajak.kodeObjekPajak === "21-100-06"
+        );
+        totalJumlahPenerimaPenghasilan += parseInt(
+          find2110006.jumlahPenerimaPenghasilan
+        );
+        totalJumlahDpp += parseInt(find2110006.jumlahDpp);
+        totalJumlahPph += parseInt(find2110006.jumlahPph);
+
+        let find2110007 = currentPosts.find(
+          (input) => input.objekpajak.kodeObjekPajak === "21-100-07"
+        );
+        totalJumlahPenerimaPenghasilan += parseInt(
+          find2110007.jumlahPenerimaPenghasilan
+        );
+        totalJumlahDpp += parseInt(find2110007.jumlahDpp);
+        totalJumlahPph += parseInt(find2110007.jumlahPph);
+
+        let find2110009 = currentPosts.find(
+          (input) => input.objekpajak.kodeObjekPajak === "21-100-09"
+        );
+        totalJumlahPenerimaPenghasilan += parseInt(
+          find2110009.jumlahPenerimaPenghasilan
+        );
+        totalJumlahDpp += parseInt(find2110009.jumlahDpp);
+        totalJumlahPph += parseInt(find2110009.jumlahPph);
+
+        return (
+          <>
+            <TableRow
+              key={user.id}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+              }}
+            >
+              <TableCell component="th" scope="row" sx={textDataStyle}>
+                4
+              </TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>BUKAN PEGAWAI</TableCell>
+            </TableRow>
+            <TableRow
+              key={user.id}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+              }}
+            >
+              <TableCell
+                component="th"
+                scope="row"
+                sx={textDataStyle}
+              ></TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>
+                4a. {find2110004.objekpajak.namaObjekPajak.toUpperCase()}
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                {find2110004.objekpajak.kodeObjekPajak}
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110004.jumlahPenerimaPenghasilan}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110004.jumlahDpp}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110004.jumlahPph}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+            </TableRow>
+            <TableRow
+              key={user.id}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+              }}
+            >
+              <TableCell
+                component="th"
+                scope="row"
+                sx={textDataStyle}
+              ></TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>
+                4b. {find2110005.objekpajak.namaObjekPajak.toUpperCase()}
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                {find2110005.objekpajak.kodeObjekPajak}
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110005.jumlahPenerimaPenghasilan}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110005.jumlahDpp}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110005.jumlahPph}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+            </TableRow>
+            <TableRow
+              key={user.id}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+              }}
+            >
+              <TableCell
+                component="th"
+                scope="row"
+                sx={textDataStyle}
+              ></TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>
+                4c. {find2110006.objekpajak.namaObjekPajak.toUpperCase()}
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                {find2110006.objekpajak.kodeObjekPajak}
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110006.jumlahPenerimaPenghasilan}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110006.jumlahDpp}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110006.jumlahPph}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+            </TableRow>
+            <TableRow
+              key={user.id}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+              }}
+            >
+              <TableCell
+                component="th"
+                scope="row"
+                sx={textDataStyle}
+              ></TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>
+                4d. {find2110007.objekpajak.namaObjekPajak.toUpperCase()}
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                {find2110007.objekpajak.kodeObjekPajak}
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110007.jumlahPenerimaPenghasilan}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110007.jumlahDpp}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110007.jumlahPph}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+            </TableRow>
+            <TableRow
+              key={user.id}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+              }}
+            >
+              <TableCell
+                component="th"
+                scope="row"
+                sx={textDataStyle}
+              ></TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>
+                4e. {find2110009.objekpajak.namaObjekPajak.toUpperCase()}
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                {find2110009.objekpajak.kodeObjekPajak}
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110009.jumlahPenerimaPenghasilan}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110009.jumlahDpp}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell sx={textDataStyle}>
+                <NumericFormat
+                  required
+                  value={find2110009.jumlahPph}
+                  decimalSeparator={","}
+                  thousandSeparator={"."}
+                  customInput={Form.Control}
+                  style={{ textAlign: "right" }}
+                  disabled
+                />
+              </TableCell>
+            </TableRow>
+          </>
+        );
+      }
+    }
+  });
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={6} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NO
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              PENERIMA PENGHASILAN
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              KODE OBJEK PAJAK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PENERIMA PENGHASILAN
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PENGHASILAN BRUTO (Rp)
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PAJAK DIPOTONG (Rp)
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {dataTable}
+          <TableRow
+            key={"total"}
+            sx={{
+              "&:last-child td, &:last-child th": { border: 0 },
+            }}
+          >
+            <TableCell component="th" scope="row" sx={textDataStyle}>
+              11
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>
+              JUMLAH (PENJUMLAHAN ANGKA 1 S.D.10)
+            </TableCell>
+            <TableCell sx={textDataStyle}></TableCell>
+            <TableCell sx={textDataStyle}>
+              <NumericFormat
+                required
+                value={totalJumlahPenerimaPenghasilan}
+                decimalSeparator={","}
+                thousandSeparator={"."}
+                customInput={Form.Control}
+                style={{ textAlign: "right" }}
+                disabled
+              />
+            </TableCell>
+            <TableCell sx={textDataStyle}>
+              <NumericFormat
+                required
+                value={totalJumlahDpp}
+                decimalSeparator={","}
+                thousandSeparator={"."}
+                customInput={Form.Control}
+                style={{ textAlign: "right" }}
+                disabled
+              />
+            </TableCell>
+            <TableCell sx={textDataStyle}>
+              <NumericFormat
+                required
+                value={totalJumlahPph}
+                decimalSeparator={","}
+                thousandSeparator={"."}
+                customInput={Form.Control}
+                style={{ textAlign: "right" }}
+                disabled
+              />
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableEbupot2126PenyiapanSptKurangLebih({ currentPosts }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+
+  let dataTable = currentPosts.map((user, index) => (
+    <TableRow
+      key={user.id}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell component="th" scope="row" sx={{ fontWeight: "bold" }}>
+        {index + 1}
+      </TableCell>
+      <TableCell colSpan={4} sx={{ fontWeight: "bold", textAlign: "left" }}>
+        {user.nomorBuktiSetor}
+      </TableCell>
+      <TableCell sx={textDataStyle}>{user.nomorBuktiSetor}</TableCell>
+    </TableRow>
+  ));
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={6} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              colSpan={5}
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              PENGHITUNGAN PPh PASAL 21 DAN/ATAU PASAL 26 YANG KURANG (LEBIH)
+              DISETOR
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{dataTable}</TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableEbupot2126PenyiapanSptObjekPajakFinal({
+  currentPosts,
+}) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+
+  const aksiButtonStyle = {
+    marginLeft: "5px",
+  };
+
+  const textDataStyle = {
+    fontWeight: "bold",
+    textAlign: "center",
+  };
+  let tempNo = 0;
+  let totalJumlahDpp = 0;
+  let totalJumlahPph = 0;
+
+  let dataTable = currentPosts.map((user, index) => {
+    let ifNotTampil =
+      user.objekpajak.kodeObjekPajak === "21-401-01" ||
+      user.objekpajak.kodeObjekPajak === "21-401-02" ||
+      user.objekpajak.kodeObjekPajak === "21-402-01" ||
+      user.objekpajak.kodeObjekPajak === "21-499-99";
+
+    if (ifNotTampil) {
+      tempNo++;
+      totalJumlahDpp += parseInt(user.jumlahDpp);
+      totalJumlahPph += parseInt(user.jumlahPph);
+
+      return (
+        <TableRow
+          key={user.id}
+          sx={{
+            "&:last-child td, &:last-child th": { border: 0 },
+          }}
+        >
+          <TableCell component="th" scope="row" sx={textDataStyle}>
+            {tempNo}
+          </TableCell>
+          <TableCell sx={{ fontWeight: "bold" }}>
+            {user.objekpajak.namaObjekPajak.toUpperCase()}
+          </TableCell>
+          <TableCell sx={textDataStyle}>
+            {user.objekpajak.kodeObjekPajak}
+          </TableCell>
+          <TableCell sx={textDataStyle}>
+            <NumericFormat
+              required
+              value={user.jumlahDpp}
+              decimalSeparator={","}
+              thousandSeparator={"."}
+              customInput={Form.Control}
+              style={{ textAlign: "right" }}
+              disabled
+            />
+          </TableCell>
+          <TableCell sx={textDataStyle}>
+            <NumericFormat
+              required
+              value={user.jumlahPph}
+              decimalSeparator={","}
+              thousandSeparator={"."}
+              customInput={Form.Control}
+              style={{ textAlign: "right" }}
+              disabled
+            />
+          </TableCell>
+        </TableRow>
+      );
+    }
+  });
+
+  if (currentPosts.length === 0) {
+    dataTable = (
+      <TableRow>
+        <TableCell colSpan={6} style={{ textAlign: "center" }}>
+          <b>Tidak ditemukan</b>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              NO
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              PENERIMA PENGHASILAN
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              KODE OBJEK PAJAK
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PENGHASILAN BRUTO (Rp)
+            </TableCell>
+            <TableCell sx={textDataStyle} className={classes.tableRightBorder}>
+              JUMLAH PAJAK DIPOTONG (Rp)
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {dataTable}
+          <TableRow
+            key={"total"}
+            sx={{
+              "&:last-child td, &:last-child th": { border: 0 },
+            }}
+          >
+            <TableCell component="th" scope="row" sx={textDataStyle}>
+              5
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>
+              JUMLAH BAGIAN C (PENJUMLAHAN ANGKA 1 S.D. 5)
+            </TableCell>
+            <TableCell sx={textDataStyle}></TableCell>
+            <TableCell sx={textDataStyle}>
+              <NumericFormat
+                required
+                value={totalJumlahDpp}
+                decimalSeparator={","}
+                thousandSeparator={"."}
+                customInput={Form.Control}
+                style={{ textAlign: "right" }}
+                disabled
+              />
+            </TableCell>
+            <TableCell sx={textDataStyle}>
+              <NumericFormat
+                required
+                value={totalJumlahPph}
+                decimalSeparator={","}
+                thousandSeparator={"."}
+                customInput={Form.Control}
+                style={{ textAlign: "right" }}
+                disabled
+              />
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }

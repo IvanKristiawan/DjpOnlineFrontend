@@ -32,6 +32,7 @@ import {
   Ebupot2126Posting,
   Ebupot2126PerekamanSptMasa,
   Ebupot2126DaftarPenyiapanSpt,
+  Ebupot2126UbahPenyiapanSpt,
   TampilEbupot2126Penandatangan,
   TampilEbupot2126Perekam,
   TampilEbupot2126BuatAuthKey,
@@ -300,6 +301,14 @@ const App = () => {
             element={
               <USERRoute>
                 <Ebupot2126DaftarPenyiapanSpt />
+              </USERRoute>
+            }
+          />
+          <Route
+            path="/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/:id"
+            element={
+              <USERRoute>
+                <Ebupot2126UbahPenyiapanSpt />
               </USERRoute>
             }
           />

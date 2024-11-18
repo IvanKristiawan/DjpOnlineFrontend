@@ -31,6 +31,7 @@ export { default as Ebupot2126DownloadBupot } from "./Ebupot2126/DownloadBupot/E
 export { default as Ebupot2126Posting } from "./Ebupot2126/Posting/Ebupot2126Posting";
 export { default as Ebupot2126PerekamanSptMasa } from "./Ebupot2126/Ebupot2126PerekamanSptMasa/Ebupot2126PerekamanSptMasa";
 export { default as Ebupot2126DaftarPenyiapanSpt } from "./Ebupot2126/Ebupot2126PenyiapanSpt/Ebupot2126DaftarPenyiapanSpt";
+export { default as Ebupot2126UbahPenyiapanSpt } from "./Ebupot2126/Ebupot2126PenyiapanSpt/Ebupot2126UbahPenyiapanSpt";
 export { default as TampilEbupot2126Penandatangan } from "./Ebupot2126/Penandatangan/TampilEbupot2126Penandatangan";
 export { default as TampilEbupot2126Perekam } from "./Ebupot2126/Perekam/TampilEbupot2126Perekam";
 export { default as TampilEbupot2126BuatAuthKey } from "./Ebupot2126/BuatAuthKey/TampilEbupot2126BuatAuthKey";

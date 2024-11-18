@@ -273,6 +273,7 @@ function Ebupot2126InputPph26() {
   const getObjekPajakData = async () => {
     const response = await axios.post(`${tempUrl}/objekPajaksBupot2126`, {
       untukBupot2126: "PPh 26",
+      isActiveBupot2126: true,
       _id: user.id,
       token: user.token,
     });

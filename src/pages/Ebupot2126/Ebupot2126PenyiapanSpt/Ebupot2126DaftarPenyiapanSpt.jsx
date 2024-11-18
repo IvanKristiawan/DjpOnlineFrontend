@@ -104,9 +104,9 @@ function Ebupot2126DaftarPenyiapanSpt() {
     }
   }
 
-  // useEffect(() => {
-  //   getEBupot2126PenyiapanSptData();
-  // }, [page, limit]);
+  useEffect(() => {
+    getEBupot2126PenyiapanSptData();
+  }, [page, limit]);
 
   const getEBupot2126PenyiapanSptData = async () => {
     setOpenLoading(true);
