@@ -15,6 +15,8 @@ import {
 import "../../../constants/defaultProgram.css";
 import {
   dasarPemotonganDokumenOptions,
+  getLastDateOfMonth,
+  getMonthIndex,
   getRandomIndonesianName,
 } from "../../../constants/helper";
 import { ShowTableDaftarDokumenPph42152223 } from "../../../components/ShowTable";
@@ -222,6 +224,7 @@ function EbupotUnifikasiUbahPph42152223() {
   }
   const [tahunPajak, setTahunPajak] = useState("");
 
+  const [maxMasaPajak, setMaxMasaPajak] = useState(new Date());
   const [masaPajak, setMasaPajak] = useState("");
   const [masaPajakOptions, setMasaPajakOptions] = useState([]);
   const [identitas, setIdentitas] = useState("NPWP/NITKU");
@@ -372,6 +375,15 @@ function EbupotUnifikasiUbahPph42152223() {
     );
     // 01.) Accordion 1
     setTahunPajak(response.data.eBupotUnifikasiPph42152223.tahunPajak);
+
+    const month = getMonthIndex(
+      response.data.eBupotUnifikasiPph42152223.masaPajak
+    );
+    const lastDate = getLastDateOfMonth(
+      response.data.eBupotUnifikasiPph42152223.tahunPajak,
+      month
+    );
+    setMaxMasaPajak(lastDate);
     setMasaPajak(response.data.eBupotUnifikasiPph42152223.masaPajak);
     setIdentitas(response.data.eBupotUnifikasiPph42152223.identitas);
     setNpwpNitku(response.data.eBupotUnifikasiPph42152223.npwpNitku);
@@ -2140,6 +2152,7 @@ function EbupotUnifikasiUbahPph42152223() {
                     <Col sm="8">
                       <DatePicker
                         required
+                        maxDate={maxMasaPajak}
                         dateFormat="dd/MM/yyyy"
                         customInput={<Form.Control required />}
                         selected={tanggalDokumen}

@@ -827,7 +827,7 @@ function Ebupot2126ImporData() {
                         </button>
                       )}
                     </div>
-                    {Object.keys(jsonData).length > 0 && (
+                    {/* {Object.keys(jsonData).length > 0 && (
                       <div>
                         {Object.keys(jsonData).map((sheetName) => (
                           <div key={sheetName}>
@@ -838,7 +838,7 @@ function Ebupot2126ImporData() {
                           </div>
                         ))}
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
                 <div style={{ display: "flex", justifyContent: "center" }}>

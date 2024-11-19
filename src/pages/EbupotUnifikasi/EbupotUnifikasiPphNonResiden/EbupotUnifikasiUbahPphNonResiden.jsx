@@ -13,7 +13,11 @@ import {
   usePagination,
 } from "../../../components/index";
 import "../../../constants/defaultProgram.css";
-import { dasarPemotonganDokumenOptions } from "../../../constants/helper";
+import {
+  dasarPemotonganDokumenOptions,
+  getLastDateOfMonth,
+  getMonthIndex,
+} from "../../../constants/helper";
 import { ShowTableDaftarDokumenPphNonResiden } from "../../../components/ShowTable";
 import {
   Card,
@@ -209,6 +213,7 @@ function EbupotUnifikasiUbahPphNonResiden() {
   }
   const [tahunPajak, setTahunPajak] = useState("");
 
+  const [maxMasaPajak, setMaxMasaPajak] = useState(new Date());
   const [masaPajak, setMasaPajak] = useState("");
   const [masaPajakOptions, setMasaPajakOptions] = useState([]);
   const [tin, setTin] = useState("");
@@ -369,6 +374,15 @@ function EbupotUnifikasiUbahPphNonResiden() {
     );
     // 01.) Accordion 1
     setTahunPajak(response.data.eBupotUnifikasiPphNonResiden.tahunPajak);
+
+    const month = getMonthIndex(
+      response.data.eBupotUnifikasiPphNonResiden.masaPajak
+    );
+    const lastDate = getLastDateOfMonth(
+      response.data.eBupotUnifikasiPphNonResiden.tahunPajak,
+      month
+    );
+    setMaxMasaPajak(lastDate);
     setMasaPajak(response.data.eBupotUnifikasiPphNonResiden.masaPajak);
     setTin(response.data.eBupotUnifikasiPphNonResiden.tin);
     setNama(response.data.eBupotUnifikasiPphNonResiden.nama);
@@ -2101,6 +2115,7 @@ function EbupotUnifikasiUbahPphNonResiden() {
                     <Col sm="8">
                       <DatePicker
                         required
+                        maxDate={maxMasaPajak}
                         dateFormat="dd/MM/yyyy"
                         customInput={<Form.Control required />}
                         selected={tanggalDokumen}
