@@ -13,7 +13,7 @@ function Footer() {
             href="https://ivankristiawan.com"
             style={copyrightLinkStyle}
           >
-            TechKu
+            Ivan Kristiawan
           </a>
         </small>
       </div>
