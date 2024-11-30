@@ -8,7 +8,8 @@ import { AuthContext } from "../contexts/AuthContext";
 import { useStateContext } from "../contexts/ContextProvider";
 import { Colors } from "../constants/styles";
 import "../constants/defaultProgram.css";
-import LogoDjp from "../assets/Logo DJP.png";
+// import LogoDjp from "../assets/Logo DJP.png";
+import LogoDjp from "../assets/Logo.png";
 import LogoProfilMenu from "../assets/Logo Profil Menu.png";
 import PersonIcon from "@mui/icons-material/Person";
 
@@ -47,7 +48,7 @@ function HeaderMainEbupot2126({ username }) {
     >
       <Container>
         <Navbar.Brand href="/">
-          <img src={LogoDjp} alt="LogoDjp" style={{ width: "200px" }} />
+          <img src={LogoDjp} alt="LogoDjp" style={{ width: "50px" }} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

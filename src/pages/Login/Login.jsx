@@ -7,7 +7,8 @@ import { Colors } from "../../constants/styles";
 import "./login.css";
 import { Container, Card, InputGroup, Button, Form } from "react-bootstrap";
 import { Snackbar, Alert } from "@mui/material";
-import LogoDjp from "../../assets/Logo DJP.png";
+// import LogoDjp from "../../assets/Logo DJP.png";
+import LogoDjp from "../../assets/Logo.png";
 import CaptchaImage from "../../assets/Captcha Image.jpeg";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -99,7 +100,7 @@ function Login() {
             <img
               src={LogoDjp}
               alt="LogoDjp"
-              style={{ width: "170px", marginTop: "20px" }}
+              style={{ width: "50px", marginTop: "20px" }}
             />
             <p style={headerText}>Login</p>
           </div>

@@ -6,7 +6,8 @@ import Navbar from "react-bootstrap/Navbar";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import InputGroup from "react-bootstrap/InputGroup";
-import LogoDjp from "../assets/Logo DJP.png";
+// import LogoDjp from "../assets/Logo DJP.png";
+import LogoDjp from "../assets/Logo.png";
 import SearchIcon from "@mui/icons-material/Search";
 
 function HeaderInfo() {
@@ -22,7 +23,7 @@ function HeaderInfo() {
     >
       <Container>
         <Navbar.Brand href="/">
-          <img src={LogoDjp} alt="LogoDjp" style={{ width: "200px" }} />
+          <img src={LogoDjp} alt="LogoDjp" style={{ width: "50px" }} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
