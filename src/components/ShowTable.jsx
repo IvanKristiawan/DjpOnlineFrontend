@@ -3081,50 +3081,73 @@ export function ShowTableEbupotUnifikasiPenyiapanSpt({
         </TableCell>
         <TableCell style={dataStyle}>{user.statusSpt}</TableCell>
         <TableCell style={dataStyle}>{user.keteranganSpt}</TableCell>
-        <TableCell style={aksiButtonWrapper}>
-          <OverlayTrigger
-            placement="bottom"
-            delay={{ show: 250, hide: 50 }}
-            overlay={renderTooltipLengkapiSpt}
-          >
-            <button
-              className="aksi-button"
-              disabled={user.isHapus === true}
-              style={aksiButtonStyle}
-              onClick={() => {
-                navigate(
-                  `/ebupotUnifikasi/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
-                );
-              }}
+        {user.keteranganSpt !== "SPT Anda berhasil dikirim" ? (
+          <TableCell style={aksiButtonWrapper}>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipLengkapiSpt}
             >
-              <EditIcon fontSize="small" />
-            </button>
-          </OverlayTrigger>
-          <OverlayTrigger
-            placement="bottom"
-            delay={{ show: 250, hide: 50 }}
-            overlay={renderTooltipKirimSpt}
-          >
-            <button
-              className="aksi-button"
-              disabled={user.isHapus === true}
-              style={aksiButtonStyle}
-              onClick={() => {
-                if (user.penandatanganId === null) {
+              <button
+                className="aksi-button"
+                disabled={user.isHapus === true}
+                style={aksiButtonStyle}
+                onClick={() => {
                   navigate(
                     `/ebupotUnifikasi/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
                   );
-                } else {
-                  navigate(
-                    `/ebupotUnifikasi/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}/kirimSpt`
-                  );
-                }
-              }}
+                }}
+              >
+                <EditIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipKirimSpt}
             >
-              <SendIcon fontSize="small" />
-            </button>
-          </OverlayTrigger>
-        </TableCell>
+              <button
+                className="aksi-button"
+                disabled={user.isHapus === true}
+                style={aksiButtonStyle}
+                onClick={() => {
+                  if (user.penandatanganId === null) {
+                    navigate(
+                      `/ebupotUnifikasi/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
+                    );
+                  } else {
+                    navigate(
+                      `/ebupotUnifikasi/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}/kirimSpt`
+                    );
+                  }
+                }}
+              >
+                <SendIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+          </TableCell>
+        ) : (
+          <TableCell style={aksiButtonWrapper}>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipLengkapiSpt}
+            >
+              <button
+                className="aksi-button"
+                disabled={user.isHapus === true}
+                style={aksiButtonStyle}
+                onClick={() => {
+                  navigate(
+                    `/ebupotUnifikasi/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
+                  );
+                }}
+              >
+                <RemoveRedEyeIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+          </TableCell>
+        )}
       </TableRow>
       <Dialog
         open={openConfirmationEdit}
@@ -8851,53 +8874,76 @@ export function ShowTableEbupot2126PenyiapanSpt({
         </TableCell>
         <TableCell style={dataStyle}>{user.statusSpt}</TableCell>
         <TableCell style={dataStyle}>{user.keteranganSpt}</TableCell>
-        <TableCell style={aksiButtonWrapper}>
-          <OverlayTrigger
-            placement="bottom"
-            delay={{ show: 250, hide: 50 }}
-            overlay={renderTooltipLengkapiSpt}
-          >
-            <button
-              className="aksi-button"
-              disabled={user.isHapus === true}
-              style={aksiButtonStyle}
-              onClick={() => {
-                navigate(
-                  `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
-                );
-              }}
+        {user.keteranganSpt !== "SPT Anda berhasil dikirim" ? (
+          <TableCell style={aksiButtonWrapper}>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipLengkapiSpt}
             >
-              <EditIcon fontSize="small" />
-            </button>
-          </OverlayTrigger>
-          {user.keteranganSpt === "SPT Anda siap kirim" &&
-            user.eBupot2126PenandatanganId !== null && (
-              <OverlayTrigger
-                placement="bottom"
-                delay={{ show: 250, hide: 50 }}
-                overlay={renderTooltipKirimSpt}
+              <button
+                className="aksi-button"
+                disabled={user.isHapus === true}
+                style={aksiButtonStyle}
+                onClick={() => {
+                  navigate(
+                    `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
+                  );
+                }}
               >
-                <button
-                  className="aksi-button"
-                  disabled={user.isHapus === true}
-                  style={aksiButtonStyle}
-                  onClick={() => {
-                    if (user.penandatanganId === null) {
-                      navigate(
-                        `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
-                      );
-                    } else {
-                      navigate(
-                        `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}/kirimSpt`
-                      );
-                    }
-                  }}
+                <EditIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+            {user.keteranganSpt === "SPT Anda siap kirim" &&
+              user.eBupot2126PenandatanganId !== null && (
+                <OverlayTrigger
+                  placement="bottom"
+                  delay={{ show: 250, hide: 50 }}
+                  overlay={renderTooltipKirimSpt}
                 >
-                  <SendIcon fontSize="small" />
-                </button>
-              </OverlayTrigger>
-            )}
-        </TableCell>
+                  <button
+                    className="aksi-button"
+                    disabled={user.isHapus === true}
+                    style={aksiButtonStyle}
+                    onClick={() => {
+                      if (user.penandatanganId === null) {
+                        navigate(
+                          `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
+                        );
+                      } else {
+                        navigate(
+                          `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}/kirimSpt`
+                        );
+                      }
+                    }}
+                  >
+                    <SendIcon fontSize="small" />
+                  </button>
+                </OverlayTrigger>
+              )}
+          </TableCell>
+        ) : (
+          <TableCell style={aksiButtonWrapper}>
+            <OverlayTrigger
+              placement="bottom"
+              delay={{ show: 250, hide: 50 }}
+              overlay={renderTooltipLengkapiSpt}
+            >
+              <button
+                className="aksi-button"
+                disabled={user.isHapus === true}
+                style={aksiButtonStyle}
+                onClick={() => {
+                  navigate(
+                    `/ebupot2126/sptMasa/penyiapanSpt/lengkapiSpt/${user.id}`
+                  );
+                }}
+              >
+                <RemoveRedEyeIcon fontSize="small" />
+              </button>
+            </OverlayTrigger>
+          </TableCell>
+        )}
       </TableRow>
       <Dialog
         open={openConfirmationEdit}
