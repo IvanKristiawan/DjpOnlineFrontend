@@ -661,6 +661,8 @@ function Ebupot2126DaftarPPh21() {
                             getEbupot2126DaftarPPh21Data();
                           } else if (menuBuktiPotong === "Final/Tidak Final") {
                             getEbupot2126DaftarPPh21FinalData();
+                          } else {
+                            getEBupot2126Pph21TahunanData();
                           }
                         }}
                       >
